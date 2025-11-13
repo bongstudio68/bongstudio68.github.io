@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
-  <title>Bongstudio Product Builder v1.1 — JSON + HTML + Ảnh share</title>
+  <title>Bongstudio Product Builder v1.2 — JSON + HTML + Poster + WebP</title>
   <meta name="robots" content="noindex,follow"/>
   <style>
     :root{
@@ -219,9 +219,10 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>🔧 Bongstudio Product Builder v1.1</h1>
+  <h1>🔧 Bongstudio Product Builder v1.2</h1>
   <div class="sub">
-    Nhập thông tin sản phẩm ➝ tool tự sinh <b>slug chuẩn</b>, block <b>JSON</b>, đoạn <b>HTML card</b> và <b>ảnh share PNG</b> để đăng Facebook/Story.
+    Nhập thông tin sản phẩm ➝ tool tự sinh <b>slug chuẩn</b>, block <b>JSON</b>, đoạn <b>HTML card</b>,  
+    <b>poster share</b> và <b>ảnh WebP</b> để up repo.
   </div>
 
   <!-- KHỐI 1: INPUT THÔNG TIN -->
@@ -295,9 +296,18 @@
       </div>
 
       <div class="row">
-        <label for="thumbUrl">Link ảnh đại diện (thumb)</label>
+        <label for="thumbUrl">Link ảnh đại diện (thumb – tuỳ chọn)</label>
         <input id="thumbUrl" placeholder="Dán link ảnh sản phẩm (tạm thời)…"/>
-        <div class="hint">Sau này có worker upload ảnh lên repo thì chỉ việc thay lại link local.</div>
+        <div class="hint">Chỉ dùng để preview, <b>không</b> vẽ vào poster để tránh lỗi CORS.</div>
+      </div>
+
+      <div class="row">
+        <label for="uploadFile">Chọn ảnh sản phẩm từ máy (tuỳ chọn)</label>
+        <input id="uploadFile" type="file" accept="image/*"/>
+        <div class="hint">
+          Ảnh này sẽ được vẽ vào poster & dùng để tạo WebP thumb vuông, tiện up lên repo.
+          File chỉ xử lý tại trình duyệt, không gửi đi đâu.
+        </div>
       </div>
 
       <div class="row">
@@ -330,9 +340,11 @@
         </div>
       </div>
       <div>
-        <label for="previewImg">Preview ảnh (nếu có link):</label>
+        <label for="previewImg">Preview ảnh (URL hoặc file local):</label>
         <img id="previewImg" class="preview-img" alt="Preview ảnh sản phẩm"/>
-        <div class="hint">Tool chỉ hiển thị để kiểm tra, không lưu ở đâu cả.</div>
+        <div class="hint">
+          Nếu đã chọn file ảnh từ máy, preview sẽ ưu tiên hiển thị ảnh đó.
+        </div>
       </div>
     </div>
   </div>
@@ -357,11 +369,11 @@
     </div>
   </div>
 
-  <!-- KHỐI 4: ẢNH SHARE PNG -->
+  <!-- KHỐI 4: POSTER + WEBP -->
   <div class="card">
     <div class="card-header">
       <div class="card-title">
-        4. Ảnh share mạng xã hội (PNG)
+        4. Poster share + Ảnh WebP
         <span class="pill">Output · Image</span>
       </div>
       <span id="shareStatus" class="badge-err"></span>
@@ -370,7 +382,7 @@
     <div class="share-layout">
       <div>
         <div class="row">
-          <label for="shareTitle">Tiêu đề lớn trên ảnh</label>
+          <label for="shareTitle">Tiêu đề lớn trên poster</label>
           <input id="shareTitle" placeholder="Nếu bỏ trống sẽ dùng tên sản phẩm"/>
           <div class="hint">Tối đa 2–3 dòng, ngắn gọn, dễ đọc.</div>
         </div>
@@ -383,7 +395,7 @@
           <input id="shareBadge" placeholder="Ví dụ: Khoảng 159K / Deal hôm nay"/>
         </div>
         <div class="row">
-          <label for="shareSize">Tỉ lệ ảnh</label>
+          <label for="shareSize">Tỉ lệ poster</label>
           <select id="shareSize">
             <option value="square">Vuông 1:1 (1080×1080) — post thường</option>
             <option value="4x5">Dọc 4:5 (1080×1350) — feed tối ưu</option>
@@ -391,12 +403,14 @@
           </select>
         </div>
         <div class="actions">
-          <button type="button" id="btnRenderShare">Vẽ lại ảnh</button>
-          <button type="button" class="secondary" id="btnDownloadShare">Tải ảnh PNG</button>
+          <button type="button" id="btnRenderShare">Vẽ lại poster</button>
+          <button type="button" id="btnDownloadShareWebp">Tải poster WebP</button>
+          <button type="button" class="secondary" id="btnDownloadShare">Tải poster PNG</button>
+          <button type="button" class="secondary" id="btnDownloadThumbWebp">WebP thumb vuông</button>
         </div>
         <div class="hint">
-          Ảnh này chỉ dùng nền gradient + text (không lấy ảnh từ sàn) để tránh lỗi CORS,
-          đảm bảo tải PNG được ở mọi trình duyệt. Khi có worker upload ảnh vào repo ta sẽ nâng cấp sau.
+          Poster dùng nền gradient + text, có thể chèn ảnh sản phẩm (file local).
+          WebP thumb vuông là ảnh sản phẩm sạch (không chữ), kích thước ~800×800 để up lên repo.
         </div>
       </div>
       <div>
@@ -408,8 +422,8 @@
   </div>
 
   <div class="footer">
-    Bongstudio Tool v1.1 — chạy hoàn toàn trên trình duyệt, không gọi API.  
-    Bước sau: nối mạch với worker để publish JSON + upload ảnh thẳng lên repo.
+    Bongstudio Tool v1.2 — chạy hoàn toàn trên trình duyệt, không gọi API.  
+    Bước sau: nối mạch với worker để publish JSON + ảnh lên repo tự động.
   </div>
 </div>
 
@@ -417,20 +431,21 @@
 (function(){
   const $ = id => document.getElementById(id);
   let lastData = null;
+  let uploadedImg = null;
 
   function slugify(str){
-    if(!str) return '';
-    let s = str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(!str) return "";
+    let s = str.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     s = s.toLowerCase();
-    s = s.replace(/[^a-z0-9]+/g,'-');
-    s = s.replace(/^-+|-+$/g,'');
-    s = s.replace(/-+/g,'-');
+    s = s.replace(/[^a-z0-9]+/g,"-");
+    s = s.replace(/^-+|-+$/g,"");
+    s = s.replace(/-+/g,"-");
     return s;
   }
 
   function cleanPrice(val){
     if(!val) return null;
-    const num = parseInt(String(val).replace(/[^\d]/g,''),10);
+    const num = parseInt(String(val).replace(/[^\d]/g,""),10);
     return Number.isFinite(num) ? num : null;
   }
 
@@ -446,11 +461,11 @@
 
   function merchantLabel(code){
     switch(code){
-      case 'shopee': return 'Shopee';
-      case 'lazada': return 'Lazada';
-      case 'tiktok': return 'TikTok Shop';
-      case 'tiki':   return 'Tiki';
-      default:       return 'Nguồn khác';
+      case "shopee": return "Shopee";
+      case "lazada": return "Lazada";
+      case "tiktok": return "TikTok Shop";
+      case "tiki":   return "Tiki";
+      default:       return "Nguồn khác";
     }
   }
 
@@ -462,30 +477,30 @@
   }
 
   function buildJson(){
-    const merchant = $('merchant').value;
-    const originUrl = $('originUrl').value.trim();
-    const title = $('title').value.trim();
-    const priceNow = cleanPrice($('priceNow').value);
-    const priceOld = cleanPrice($('priceOld').value);
-    const category = $('category').value;
-    let sku = $('sku').value.trim();
-    const thumbUrl = $('thumbUrl').value.trim();
-    const shortDescRaw = $('shortDesc').value;
+    const merchant = $("merchant").value;
+    const originUrl = $("originUrl").value.trim();
+    const title = $("title").value.trim();
+    const priceNow = cleanPrice($("priceNow").value);
+    const priceOld = cleanPrice($("priceOld").value);
+    const category = $("category").value;
+    let sku = $("sku").value.trim();
+    const thumbUrl = $("thumbUrl").value.trim();
+    const shortDescRaw = $("shortDesc").value;
 
     if(!title || !originUrl){
-      $('statusJson').textContent = "Cần tối thiểu: Tên sản phẩm + Link gốc.";
-      $('statusJson').className = "badge-err";
+      $("statusJson").textContent = "Cần tối thiểu: Tên sản phẩm + Link gốc.";
+      $("statusJson").className = "badge-err";
       return null;
     }
 
     if(!sku){
       sku = slugify(title);
-      $('sku').value = sku;
-      $('slugHint').textContent = "Đã tự sinh SKU từ tên: " + sku;
+      $("sku").value = sku;
+      $("slugHint").textContent = "Đã tự sinh SKU từ tên: " + sku;
     }
 
     const shortDesc = buildShortDesc(category, merchant, shortDescRaw);
-    $('shortDesc').value = shortDesc;
+    $("shortDesc").value = shortDesc;
 
     const today = new Date();
     const created = today.toISOString().slice(0,10);
@@ -508,27 +523,27 @@
       thumb: thumbUrl || null,
       short_desc: shortDesc,
       tags,
-      note: "Bongstudio Tool v1.1",
+      note: "Bongstudio Tool v1.2",
       created_at: created
     };
 
-    $('statusJson').textContent = "JSON đã sinh xong (" + created + ").";
-    $('statusJson').className = "badge-ok";
+    $("statusJson").textContent = "JSON đã sinh xong (" + created + ").";
+    $("statusJson").className = "badge-ok";
 
     return obj;
   }
 
   function buildHtmlCard(data){
     if(!data) return "";
-    const priceNow = data.price ? data.price.toLocaleString('vi-VN') + "₫" : "Liên hệ";
-    const priceOld = data.price_old ? data.price_old.toLocaleString('vi-VN') + "₫" : "";
+    const priceNow = data.price ? data.price.toLocaleString("vi-VN") + "₫" : "Liên hệ";
+    const priceOld = data.price_old ? data.price_old.toLocaleString("vi-VN") + "₫" : "";
     const merchantText = merchantLabel(data.merchant);
 
     return (
 `<article class="product-card" data-sku="${data.sku}" data-merchant="${data.merchant}" data-category="${data.category}">
   <a class="product-link" href="${data.origin_url}" target="_blank" rel="nofollow noopener">
     <div class="product-thumb">
-      <img src="${data.thumb || ''}" alt="${data.title.replace(/"/g,'&quot;')}" loading="lazy"/>
+      <img src="${data.thumb || ""}" alt="${data.title.replace(/"/g,"&quot;")}" loading="lazy"/>
       <span class="product-merchant">${merchantText}</span>
     </div>
     <div class="product-body">
@@ -549,19 +564,19 @@
   }
 
   function updateShareFieldsFromData(data){
-    if(!$('shareTitle')) return;
-    if(!$('shareTitle').value){
-      $('shareTitle').value = data.title;
+    if(!$("shareTitle")) return;
+    if(!$("shareTitle").value){
+      $("shareTitle").value = data.title;
     }
-    if(!$('shareTagline').value){
-      $('shareTagline').value = "Deal từ " + merchantLabel(data.merchant) + " • " + (data.category || "Bongstudio");
+    if(!$("shareTagline").value){
+      $("shareTagline").value = "Deal từ " + merchantLabel(data.merchant) + " • " + (data.category || "Bongstudio");
     }
-    if(!$('shareBadge').value){
+    if(!$("shareBadge").value){
       if(data.price){
         const k = Math.round(data.price / 1000);
-        $('shareBadge').value = "Khoảng " + k + "K";
+        $("shareBadge").value = "Khoảng " + k + "K";
       }else{
-        $('shareBadge').value = "Ưu đãi theo thời điểm";
+        $("shareBadge").value = "Ưu đãi theo thời điểm";
       }
     }
   }
@@ -613,38 +628,38 @@
   }
 
   function renderShareImage(){
-    const canvas = $('shareCanvas');
-    const statusEl = $('shareStatus');
-    const shareTitle = $('shareTitle').value.trim();
-    const shareTagline = $('shareTagline').value.trim();
-    const shareBadge = $('shareBadge').value.trim();
-    const size = $('shareSize').value;
+    const canvas = $("shareCanvas");
+    const statusEl = $("shareStatus");
+    const shareTitle = $("shareTitle").value.trim();
+    const shareTagline = $("shareTagline").value.trim();
+    const shareBadge = $("shareBadge").value.trim();
+    const size = $("shareSize").value;
     const data = lastData || buildJson();
 
     if(!data){
-      statusEl.textContent = "Hãy tạo JSON (bấm Tạo JSON + HTML) trước khi vẽ ảnh.";
+      statusEl.textContent = "Hãy tạo JSON (bấm Tạo JSON + HTML) trước khi vẽ poster.";
       statusEl.className = "badge-err";
       return;
     }
 
     let w = 1080, h = 1080;
-    if(size === '4x5'){ h = 1350; }
-    else if(size === 'story'){ h = 1920; }
+    if(size === "4x5"){ h = 1350; }
+    else if(size === "story"){ h = 1920; }
 
     canvas.width = w;
     canvas.height = h;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
     // Nền gradient
     const grad = ctx.createLinearGradient(0,0,w,h);
-    grad.addColorStop(0,'#020617');
-    grad.addColorStop(0.45,'#111827');
-    grad.addColorStop(1,'#1d233b');
+    grad.addColorStop(0,"#020617");
+    grad.addColorStop(0.45,"#111827");
+    grad.addColorStop(1,"#1d233b");
     ctx.fillStyle = grad;
     ctx.fillRect(0,0,w,h);
 
     // Vùng glow tròn
-    ctx.fillStyle = 'rgba(96,165,250,0.35)';
+    ctx.fillStyle = "rgba(96,165,250,0.35)";
     const centerX = w*0.72;
     const centerY = h*0.22;
     const radius = Math.min(w,h)*0.22;
@@ -658,43 +673,75 @@
     const cardW = w - margin*2;
     const cardH = h*0.46;
     roundedRect(ctx, margin, top, cardW, cardH, w*0.04);
-    ctx.fillStyle = 'rgba(15,23,42,0.92)';
+    ctx.fillStyle = "rgba(15,23,42,0.92)";
     ctx.fill();
-    ctx.strokeStyle = 'rgba(129,140,248,0.65)';
+    ctx.strokeStyle = "rgba(129,140,248,0.65)";
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    const hasImg = !!uploadedImg;
 
     const innerX = margin + w*0.05;
     let textY = top + w*0.09;
 
+    // Vùng ảnh sản phẩm (nếu có)
+    const imgBoxW = cardW*0.34;
+    const imgBoxH = cardH*0.76;
+    const imgBoxX = margin + cardW - imgBoxW - w*0.05;
+    const imgBoxY = top + w*0.06;
+
+    if(hasImg){
+      ctx.save();
+      roundedRect(ctx, imgBoxX, imgBoxY, imgBoxW, imgBoxH, w*0.03);
+      ctx.clip();
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+
+      const iw = uploadedImg.width;
+      const ih = uploadedImg.height;
+      const scale = Math.max(imgBoxW/iw, imgBoxH/ih);
+      const dw = iw*scale;
+      const dh = ih*scale;
+      const dx = imgBoxX + (imgBoxW - dw)/2;
+      const dy = imgBoxY + (imgBoxH - dh)/2;
+      ctx.drawImage(uploadedImg, dx, dy, dw, dh);
+      ctx.restore();
+
+      ctx.strokeStyle = "rgba(248,250,252,0.35)";
+      ctx.lineWidth = 2;
+      roundedRect(ctx, imgBoxX, imgBoxY, imgBoxW, imgBoxH, w*0.03);
+      ctx.stroke();
+    }
+
     // Tag sàn + danh mục
-    ctx.font = '500 ' + Math.round(w*0.022) + 'px system-ui';
-    ctx.fillStyle = '#e5e7eb';
-    const tag = merchantLabel(data.merchant) + ' • ' + (data.category || '');
+    ctx.font = "500 " + Math.round(w*0.022) + "px system-ui";
+    ctx.fillStyle = "#e5e7eb";
+    const tag = merchantLabel(data.merchant) + " • " + (data.category || "");
     ctx.fillText(tag, innerX, textY);
     textY += w*0.04;
 
     // Tiêu đề lớn
-    ctx.font = '700 ' + Math.round(w*0.045) + 'px system-ui';
-    ctx.fillStyle = '#f9fafb';
+    ctx.font = "700 " + Math.round(w*0.045) + "px system-ui";
+    ctx.fillStyle = "#f9fafb";
     const titleText = shareTitle || data.title;
-    textY = wrapText(ctx, titleText, innerX, textY, cardW - w*0.12, w*0.055, 3);
+    const textMaxWidth = hasImg ? (imgBoxX - innerX - w*0.04) : (cardW - w*0.12);
+    textY = wrapText(ctx, titleText, innerX, textY, textMaxWidth, w*0.055, 3);
     textY += w*0.03;
 
     // Giá
-    ctx.font = '700 ' + Math.round(w*0.04) + 'px system-ui';
-    ctx.fillStyle = '#bfdbfe';
-    const priceNow = data.price ? data.price.toLocaleString('vi-VN') + '₫' : 'Giá cập nhật trên sàn';
+    ctx.font = "700 " + Math.round(w*0.04) + "px system-ui";
+    ctx.fillStyle = "#bfdbfe";
+    const priceNow = data.price ? data.price.toLocaleString("vi-VN") + "₫" : "Giá cập nhật trên sàn";
     ctx.fillText(priceNow, innerX, textY);
 
     if(data.price_old){
-      ctx.font = '500 ' + Math.round(w*0.025) + 'px system-ui';
-      ctx.fillStyle = '#9ca3af';
-      const old = data.price_old.toLocaleString('vi-VN') + '₫';
+      ctx.font = "500 " + Math.round(w*0.025) + "px system-ui";
+      ctx.fillStyle = "#9ca3af";
+      const old = data.price_old.toLocaleString("vi-VN") + "₫";
       const widthNow = ctx.measureText(priceNow).width;
       ctx.fillText(old, innerX + widthNow + 16, textY);
       const oldWidth = ctx.measureText(old).width;
-      ctx.strokeStyle = '#9ca3af';
+      ctx.strokeStyle = "#9ca3af";
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.moveTo(innerX + widthNow + 16, textY - w*0.012);
@@ -703,112 +750,199 @@
     }
 
     // Badge góc phải
-    const badgeText = shareBadge || 'Sản phẩm chọn lọc';
-    ctx.font = '600 ' + Math.round(w*0.026) + 'px system-ui';
+    const badgeText = shareBadge || "Sản phẩm chọn lọc";
+    ctx.font = "600 " + Math.round(w*0.026) + "px system-ui";
     const badgeWidth = ctx.measureText(badgeText).width + w*0.06;
     const badgeHeight = w*0.06;
     const badgeX = margin + cardW - badgeWidth - w*0.04;
     const badgeY = top + cardH - badgeHeight - w*0.04;
     roundedRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, w*0.03);
     const gradBadge = ctx.createLinearGradient(badgeX, badgeY, badgeX+badgeWidth, badgeY+badgeHeight);
-    gradBadge.addColorStop(0,'#4f46e5');
-    gradBadge.addColorStop(1,'#22d3ee');
+    gradBadge.addColorStop(0,"#4f46e5");
+    gradBadge.addColorStop(1,"#22d3ee");
     ctx.fillStyle = gradBadge;
     ctx.fill();
-    ctx.fillStyle = '#f9fafb';
-    ctx.textBaseline = 'middle';
+    ctx.fillStyle = "#f9fafb";
+    ctx.textBaseline = "middle";
     ctx.fillText(badgeText, badgeX + w*0.03, badgeY + badgeHeight/2);
 
     // Dải brand phía dưới
     const stripH = h*0.09;
     const stripY = h - stripH;
-    ctx.fillStyle = 'rgba(15,23,42,0.92)';
+    ctx.fillStyle = "rgba(15,23,42,0.92)";
     ctx.fillRect(0, stripY, w, stripH);
 
-    ctx.font = '600 ' + Math.round(w*0.03) + 'px system-ui';
-    ctx.fillStyle = '#e5e7eb';
-    ctx.textBaseline = 'alphabetic';
-    const brandText = 'Bongstudio • Sản phẩm chọn lọc';
+    ctx.font = "600 " + Math.round(w*0.03) + "px system-ui";
+    ctx.fillStyle = "#e5e7eb";
+    ctx.textBaseline = "alphabetic";
+    const brandText = "Bongstudio • Sản phẩm chọn lọc";
     ctx.fillText(brandText, margin, stripY + stripH*0.55);
 
-    ctx.font = '500 ' + Math.round(w*0.022) + 'px system-ui';
-    ctx.fillStyle = '#9ca3af';
-    const tagline = shareTagline || ('Check giá & ưu đãi mới nhất trực tiếp trên ' + merchantLabel(data.merchant));
+    ctx.font = "500 " + Math.round(w*0.022) + "px system-ui";
+    ctx.fillStyle = "#9ca3af";
+    const tagline = shareTagline || ("Check giá & ưu đãi mới nhất trực tiếp trên " + merchantLabel(data.merchant));
     wrapText(ctx, tagline, margin, stripY + stripH*0.8, w - margin*2, w*0.03, 2);
 
     // SKU nhỏ góc phải
-    ctx.font = '500 ' + Math.round(w*0.02) + 'px ui-monospace,monospace';
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#6b7280';
-    ctx.fillText(data.sku || '', w - margin, stripY + stripH*0.35);
-    ctx.textAlign = 'left';
+    ctx.font = "500 " + Math.round(w*0.02) + "px ui-monospace,monospace";
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#6b7280";
+    ctx.fillText(data.sku || "", w - margin, stripY + stripH*0.35);
+    ctx.textAlign = "left";
 
-    statusEl.textContent = "Đã vẽ preview ảnh xong. Giờ có thể tải PNG.";
+    statusEl.textContent = "Đã vẽ preview poster xong. Có thể tải PNG/WebP.";
     statusEl.className = "badge-ok";
   }
 
-  function downloadShareImage(){
-    const canvas = $('shareCanvas');
-    const statusEl = $('shareStatus');
+  function downloadSharePng(){
+    const canvas = $("shareCanvas");
+    const statusEl = $("shareStatus");
     if(!canvas.width || !canvas.height){
-      statusEl.textContent = "Chưa có ảnh để tải. Bấm Vẽ lại ảnh trước.";
+      statusEl.textContent = "Chưa có poster để tải. Bấm Vẽ lại poster trước.";
       statusEl.className = "badge-err";
       return;
     }
     try{
-      const dataUrl = canvas.toDataURL('image/png');
-      const data = lastData || buildJson();
-      const namePart = (data && data.sku) ? data.sku : 'bongstudio';
-      const a = document.createElement('a');
+      const dataUrl = canvas.toDataURL("image/png");
+      const data = lastData || buildJson() || {};
+      const namePart = data.sku || "bongstudio";
+      const a = document.createElement("a");
       a.href = dataUrl;
-      a.download = namePart + '-share.png';
+      a.download = namePart + "-poster.png";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      statusEl.textContent = "Đã yêu cầu tải ảnh PNG (xem trong thư mục tải về).";
+      statusEl.textContent = "Đã yêu cầu tải poster PNG.";
       statusEl.className = "badge-ok";
     }catch(e){
-      statusEl.textContent = "Trình duyệt chặn tải ảnh (toDataURL). Thử trên browser khác.";
+      statusEl.textContent = "Trình duyệt chặn tải poster PNG (toDataURL).";
       statusEl.className = "badge-err";
     }
   }
 
-  $('btnSlug').addEventListener('click', function(){
-    const title = $('title').value;
+  function downloadShareWebp(){
+    const canvas = $("shareCanvas");
+    const statusEl = $("shareStatus");
+    if(!canvas.width || !canvas.height){
+      statusEl.textContent = "Chưa có poster để tải. Bấm Vẽ lại poster trước.";
+      statusEl.className = "badge-err";
+      return;
+    }
+    try{
+      const dataUrl = canvas.toDataURL("image/webp",0.92);
+      if(!dataUrl.startsWith("data:image/webp")){
+        statusEl.textContent = "Trình duyệt không hỗ trợ WebP từ canvas. Dùng PNG hoặc thử browser khác.";
+        statusEl.className = "badge-err";
+        return;
+      }
+      const data = lastData || buildJson() || {};
+      const namePart = data.sku || "bongstudio";
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = namePart + "-poster.webp";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      statusEl.textContent = "Đã yêu cầu tải poster WebP.";
+      statusEl.className = "badge-ok";
+    }catch(e){
+      statusEl.textContent = "Trình duyệt chặn tải poster WebP.";
+      statusEl.className = "badge-err";
+    }
+  }
+
+  function downloadThumbWebp(){
+    const statusEl = $("shareStatus");
+    if(!uploadedImg){
+      statusEl.textContent = "Chưa chọn ảnh sản phẩm từ máy để tạo WebP thumb.";
+      statusEl.className = "badge-err";
+      return;
+    }
+    try{
+      const size = 800;
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(0,0,size,size);
+
+      const iw = uploadedImg.width;
+      const ih = uploadedImg.height;
+      const scale = Math.max(size/iw, size/ih);
+      const dw = iw*scale;
+      const dh = ih*scale;
+      const dx = (size - dw)/2;
+      const dy = (size - dh)/2;
+      ctx.drawImage(uploadedImg, dx, dy, dw, dh);
+
+      const dataUrl = canvas.toDataURL("image/webp",0.92);
+      if(!dataUrl.startsWith("data:image/webp")){
+        statusEl.textContent = "Trình duyệt không hỗ trợ WebP thumb. Thử browser khác.";
+        statusEl.className = "badge-err";
+        return;
+      }
+      const data = lastData || buildJson() || {};
+      const namePart = data.sku || "bongstudio-thumb";
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = namePart + "-thumb.webp";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      statusEl.textContent = "Đã tải WebP thumb vuông (800×800) để up repo.";
+      statusEl.className = "badge-ok";
+    }catch(e){
+      statusEl.textContent = "Lỗi khi tạo WebP thumb.";
+      statusEl.className = "badge-err";
+    }
+  }
+
+  // --- Event handlers ---
+
+  $("btnSlug").addEventListener("click", function(){
+    const title = $("title").value;
     const s = slugify(title);
-    $('sku').value = s;
-    $('slugHint').textContent = s ? ("Slug đề xuất: " + s) : "Nhập tên sản phẩm trước để sinh slug.";
+    $("sku").value = s;
+    $("slugHint").textContent = s ? ("Slug đề xuất: " + s) : "Nhập tên sản phẩm trước để sinh slug.";
   });
 
-  $('btnGenerate').addEventListener('click', function(){
+  $("btnGenerate").addEventListener("click", function(){
     const data = buildJson();
     if(!data) return;
     lastData = data;
-    $('jsonOutput').value = JSON.stringify(data, null, 2);
+    $("jsonOutput").value = JSON.stringify(data, null, 2);
 
-    if(data.thumb){
-      $('previewImg').src = data.thumb;
-    }else{
-      $('previewImg').src = "";
+    if(!uploadedImg){
+      if(data.thumb){
+        $("previewImg").src = data.thumb;
+      }else{
+        $("previewImg").src = "";
+      }
     }
 
-    $('htmlOutput').value = buildHtmlCard(data);
+    $("htmlOutput").value = buildHtmlCard(data);
     updateShareFieldsFromData(data);
   });
 
-  $('btnClear').addEventListener('click', function(){
-    ['originUrl','title','priceNow','priceOld','sku','thumbUrl','shortDesc',
-     'shareTitle','shareTagline','shareBadge'].forEach(id => {
+  $("btnClear").addEventListener("click", function(){
+    [
+      "originUrl","title","priceNow","priceOld","sku",
+      "thumbUrl","shortDesc","shareTitle","shareTagline","shareBadge"
+    ].forEach(id => {
       if($(id)) $(id).value = "";
     });
+    const up = $("uploadFile");
+    if(up) up.value = "";
+    uploadedImg = null;
     lastData = null;
-    $('jsonOutput').value = "";
-    $('htmlOutput').value = "";
-    $('previewImg').src = "";
-    $('statusJson').textContent = "";
-    $('slugHint').textContent = "";
-    $('shareStatus').textContent = "";
-    const canvas = $('shareCanvas');
+    $("jsonOutput").value = "";
+    $("htmlOutput").value = "";
+    $("previewImg").src = "";
+    $("statusJson").textContent = "";
+    $("slugHint").textContent = "";
+    $("shareStatus").textContent = "";
+    const canvas = $("shareCanvas");
     canvas.width = 0;
     canvas.height = 0;
   });
@@ -819,6 +953,10 @@
       alert("Chưa có " + label + " để copy.");
       return;
     }
+    if(!navigator.clipboard || !navigator.clipboard.writeText){
+      alert("Trình duyệt không cho copy tự động, hãy chọn và copy thủ công.");
+      return;
+    }
     navigator.clipboard.writeText(value).then(()=>{
       alert("Đã copy " + label + " vào clipboard.");
     }).catch(()=>{
@@ -826,14 +964,14 @@
     });
   }
 
-  $('btnCopyJson').addEventListener('click', function(){
-    copyToClipboard($('jsonOutput'), "JSON");
+  $("btnCopyJson").addEventListener("click", function(){
+    copyToClipboard($("jsonOutput"), "JSON");
   });
-  $('btnCopyHtml').addEventListener('click', function(){
-    copyToClipboard($('htmlOutput'), "HTML");
+  $("btnCopyHtml").addEventListener("click", function(){
+    copyToClipboard($("htmlOutput"), "HTML");
   });
 
-  $('btnRenderShare').addEventListener('click', function(){
+  $("btnRenderShare").addEventListener("click", function(){
     if(!lastData){
       const data = buildJson();
       if(!data) return;
@@ -843,12 +981,48 @@
     renderShareImage();
   });
 
-  $('btnDownloadShare').addEventListener('click', function(){
-    downloadShareImage();
+  $("btnDownloadShare").addEventListener("click", function(){
+    downloadSharePng();
   });
 
+  $("btnDownloadShareWebp").addEventListener("click", function(){
+    downloadShareWebp();
+  });
+
+  $("btnDownloadThumbWebp").addEventListener("click", function(){
+    downloadThumbWebp();
+  });
+
+  // File ảnh local
+  const uploadInput = $("uploadFile");
+  if(uploadInput){
+    uploadInput.addEventListener("change", function(e){
+      const file = e.target.files && e.target.files[0];
+      if(!file){
+        uploadedImg = null;
+        return;
+      }
+      if(!file.type || !file.type.startsWith("image/")){
+        alert("Hãy chọn đúng file ảnh.");
+        e.target.value = "";
+        uploadedImg = null;
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        const img = new Image();
+        img.onload = function(){
+          uploadedImg = img;
+          $("previewImg").src = ev.target.result;
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   // Khởi tạo preview rỗng
-  $('previewImg').src = "";
+  $("previewImg").src = "";
 })();
 </script>
 </body>
