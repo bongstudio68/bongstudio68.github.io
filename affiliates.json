@@ -1,0 +1,56 @@
+[
+  {
+    "sku": "ao-khoac-nu-tt001",
+    "name": "Áo khoác nữ thể thao nhẹ",
+    "image": "/assets/img/products/ao-khoac-nu-tt001.webp",
+    "price_vnd": 259000,
+    "origin_url": "https://shopee.vn/product/1556178256/40011498662",
+    "merchant": "shopee",
+    "desc": "Áo khoác nữ thể thao nhẹ"
+  },
+  {
+    "sku": "son-li-do-mlbb",
+    "name": "Son lì đỏ MLBB",
+    "image": "/assets/img/products/son-li-do-mlbb.webp",
+    "price_vnd": 129000,
+    "origin_url": "https://shopee.vn/product/123456/987654",
+    "merchant": "shopee",
+    "desc": "Son lì đỏ MLBB"
+  },
+  {
+    "sku": "dam-midi-basic",
+    "name": "Đầm midi basic",
+    "image": "/assets/img/products/dam-midi-basic.webp",
+    "price_vnd": 189000,
+    "origin_url": "https://www.lazada.vn/products/i123456.html",
+    "merchant": "lazada",
+    "desc": "Đầm midi basic"
+  },
+  {
+    "sku": "kem-duong-ban-dem",
+    "name": "Kem dưỡng ban đêm 50ml",
+    "image": "/assets/img/products/kem-duong-ban-dem.webp",
+    "price_vnd": 279000,
+    "origin_url": "https://www.lazada.vn/products/i987654.html",
+    "merchant": "lazada",
+    "desc": "Kem dưỡng ban đêm 50ml"
+  },
+  {
+    "sku": "binh-sua-pps-240ml",
+    "name": "Bình sữa PPSU 240ml",
+    "image": "/assets/img/products/binh-sua-pps-240ml.webp",
+    "price_vnd": 179000,
+    "origin_url": "https://www.tiktok.com/product/12345",
+    "merchant": "tiktok",
+    "desc": "Bình sữa PPSU 240ml"
+  },
+  {
+    "sku": "ta-quan-soft",
+    "name": "Tã quần Soft size M",
+    "image": "/assets/img/products/ta-quan-soft.webp",
+    "price_vnd": 299000,
+    "origin_url": "https://shopee.vn/product/123/456",
+    "merchant": "shopee",
+    "desc": "Tã quần Soft size M"
+  }
+]
