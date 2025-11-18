@@ -463,8 +463,8 @@ function initImporter() {
     .toLowerCase().replace(/[^a-z0-9]+/g,'-')
     .replace(/^-+|-+$/g,'');
 
-  // Use a new local storage key for the 4.4 release to avoid conflicts with older settings
-  const LS_KEY = `MXD_IMPORTER_SETTINGS_V440PRO4_${SITE_ID.toUpperCase()}`;
+  // Retain the same local storage key as previous versions so users don't lose settings
+  const LS_KEY = `MXD_IMPORTER_SETTINGS_V439PRO4_${SITE_ID.toUpperCase()}`;
 
   /* Default template AFF cho Bongstudio (cậu đưa) */
   const DEFAULT_TPL = {
@@ -1449,6 +1449,9 @@ function initImporter() {
           content: jsonText,   // GỬI DẠNG CHUỖI THUẦN
           note: `feat(product): upsert ${obj.sku} via bongstudio importer`
         };
+
+        // Log the target path for debugging so users can verify where the JSON is being uploaded
+        log(`[doPublish] committing to ${payload.path}`);
         const r = await fetch(b + "/git/json", {
           method: "POST",
           mode: "cors",
