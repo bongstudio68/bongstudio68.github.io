@@ -1,4 +1,3 @@
-<!-- NEW FILE: /category-thoi-trang-nu.html -->
 <!doctype html>
 <html lang="vi">
 <head>
@@ -32,7 +31,7 @@
   <!-- CSS chung -->
   <link rel="stylesheet" href="/assets/css/styles.css"/>
 
-  <!-- STYLE nhẹ, đồng bộ với index & store -->
+  <!-- STYLE -->
   <style>
     .container {
       max-width: 1120px;
@@ -79,9 +78,6 @@
       padding: .35rem .6rem;
       border-radius: 999px;
     }
-    .main-nav a[data-nav="store"] {
-      /* danh mục vẫn thuộc khu “Cửa hàng” */
-    }
 
     .cat-hero {
       padding: 2rem 0 1.25rem;
@@ -120,6 +116,7 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: .9rem;
       padding-bottom: 2.5rem;
+      min-height: 3rem;
     }
     .product-card {
       border-radius: 1rem;
@@ -153,7 +150,7 @@
     .product-name {
       font-size: .95rem;
       line-height: 1.4;
-      max-height: 2.8em; /* ~2 dòng */
+      max-height: 2.8em;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -268,70 +265,16 @@
       </div>
     </section>
 
-    <!-- LƯỚI SẢN PHẨM: MẪU THỜI TRANG NỮ -->
+    <!-- LƯỚI SẢN PHẨM: RENDER TỪ JSON -->
     <section>
       <div class="container">
         <div class="home-section-head">
-          <h2>Sản phẩm thời trang nữ (bản test)</h2>
-          <p>Sau này kho sản phẩm & tool sẽ thay toàn bộ khối này bằng dữ liệu thật.</p>
+          <h2>Sản phẩm thời trang nữ</h2>
+          <p>Dữ liệu đang lấy từ kho JSON /assets/data/bongstudio-products.json (category: thoi-trang-nu).</p>
         </div>
 
-        <div class="product-grid">
-          <!-- CARD 1: Pijama (đồ mặc nhà) -->
-          <article class="product-card"
-                   data-sku="BS-PJ-001"
-                   data-merchant="shopee"
-                   data-origin-url="https://shopee.vn/Pijama-Xinh-Tay-D%C3%A0i-Qu%E1%BA%A7n-D%C3%A0i-%C4%90%E1%BB%93-Ng%E1%BB%A7-Gi%C3%A1-R%E1%BA%BB-%C4%90%E1%BB%93-B%E1%BB%99-Ng%E1%BB%A7-N%E1%BB%AF-Pyjama-%C4%90%E1%BB%93-B%E1%BB%99-M%E1%BA%B7c-Nh%C3%A0-Ch%C3%A2%CC%81t-Ma%CC%81t-Kh%C3%B4ng-Nh%C4%83n-Ha%CC%80ng-Si%C3%AAu-%C4%90e%CC%A3p-i.1121158422.20386415824">
-            <a class="product-thumb" href="#pj" aria-label="Pijama xinh tay dài quần dài">
-              <img src="/assets/img/products/pijama-xinh-tay-dai-quan-dai.webp"
-                   loading="lazy"
-                   alt="Pijama xinh tay dài quần dài, chất mát, không nhăn (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Pijama Xinh Tay Dài Quần Dài – Đồ mặc nhà mát, dễ giặt, ít nhăn
-              </h3>
-              <div class="product-merchant">Nguồn: Shopee</div>
-              <div class="product-price">
-                <span class="product-price-current">57.000₫</span>
-                <span class="product-price-old">89.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Mua pijama trên Shopee
-                </button>
-                <a class="btn-secondary" href="#pj">Chi tiết</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 2: Áo sơ mi trắng Rymola -->
-          <article class="product-card"
-                   data-sku="BS-SM-001"
-                   data-merchant="shopee"
-                   data-origin-url="https://shopee.vn/%C3%81o-S%C6%A1-Mi-Tr%E1%BA%AFng-N%E1%BB%AF-Rymola-Kh%C3%B4ng-Nh%C4%83n-Gi%E1%BA%A5u-N%E1%BB%AAt-Tay-D%C3%A0i-C%C3%B3-Bigsize-S%C6%A1-Mi-Tr%E1%BA%AFng-C%C3%B4ng-S%E1%BB%9F-Ch%E1%BA%A5t-V%E1%BA%A3i-Cotton-Form-Su%C3%B4ng-i.8496476.6342798120">
-            <a class="product-thumb" href="#sm" aria-label="Áo sơ mi trắng nữ Rymola">
-              <img src="/assets/img/products/ao-so-mi-trang-nu-rymola.webp"
-                   loading="lazy"
-                   alt="Áo sơ mi trắng nữ Rymola, không nhăn, giấu nút (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Áo Sơ Mi Trắng Nữ Rymola – Không nhăn, giấu nút, form suông dễ phối
-              </h3>
-              <div class="product-merchant">Nguồn: Shopee</div>
-              <div class="product-price">
-                <span class="product-price-current">199.000₫</span>
-                <span class="product-price-old">250.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Mua áo trên Shopee
-                </button>
-                <a class="btn-secondary" href="#sm">Chi tiết</a>
-              </div>
-            </div>
-          </article>
+        <div class="product-grid" data-category="thoi-trang-nu">
+          Đang tải sản phẩm...
         </div>
       </div>
     </section>
@@ -355,58 +298,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ISCLIX: GIỐNG INDEX & STORE -->
-  <script>
-    ;(function(){
-      const AFF_BASE = {
-        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
-        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
-        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655"
-      };
-
-      const UTM_BASE = "utm_source=" + encodeURIComponent(location.hostname) + "&utm_medium=affiliate";
-
-      function makeIsclixUrl(base, originUrl, sku, merchant){
-        if(!base || !originUrl) return originUrl;
-        const head = base + (base.includes("?") ? "&" : "?") + "url=" + encodeURIComponent(originUrl);
-        const params = [
-          UTM_BASE,
-          "utm_campaign=" + encodeURIComponent(merchant || ""),
-          "sub1=" + encodeURIComponent(sku || ""),
-          "sub2=" + encodeURIComponent(merchant || "")
-        ];
-        return head + "&" + params.join("&");
-      }
-
-      function wireCatCards(){
-        const cards = document.querySelectorAll(".product-card[data-origin-url][data-merchant]");
-        if(!cards.length) return;
-
-        cards.forEach(card => {
-          const sku = card.getAttribute("data-sku") || "";
-          const merchant = (card.getAttribute("data-merchant") || "").toLowerCase();
-          const origin = card.getAttribute("data-origin-url");
-          const base = AFF_BASE[merchant];
-          const btn = card.querySelector(".js-mxd-buy");
-          if(!btn) return;
-
-          const finalUrl = makeIsclixUrl(base, origin, sku, merchant);
-
-          btn.addEventListener("click", function(ev){
-            ev.preventDefault();
-            const urlToOpen = finalUrl || origin;
-            if(!urlToOpen) return;
-            window.open(urlToOpen, "_blank");
-          });
-        });
-      }
-
-      if(document.readyState === "loading"){
-        document.addEventListener("DOMContentLoaded", wireCatCards);
-      } else {
-        wireCatCards();
-      }
-    })();
-  </script>
+  <!-- TOOL RENDER + ISCLIX CHUNG -->
+  <script defer src="/assets/js/bongstudio-products.js"></script>
 </body>
 </html>
