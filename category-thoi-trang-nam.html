@@ -1,4 +1,3 @@
-<!-- NEW FILE: /category-thoi-trang-nam.html -->
 <!doctype html>
 <html lang="vi">
 <head>
@@ -32,7 +31,7 @@
   <!-- CSS chung -->
   <link rel="stylesheet" href="/assets/css/styles.css"/>
 
-  <!-- STYLE nhẹ, đồng bộ với index/store/category khác -->
+  <!-- STYLE -->
   <style>
     .container {
       max-width: 1120px;
@@ -79,9 +78,6 @@
       padding: .35rem .6rem;
       border-radius: 999px;
     }
-    .main-nav a[data-nav="store"] {
-      /* danh mục vẫn cùng cụm “Cửa hàng” */
-    }
 
     .cat-hero {
       padding: 2rem 0 1.25rem;
@@ -120,6 +116,7 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: .9rem;
       padding-bottom: 2.5rem;
+      min-height: 3rem;
     }
     .product-card {
       border-radius: 1rem;
@@ -153,7 +150,7 @@
     .product-name {
       font-size: .95rem;
       line-height: 1.4;
-      max-height: 2.8em; /* ~2 dòng */
+      max-height: 2.8em;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -268,70 +265,16 @@
       </div>
     </section>
 
-    <!-- LƯỚI SẢN PHẨM: MẪU THỜI TRANG NAM -->
+    <!-- LƯỚI SẢN PHẨM: RENDER TỪ JSON -->
     <section>
       <div class="container">
         <div class="home-section-head">
-          <h2>Sản phẩm thời trang nam (bản test)</h2>
-          <p>Sau này kho sản phẩm & tool sẽ thay toàn bộ khối này bằng dữ liệu thật.</p>
+          <h2>Sản phẩm thời trang nam</h2>
+          <p>Dữ liệu đang lấy từ kho JSON /assets/data/bongstudio-products.json (category: thoi-trang-nam).</p>
         </div>
 
-        <div class="product-grid">
-          <!-- CARD 1: Áo sơ mi trắng nam basic (Shopee placeholder) -->
-          <article class="product-card"
-                   data-sku="BS-NAM-SM-001"
-                   data-merchant="shopee"
-                   data-origin-url="https://shopee.vn/">
-            <a class="product-thumb" href="#sm-nam" aria-label="Áo sơ mi trắng nam basic">
-              <img src="/assets/img/products/ao-so-mi-nam-trang-basic.webp"
-                   loading="lazy"
-                   alt="Áo sơ mi trắng nam basic, dễ phối (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Áo sơ mi trắng nam basic – Form dễ mặc, hợp đi làm và đi chơi
-              </h3>
-              <div class="product-merchant">Nguồn: Shopee (placeholder, sau thay link thật)</div>
-              <div class="product-price">
-                <span class="product-price-current">189.000₫</span>
-                <span class="product-price-old">239.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Mua áo trên Shopee
-                </button>
-                <a class="btn-secondary" href="#sm-nam">Chi tiết</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 2: Quần tây nam basic (Lazada placeholder) -->
-          <article class="product-card"
-                   data-sku="BS-NAM-QT-001"
-                   data-merchant="lazada"
-                   data-origin-url="https://www.lazada.vn/">
-            <a class="product-thumb" href="#quan-tay-nam" aria-label="Quần tây nam basic">
-              <img src="/assets/img/products/quan-tay-nam-basic.webp"
-                   loading="lazy"
-                   alt="Quần tây nam basic, dễ phối với sơ mi (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Quần tây nam basic – Dễ phối với sơ mi, phù hợp đi làm
-              </h3>
-              <div class="product-merchant">Nguồn: Lazada (placeholder, sau thay link thật)</div>
-              <div class="product-price">
-                <span class="product-price-current">249.000₫</span>
-                <span class="product-price-old">320.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Mua quần trên Lazada
-                </button>
-                <a class="btn-secondary" href="#quan-tay-nam">Chi tiết</a>
-              </div>
-            </div>
-          </article>
+        <div class="product-grid" data-category="thoi-trang-nam">
+          Đang tải sản phẩm...
         </div>
       </div>
     </section>
@@ -355,58 +298,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ISCLIX: CHUẨN CHUNG TOÀN SITE -->
-  <script>
-    ;(function(){
-      const AFF_BASE = {
-        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
-        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
-        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655"
-      };
-
-      const UTM_BASE = "utm_source=" + encodeURIComponent(location.hostname) + "&utm_medium=affiliate";
-
-      function makeIsclixUrl(base, originUrl, sku, merchant){
-        if(!base || !originUrl) return originUrl;
-        const head = base + (base.includes("?") ? "&" : "?") + "url=" + encodeURIComponent(originUrl);
-        const params = [
-          UTM_BASE,
-          "utm_campaign=" + encodeURIComponent(merchant || ""),
-          "sub1=" + encodeURIComponent(sku || ""),
-          "sub2=" + encodeURIComponent(merchant || "")
-        ];
-        return head + "&" + params.join("&");
-      }
-
-      function wireCatCards(){
-        const cards = document.querySelectorAll(".product-card[data-origin-url][data-merchant]");
-        if(!cards.length) return;
-
-        cards.forEach(card => {
-          const sku = card.getAttribute("data-sku") || "";
-          const merchant = (card.getAttribute("data-merchant") || "").toLowerCase();
-          const origin = card.getAttribute("data-origin-url");
-          const base = AFF_BASE[merchant];
-          const btn = card.querySelector(".js-mxd-buy");
-          if(!btn) return;
-
-          const finalUrl = makeIsclixUrl(base, origin, sku, merchant);
-
-          btn.addEventListener("click", function(ev){
-            ev.preventDefault();
-            const urlToOpen = finalUrl || origin;
-            if(!urlToOpen) return;
-            window.open(urlToOpen, "_blank");
-          });
-        });
-      }
-
-      if(document.readyState === "loading"){
-        document.addEventListener("DOMContentLoaded", wireCatCards);
-      } else {
-        wireCatCards();
-      }
-    })();
-  </script>
+  <!-- TOOL RENDER + ISCLIX CHUNG -->
+  <script defer src="/assets/js/bongstudio-products.js"></script>
 </body>
 </html>
