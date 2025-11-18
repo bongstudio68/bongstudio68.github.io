@@ -1395,34 +1395,36 @@ function initImporter() {
     }
     return list;
   }
-
-  $("#btnPublish").onclick=()=>doPublish(false);
-  $("#btnPublishFeatured").onclick=()=>doPublish(true);
+  $("#btnPublish").onclick = () => doPublish(false);
+  $("#btnPublishFeatured").onclick = () => doPublish(true);
 
   async function doPublish(forceFeatured){
-    const obj=buildJson();
-    if(forceFeatured){
-      obj.featured=true;
-      $("#featured").checked=true;
-      $("#jsonOut").value=JSON.stringify(obj,null,2);
+    const obj = buildJson();
+
+    if (forceFeatured) {
+      obj.featured = true;
+      $("#featured").checked = true;
+      $("#jsonOut").value = JSON.stringify(obj, null, 2);
     }
-    if(!obj.sku){
+
+    if (!obj.sku) {
       toast("Thiếu SKU.","err");
       return;
     }
-    if(!obj.origin_url){
+    if (!obj.origin_url) {
       toast("Thiếu origin.","warn");
       return;
     }
 
-    if(!$("#deeplink").value.trim()){
-      const maybe=activeTplFor($("#merchant").value);
-      if(maybe){
+    // đảm bảo có deeplink, ưu tiên auto từ template
+    if (!$("#deeplink").value.trim()) {
+      const maybe = activeTplFor($("#merchant").value);
+      if (maybe) {
         makeDeeplink();
-        const dl=$("#deeplink").value.trim();
-        if(dl){
-          obj.deeplink=dl;
-          $("#jsonOut").value=JSON.stringify(obj,null,2);
+        const dl = $("#deeplink").value.trim();
+        if (dl) {
+          obj.deeplink = dl;
+          $("#jsonOut").value = JSON.stringify(obj, null, 2);
         }
       } else {
         showWarn(true);
@@ -1431,40 +1433,51 @@ function initImporter() {
       }
     }
 
+    // luôn merge với kho JSON hiện tại
     const listOld = await loadProductsJson();
-    const list = upsertProduct(listOld, obj);
-    const b=baseUrl();
+    const list    = upsertProduct(listOld, obj);
+    const jsonText = JSON.stringify(list, null, 2);
+    const b = baseUrl();
 
-    if(b){
-      try{
+    // Nếu có Worker → commit thẳng bongstudio-products.json
+    if (b) {
+      try {
         const payload = {
           path: PRODUCTS_JSON_PATH,
-          content: list,
+          content: jsonText,   // GỬI DẠNG CHUỖI THUẦN
           note: `feat(product): upsert ${obj.sku} via bongstudio importer`
         };
-        const r=await fetch(b+"/git/json",{
-          method:"POST",mode:"cors",cache:"no-cache",
-          headers:hdr('POST',true),
-          body:JSON.stringify(payload)
+        const r = await fetch(b + "/git/json", {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          headers: hdr("POST", true),
+          body: JSON.stringify(payload)
         });
-        const text=await r.text().catch(()=>'' );
-        log(`[git/json ${PRODUCTS_JSON_PATH}] ${r.status} ${r.ok?'OK':'FAIL'} — ${text.slice(0,200)}`);
-        if(!r.ok) throw new Error('HTTP '+r.status);
-        toast("Publish OK → đã lưu vào kho bongstudio-products.json"+(obj.featured?" + gắn nổi bật":"."),"ok");
-        window.scrollTo({top:0,behavior:'smooth'});
+        const text = await r.text().catch(() => "");
+        log(`[git/json ${PRODUCTS_JSON_PATH}] ${r.status} ${r.ok ? "OK" : "FAIL"} — ${text.slice(0,200)}`);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+
+        toast(
+          "Publish OK → đã lưu vào kho bongstudio-products.json" +
+          (obj.featured ? " + gắn nổi bật" : "."),
+          "ok"
+        );
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
-      }catch(e){
-        toast("Publish lỗi (sẽ tải kho JSON để commit tay): "+e.message,"err");
+      } catch (e) {
+        toast("Publish lỗi (sẽ tải kho JSON để commit tay): " + e.message, "err");
       }
     }
 
-    const blob=new Blob([JSON.stringify(list,null,2)],{type:"application/json"});
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download="bongstudio-products.json";
+    // fallback: tải về toàn bộ kho để commit tay
+    const blob = new Blob([jsonText], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "bongstudio-products.json";
     a.click();
   }
-
+  
   /* Verify JSON trên repo */
   $("#btnVerify").onclick=async()=>{
     const rawSku=$("#sku").value.trim();
