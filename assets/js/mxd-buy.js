@@ -35,34 +35,54 @@
     return parent && parent.dataset ? parent.dataset[key] || "" : "";
   }
 
+  function getOrigin(btn) {
+    // Ưu tiên data-origin / data-origin-url
+    const fromData = findData(btn, "origin") || findData(btn, "originUrl");
+    if (fromData) return fromData;
+
+    // Fallback: lấy luôn href nếu là link tuyệt đối http/https
+    const href = btn.getAttribute("href") || "";
+    if (/^https?:\/\//i.test(href)) return href;
+
+    return "";
+  }
+
+  function getMerchant(btn) {
+    const m =
+      (findData(btn, "merchant") || "").toLowerCase().trim();
+    if (m) return m;
+    return "shopee";
+  }
+
+  function getSku(btn) {
+    return (
+      findData(btn, "sku") ||
+      findData(btn, "id") ||
+      btn.getAttribute("data-sku") ||
+      ""
+    );
+  }
+
   function handleClick(e) {
-    // Bắt các loại nút mua có thể có
+    // Bắt TẤT CẢ các nút trong khối sản phẩm
     const btn = e.target.closest(
-      ".js-mxd-buy, .js-buy-btn, .btn-buy, [data-role='buy-button']"
+      "#productGrid a, .js-mxd-buy, .js-buy-btn, .btn-buy, [data-role='buy-button']"
     );
     if (!btn) return;
 
+    const origin = getOrigin(btn);
+    if (!origin) {
+      // Không có link gốc thì thôi, cho nó đi theo href mặc định
+      return;
+    }
+
     e.preventDefault();
 
-    const origin =
-      findData(btn, "origin") || findData(btn, "originUrl");
-    const merchant = (findData(btn, "merchant") || "shopee").toLowerCase();
-    const sku = findData(btn, "sku") || findData(btn, "id") || "";
-
-    if (!origin) {
-      console.warn("[mxd-buy] Không tìm thấy data-origin trên nút mua", btn);
-      return;
-    }
+    const merchant = getMerchant(btn);
+    const sku = getSku(btn);
 
     const finalUrl = makeIsclixUrl(origin, merchant, sku);
-    if (!finalUrl) {
-      console.warn("[mxd-buy] Không tạo được URL mua", {
-        origin,
-        merchant,
-        sku
-      });
-      return;
-    }
+    if (!finalUrl) return;
 
     window.open(finalUrl, "_blank", "noopener,noreferrer");
   }
