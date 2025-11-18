@@ -1,77 +1,110 @@
-// REPLACE WHOLE FILE: /assets/js/mxd-buy.js
-;(() => {
-  // Base AccessTrade cho Bongstudio
-  const AFF_BASE = {
-    shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
-    lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
-    tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655"
-  };
+<!-- REPLACE WHOLE FILE: /index.html -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Bongstudio • Lựa chọn tin cậy</title>
+<meta name="description" content="Trang giới thiệu & cửa hàng affiliate Bongstudio — tổng hợp sản phẩm chọn tại Bongstudio.</p>
+</div>
 
-  const UTM_BASE =
-    "utm_source=" +
-    encodeURIComponent(location.hostname) +
-    "&utm_medium=affiliate";
+<div class="container">
+  <!-- Lối tắt nhanh -->
+  <div class="quick-nav">
+    <a href="/store.html">Tất cả danh mục</a>
+    <a href="/cat-thoi-trang-nu.html">Thời trang nữ</a>
+    <a href="/cat-thoi-trang-nam.html">Thời trang nam</a>
+    <a href="/cat-quan-ao-em-be.html">Mẹ & Bé</a>
+  </div>
 
-  function makeIsclixUrl(originUrl, merchant, sku) {
-    if (!originUrl) return "";
-    merchant = (merchant || "shopee").toLowerCase();
+  <hr class="sep"/>
 
-    const base = AFF_BASE[merchant] || "";
-    // Nếu chưa cấu hình base cho merchant thì cho đi thẳng link gốc
-    if (!base) return originUrl;
+  <!-- Lưới 7 danh mục chính (giống store.html) -->
+  <div class="grid cards" style="margin-top:16px">
+    <!-- Gia dụng, decor nhà cửa -->
+    <a class="category-tile" href="/cat-gia-dung-decor-nha-cua.html">
+      <img src="/assets/img/categories/gia-dung-decor-nha-cua.webp"
+           alt="Gia dụng, decor nhà cửa" width="800" height="480"/>
+      <span>Gia dụng, decor nhà cửa</span>
+    </a>
 
-    const sep = base.includes("?") ? "&" : "?";
-    const head = base + sep + "url=" + encodeURIComponent(originUrl);
-    const params = [
-      UTM_BASE,
-      "utm_campaign=" + encodeURIComponent(merchant || ""),
-      "sub1=" + encodeURIComponent(sku || ""),
-      "sub2=" + encodeURIComponent(merchant || "")
-    ];
-    return head + "&" + params.join("&");
-  }
+    <!-- Thời trang nữ -->
+    <a class="category-tile" href="/cat-thoi-trang-nu.html">
+      <img src="/assets/img/categories/thoi-trang-nu.webp"
+           alt="Thời trang nữ" width="800" height="480"/>
+      <span>Thời trang nữ</span>
+    </a>
 
-  function getDataset(el, key) {
-    if (!el) return "";
-    if (el.dataset && el.dataset[key]) return el.dataset[key];
-    const parent = el.closest("[data-" + key + "]");
-    if (parent && parent.dataset && parent.dataset[key]) return parent.dataset[key];
-    return "";
-  }
+    <!-- Thời trang nam -->
+    <a class="category-tile" href="/cat-thoi-trang-nam.html">
+      <img src="/assets/img/categories/thoi-trang-nam.webp"
+           alt="Thời trang nam" width="800" height="480"/>
+      <span>Thời trang nam</span>
+    </a>
 
-  function getOrigin(btn) {
-    const fromData =
-      getDataset(btn, "origin") ||
-      getDataset(btn, "originUrl");
-    if (fromData) return fromData;
+    <!-- Quần áo em bé -->
+    <a class="category-tile" href="/cat-quan-ao-em-be.html">
+      <img src="/assets/img/categories/quan-ao-em-be.webp"
+           alt="Quần áo em bé" width="800" height="480"/>
+      <span>Quần áo em bé</span>
+    </a>
 
-    const href = btn.getAttribute("href") || "";
-    if (/^https?:\/\//i.test(href)) return href;
+    <!-- Sức khỏe, thực phẩm chức năng -->
+    <a class="category-tile" href="/cat-suc-khoe-thuc-pham-chuc-nang.html">
+      <img src="/assets/img/categories/suc-khoe-thuc-pham-chuc-nang.webp"
+           alt="Sức khỏe, thực phẩm chức năng" width="800" height="480"/>
+      <span>Sức khoẻ, thực phẩm chức năng</span>
+    </a>
 
-    return "";
-  }
+    <!-- Sách -->
+    <a class="category-tile" href="/cat-sach.html">
+      <img src="/assets/img/categories/sach.webp"
+           alt="Sách" width="800" height="480"/>
+      <span>Sách</span>
+    </a>
 
-  function clickHandler(e) {
-    const btn = e.target.closest(
-      ".btn-buy, .js-mxd-buy, .js-buy-btn, [data-role='buy-button']"
-    );
-    if (!btn) return;
+    <!-- Đồ ăn -->
+    <a class="category-tile" href="/cat-do-an.html">
+      <img src="/assets/img/categories/do-an.webp"
+           alt="Đồ ăn" width="800" height="480"/>
+      <span>Đồ ăn</span>
+    </a>
+  </div>
 
-    const origin = getOrigin(btn);
-    if (!origin) {
-      // Không biết link gốc → cho đi theo href mặc định
-      return;
-    }
+  <!-- Khối sản phẩm nổi bật từ tool Bongstudio -->
+  <section class="product-section home-featured">
+    <div class="home-section-header">
+      <h2>Sản phẩm nổi bật</h2>
+      <a href="/store.html" class="link-more">Xem tất cả</a>
+    </div>
+    <div id="homeFeaturedStatus" class="product-status"></div>
+    <div id="homeFeaturedGrid" class="grid cards"></div>
+  </section>
+</div>
 
-    const merchant = (getDataset(btn, "merchant") || "shopee").toLowerCase();
-    const sku = getDataset(btn, "sku") || getDataset(btn, "id") || "";
+<div class="container footer small">
+  © 2025 — Bongstudio68.github.io • GitHub Pages
+</div>
 
-    const finalUrl = makeIsclixUrl(origin, merchant, sku);
-    if (!finalUrl) return;
+<div class="fabs">
+  <a href="tel:0978557797">
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.5 21.2 2.8 14.5 2.8 6.2 2.8 5.5 3.3 5 4 5h3.7c.7 0 1.2.5 1.2 1.2 0 1 0 2-.5 3-.1.4 0 .9.3 1.2l-2.1 2.4z'/></svg>'/>
+    <span>Gọi 0978557797</span>
+  </a>
+  <a href="https://zalo.me/0978557797" target="_blank" rel="noopener">
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><circle cx='12' cy='12' r='10'/></svg>'/>
+    <span>Zalo</span>
+  </a>
+  <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener">
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M10 9h2V7c0-1.1.9-2 2-2h2v3h-2v2h2l-.5 3h-1.5v6h-3v-6H10V9z'/></svg>'/>
+    <span>Facebook</span>
+  </a>
+</div>
 
-    e.preventDefault();
-    window.open(finalUrl, "_blank", "noopener,noreferrer");
-  }
-
-  document.addEventListener("click", clickHandler, false);
-})();
+<script defer src="/assets/js/index-bongstudio.js"></script>
+<script defer src="/assets/js/mxd-buy.js"></script>
+<script>
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js'); }
+</script>
+</body>
+</html>
