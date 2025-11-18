@@ -2,10 +2,268 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Bongstudio • Lựa chọn tin cậy</title>
-<meta name="description" content="Trang giới thiệu & cửa hàng affiliate Bongstudio — tổng hợp sản phẩm chọn tại Bongstudio.</p>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bongstudio • Cửa hàng affiliate</title>
+
+  <meta name="description" content="Trang giới thiệu & cửa hàng affiliate Bongstudio — tổng hợp sản phẩm chọn lọc: Gia dụng, Thời trang, Mẹ & Bé, Sức khỏe, Sách, Đồ ăn từ Shopee, Lazada, TikTok."/>
+  <link rel="canonical" href="https://bongstudio68.github.io/"/>
+
+  <meta property="og:title" content="Bongstudio • Cửa hàng affiliate"/>
+  <meta property="og:description" content="Trang giới thiệu & cửa hàng affiliate Bongstudio — tổng hợp sản phẩm chọn lọc: Gia dụng, Thời trang, Mẹ & Bé, Sức khỏe, Sách, Đồ ăn từ Shopee, Lazada, TikTok."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://bongstudio68.github.io/"/>
+  <meta property="og:image" content="https://bongstudio68.github.io/assets/img/categories/thoi-trang.webp"/>
+
+  <meta name="robots" content="index,follow"/>
+  <meta name="google-site-verification" content=""/>
+
+  <!-- GA4 + affiliate -->
+  <script defer src="/assets/js/analytics.js"></script>
+  <script defer src="/assets/js/mxd-affiliate.js"></script>
+
+  <link rel="stylesheet" href="/assets/site.css"/>
+
+  <style>
+    :root{color-scheme:dark light;}
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#050816;
+      color:#e5e7eb;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px;
+    }
+
+    /* HEADER */
+    .top{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(5,8,22,.96);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid #1f2937;
+    }
+    .top .inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      font-weight:700;
+      font-size:18px;
+    }
+    .top nav a{
+      font-size:14px;
+      margin-left:16px;
+      opacity:.9;
+    }
+    .top nav a[aria-current="page"]{
+      font-weight:600;
+      opacity:1;
+      text-decoration:underline;
+      text-underline-offset:4px;
+    }
+
+    /* HERO */
+    .hero{
+      padding:32px 16px 8px;
+    }
+    .hero h1{
+      font-size:28px;
+      margin:0 0 8px;
+    }
+    .hero p{
+      margin:0;
+      font-size:14px;
+      color:#9ca3af;
+      max-width:520px;
+    }
+
+    /* QUICK NAV */
+    .quick-nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .quick-nav a{
+      font-size:13px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#111827;
+      border:1px solid #1f2937;
+      white-space:nowrap;
+    }
+
+    .sep{
+      border:0;
+      border-top:1px solid #1f2937;
+      margin:8px 0 16px;
+    }
+
+    /* GRID DANH MỤC */
+    .grid.cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+      gap:16px;
+      margin-bottom:24px;
+    }
+    .category-tile{
+      border-radius:16px;
+      overflow:hidden;
+      position:relative;
+      background:#111827;
+      border:1px solid #1f2937;
+      display:block;
+    }
+    .category-tile img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      display:block;
+    }
+    .category-tile span{
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      font-size:13px;
+      font-weight:600;
+      background:rgba(0,0,0,.6);
+      padding:4px 8px;
+      border-radius:999px;
+    }
+
+    /* KHỐI SẢN PHẨM NỔI BẬT */
+    .product-section{margin-top:32px;}
+    .home-section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .home-section-header h2{
+      font-size:20px;
+      margin:0;
+    }
+    .link-more{
+      font-size:13px;
+      color:#60a5fa;
+    }
+    .link-more:hover{text-decoration:underline;}
+    .product-status{
+      font-size:13px;
+      color:#9ca3af;
+      margin:4px 0 10px;
+    }
+
+    .product-card{
+      background:#020617;
+      border:1px solid #1f2937;
+      border-radius:16px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .product-card a.thumb{display:block;line-height:0;}
+    .product-card img{
+      width:100%;height:220px;object-fit:cover;display:block;
+    }
+    .product-card-body{
+      padding:12px 14px 14px;
+      display:flex;flex-direction:column;gap:4px;
+    }
+    .product-card-title{
+      font-size:15px;
+      font-weight:600;
+      line-height:1.5;
+      margin:0 0 6px;
+      color:#e5e7eb;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .product-card-meta{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:13px;margin-top:2px;
+    }
+    .product-price{font-weight:700;color:#f97316;}
+    .product-brand{color:#9ca3af;font-size:12px;}
+    .product-actions{
+      margin-top:8px;display:flex;justify-content:flex-end;
+    }
+    .btn-buy{
+      display:inline-block;padding:8px 12px;
+      border-radius:999px;font-size:13px;
+      text-decoration:none;background:#2563eb;color:#fff;
+    }
+    .btn-buy:hover{filter:brightness(0.97);}
+
+    /* FOOTER */
+    .footer{
+      border-top:1px solid #1f2937;
+      margin-top:24px;
+      padding:16px;
+      font-size:12px;
+      color:#9ca3af;
+      text-align:left;
+    }
+
+    /* FABS liên hệ dùng style cũ trong site.css; ở đây chỉ phòng hờ */
+    .fabs{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      z-index:30;
+    }
+    .fabs a{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#f9fafb;
+      color:#111827;
+      font-size:12px;
+      text-decoration:none;
+    }
+    .fabs img.icon{
+      width:20px;height:20px;
+    }
+
+    @media (max-width:768px){
+      .top .inner{padding:8px 4px;}
+      .product-card img{height:200px;}
+    }
+  </style>
+</head>
+<body>
+<header class="top">
+  <div class="inner container">
+    <div class="brand">Bongstudio</div>
+    <nav>
+      <a href="/" aria-current="page">Trang chủ</a>
+      <a href="/store.html">Cửa hàng</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container hero">
+  <h1>Xin chào 👋</h1>
+  <p>Nơi tổng hợp sản phẩm nổi bật — giá ưu đãi, khuyến mãi lớn cho cộng đồng Bongstudio.</p>
 </div>
 
 <div class="container">
@@ -19,51 +277,44 @@
 
   <hr class="sep"/>
 
-  <!-- Lưới 7 danh mục chính (giống store.html) -->
-  <div class="grid cards" style="margin-top:16px">
-    <!-- Gia dụng, decor nhà cửa -->
+  <!-- Lưới 7 danh mục chính -->
+  <div class="grid cards">
     <a class="category-tile" href="/cat-gia-dung-decor-nha-cua.html">
       <img src="/assets/img/categories/gia-dung-decor-nha-cua.webp"
            alt="Gia dụng, decor nhà cửa" width="800" height="480"/>
       <span>Gia dụng, decor nhà cửa</span>
     </a>
 
-    <!-- Thời trang nữ -->
     <a class="category-tile" href="/cat-thoi-trang-nu.html">
       <img src="/assets/img/categories/thoi-trang-nu.webp"
            alt="Thời trang nữ" width="800" height="480"/>
       <span>Thời trang nữ</span>
     </a>
 
-    <!-- Thời trang nam -->
     <a class="category-tile" href="/cat-thoi-trang-nam.html">
       <img src="/assets/img/categories/thoi-trang-nam.webp"
            alt="Thời trang nam" width="800" height="480"/>
       <span>Thời trang nam</span>
     </a>
 
-    <!-- Quần áo em bé -->
     <a class="category-tile" href="/cat-quan-ao-em-be.html">
       <img src="/assets/img/categories/quan-ao-em-be.webp"
            alt="Quần áo em bé" width="800" height="480"/>
       <span>Quần áo em bé</span>
     </a>
 
-    <!-- Sức khỏe, thực phẩm chức năng -->
     <a class="category-tile" href="/cat-suc-khoe-thuc-pham-chuc-nang.html">
       <img src="/assets/img/categories/suc-khoe-thuc-pham-chuc-nang.webp"
            alt="Sức khỏe, thực phẩm chức năng" width="800" height="480"/>
       <span>Sức khoẻ, thực phẩm chức năng</span>
     </a>
 
-    <!-- Sách -->
     <a class="category-tile" href="/cat-sach.html">
       <img src="/assets/img/categories/sach.webp"
            alt="Sách" width="800" height="480"/>
       <span>Sách</span>
     </a>
 
-    <!-- Đồ ăn -->
     <a class="category-tile" href="/cat-do-an.html">
       <img src="/assets/img/categories/do-an.webp"
            alt="Đồ ăn" width="800" height="480"/>
@@ -71,7 +322,7 @@
     </a>
   </div>
 
-  <!-- Khối sản phẩm nổi bật từ tool Bongstudio -->
+  <!-- Khối sản phẩm nổi bật -->
   <section class="product-section home-featured">
     <div class="home-section-header">
       <h2>Sản phẩm nổi bật</h2>
@@ -88,23 +339,26 @@
 
 <div class="fabs">
   <a href="tel:0978557797">
-    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.5 21.2 2.8 14.5 2.8 6.2 2.8 5.5 3.3 5 4 5h3.7c.7 0 1.2.5 1.2 1.2 0 1 0 2-.5 3-.1.4 0 .9.3 1.2l-2.1 2.4z'/></svg>'/>
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.5 21.2 2.8 14.5 2.8 6.2 2.8 5.5 3.3 5 4 5h3.7c.7 0 1.2.5 1.2 1.2 0 1 0 2-.5 3-.1.4 0 .9.3 1.2l-2.1 2.4z'/></svg>'"/>
     <span>Gọi 0978557797</span>
   </a>
   <a href="https://zalo.me/0978557797" target="_blank" rel="noopener">
-    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><circle cx='12' cy='12' r='10'/></svg>'/>
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><circle cx='12' cy='12' r='10'/></svg>'"/>
     <span>Zalo</span>
   </a>
   <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener">
-    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M10 9h2V7c0-1.1.9-2 2-2h2v3h-2v2h2l-.5 3h-1.5v6h-3v-6H10V9z'/></svg>'/>
+    <img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M10 9h2V7c0-1.1.9-2 2-2h2v3h-2v2h2l-.5 3h-1.5v6h-3v-6H10V9z'/></svg>'"/>
     <span>Facebook</span>
   </a>
 </div>
 
+<!-- JS trang chủ + nút mua -->
 <script defer src="/assets/js/index-bongstudio.js"></script>
 <script defer src="/assets/js/mxd-buy.js"></script>
 <script>
-  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js'); }
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js');
+  }
 </script>
 </body>
 </html>
