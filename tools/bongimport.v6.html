@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bongstudio Importer v4</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    /* Giữ nguyên các phong cách và giao diện hiện có (nếu có) */
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Bongstudio Importer v4</h1>
+
+  <!-- Các tùy chọn chế độ và giao diện -->
+  <div>
+    <label><input type="checkbox" id="batchMode"> Batch mode</label>
+    <label><input type="checkbox" id="featuredOnly"> Featured only</label>
+    <label><input type="checkbox" id="debugMode"> Debug mode</label>
+    <label><input type="checkbox" id="themeToggle"> Dark Theme</label>
+  </div>
+
+  <!-- Khu vực nhập liệu sản phẩm và commit -->
+  <div>
+    <!-- Giả sử có các trường nhập liệu sản phẩm (SKU, tên, v.v.) ở đây -->
+    <!-- ... (giữ nguyên các phần giao diện nhập liệu sản phẩm hiện có) ... -->
+  </div>
+  <div>
+    <label for="commitMsgInput">Commit message:</label>
+    <input type="text" id="commitMsgInput" placeholder="Nhập thông điệp commit (nếu để trống sẽ tạo tự động)" />
+    <button id="publishBtn">Publish to GitHub</button>
+  </div>
+
+  <!-- Khu vực hiển thị trạng thái/đầu ra (nếu có) -->
+  <div id="statusMsg"></div>
+  <pre id="output" class="hidden"></pre>
+
+  <script>
+    // Cấu hình repository và đường dẫn file JSON
+    const owner   = 'GITHUB_USERNAME';   // Thay bằng tên tài khoản hoặc tổ chức GitHub
+    const repo    = 'REPO_NAME';         // Thay bằng tên repository trên GitHub
+    const branch  = 'main';              // Nhánh chính (main)
+    const filePath = 'assets/data/bongstudio-products.json';
+    const apiUrl   = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+
+    // Biến lưu trữ dữ liệu sản phẩm và SHA hiện tại
+    let productsData = null;
+    let currentSha   = null;
+    let githubToken  = null;
+
+    // Yêu cầu người dùng nhập GitHub token (Personal Access Token) khi mở công cụ
+    githubToken = prompt("Vui lòng nhập GitHub Token để sử dụng công cụ:");
+    if (!githubToken) {
+      alert("Bạn chưa cung cấp GitHub token. Công cụ sẽ không thể publish lên GitHub.");
+    }
+
+    // Hàm tải dữ liệu sản phẩm từ file JSON trên GitHub (giữ nguyên cách hoạt động hiện có)
+    function loadProducts() {
+      fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`)
+        .then(response => response.ok ? response.json() : Promise.reject('Không thể tải dữ liệu sản phẩm.'))
+        .then(data => {
+          productsData = data;
+          console.log("Đã tải dữ liệu sản phẩm:", productsData);
+          // Hiển thị dữ liệu (nếu cần) hoặc cập nhật giao diện sản phẩm
+          // ... (đoạn code cập nhật giao diện sản phẩm nếu có) ...
+          // Nếu chế độ debug bật, hiển thị JSON đầy đủ
+          const outputPre = document.getElementById('output');
+          if (document.getElementById('debugMode') && document.getElementById('debugMode').checked) {
+            outputPre.textContent = JSON.stringify(productsData, null, 2);
+            outputPre.classList.remove('hidden');
+          } else {
+            outputPre.classList.add('hidden');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('statusMsg').textContent = "Lỗi: Không thể tải file JSON hiện tại.";
+        });
+    }
+
+    // Gọi hàm loadProducts() khi tải trang (để có dữ liệu ban đầu)
+    loadProducts();
+
+    // Sự kiện thay đổi Theme (giữ nguyên chức năng theme hiện có)
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('change', () => {
+        if (themeToggle.checked) {
+          document.body.style.backgroundColor = "#222";
+          document.body.style.color = "#eee";
+        } else {
+          document.body.style.backgroundColor = "";
+          document.body.style.color = "";
+        }
+      });
+    }
+
+    // Xử lý khi nhấn nút Publish
+    document.getElementById('publishBtn').addEventListener('click', () => {
+      if (!githubToken) {
+        alert("Chưa thiết lập token GitHub. Hãy thử lại sau khi thiết lập token.");
+        return;
+      }
+      if (!productsData) {
+        alert("Không có dữ liệu sản phẩm để publish.");
+        return;
+      }
+
+      // Lấy thông điệp commit từ người dùng, nếu trống thì tự tạo mặc định
+      let commitMessage = document.getElementById('commitMsgInput').value.trim();
+      if (!commitMessage) {
+        commitMessage = "Update bongstudio-products.json";  // Thông điệp commit mặc định
+      }
+
+      // Chuyển đổi nội dung JSON sang base64
+      const contentString = JSON.stringify(productsData, null, 2);
+      // Sử dụng encodeURIComponent để đảm bảo xử lý đúng ký tự Unicode trước khi base64
+      const base64Content = btoa(unescape(encodeURIComponent(contentString)));
+
+      // Lấy SHA hiện tại của file từ GitHub (cần thiết khi cập nhật file đã tồn tại)
+      fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'token ' + githubToken
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          return Promise.reject(new Error("Không thể lấy thông tin file JSON (HTTP " + response.status + ")"));
+        }
+        return response.json();
+      })
+      .then(fileInfo => {
+        // Lưu SHA hiện tại của file
+        currentSha = fileInfo.sha;
+        console.log("Current SHA:", currentSha);
+        // Chuẩn bị payload PUT với SHA để cập nhật file
+        const payload = {
+          message: commitMessage,
+          content: base64Content,
+          branch: branch,
+          sha: currentSha
+        };
+        // Gọi GitHub API để cập nhật nội dung file
+        return fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/vnd.github+json',
+            'Authorization': 'token ' + githubToken,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          // Nếu có lỗi, đọc chi tiết lỗi trả về từ GitHub
+          return response.json().then(errData => {
+            let errMsg = errData && errData.message ? errData.message : "Unknown error";
+            throw new Error("Publish thất bại: " + errMsg + " (HTTP " + response.status + ")");
+          });
+        }
+        return response.json();
+      })
+      .then(result => {
+        console.log("Kết quả publish:", result);
+        document.getElementById('statusMsg').textContent = "Đã publish thành công!";
+        // Sau khi publish, tải lại dữ liệu để kiểm tra SKU vừa thêm
+        loadProducts();
+        // (Có thể bổ sung code để tìm và highlight SKU mới trong danh sách nếu cần)
+      })
+      .catch(error => {
+        console.error("Lỗi khi publish:", error);
+        alert(error.message || "Đã xảy ra lỗi khi publish.");
+      });
+    });
+  </script>
+</body>
+</html>
