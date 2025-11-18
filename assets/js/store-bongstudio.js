@@ -1,4 +1,4 @@
-// store-bongstudio.js
+// REPLACE WHOLE FILE: /assets/js/store-bongstudio.js
 // Load sản phẩm từ assets/json/bongstudio/*.json và render vào #productGrid
 
 (function(){
@@ -70,7 +70,8 @@
       const priceText = formatPrice(p.price_vnd);
       const img = p.image || "/assets/img/categories/thoi-trang.webp";
       const origin = p.origin_url || "#";
-      const href = p.deeplink || origin;
+      // QUAN TRỌNG: luôn dùng link gốc làm href, tránh các đường dẫn nội bộ 404
+      const href = origin;
       const sku = escapeHtml(p.sku || "");
       const merchant = escapeHtml(p.merchant || "");
 
@@ -106,7 +107,7 @@
     }).join("");
     grid.innerHTML = html;
 
-    // Nếu mxd-affiliate.js có hook riêng thì cố gắng gọi nhẹ
+    // Nếu mxd-affiliate.js có hook riêng thì vẫn gọi nhẹ cho nó
     try{
       if(window.MXD_AFF && typeof window.MXD_AFF.scan === "function"){
         window.MXD_AFF.scan();
