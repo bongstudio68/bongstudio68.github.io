@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+  <title>Bongstudio · Worker Bridge v1.0</title>
+  <meta name="robots" content="noindex,follow"/>
+  <style>
+    :root{
+      --bg:#020617;
+      --fg:#e5e7eb;
+      --muted:#9ca3af;
+      --card:#020817;
+      --border:#1f2937;
+      --accent:#7c3aed;
+      --accent-soft:rgba(124,58,237,.14);
+      --danger:#fb7185;
+      --ok:#4ade80;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#111827 0,#020617 55%,#020308 100%);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{
+      max-width:960px;
+      margin:0 auto;
+      padding:16px;
+    }
+    h1{
+      font-size:1.4rem;
+      margin:0 0 4px;
+      letter-spacing:.03em;
+    }
+    .sub{
+      font-size:.85rem;
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+    .badge{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:.7rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      background:var(--accent-soft);
+      color:var(--accent);
+      border:1px solid rgba(124,58,237,.5);
+    }
+    .card{
+      background:var(--card);
+      border-radius:14px;
+      border:1px solid var(--border);
+      padding:12px 12px 10px;
+      margin-bottom:10px;
+      box-shadow:0 18px 45px rgba(0,0,0,.45);
+    }
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .card-title{
+      font-size:.95rem;
+      font-weight:600;
+    }
+    .card-sub{
+      font-size:.75rem;
+      color:var(--muted);
+    }
+    label{
+      display:block;
+      font-size:.8rem;
+      color:var(--muted);
+      margin-bottom:2px;
+    }
+    input,textarea{
+      width:100%;
+      border-radius:9px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:var(--fg);
+      padding:6px 9px;
+      font:inherit;
+      font-size:.85rem;
+      outline:none;
+      transition:border .12s,box-shadow .12s,background .12s;
+    }
+    input:focus,textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(124,58,237,.4);
+      background:#030712;
+    }
+    textarea{
+      min-height:150px;
+      resize:vertical;
+      font-family:ui-monospace,Menlo,Consolas,monospace;
+      line-height:1.45;
+      white-space:pre;
+    }
+    .row{margin-bottom:8px;}
+    .cols-2{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+    @media(max-width:768px){
+      .cols-2{grid-template-columns:1fr}
+    }
+    .hint{
+      font-size:.72rem;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:6px;
+    }
+    button{
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:linear-gradient(135deg,#4f46e5,#7c3aed);
+      color:#f9fafb;
+      padding:6px 13px;
+      font-size:.78rem;
+      font-weight:600;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 10px 25px rgba(15,23,42,.6);
+      transition:transform .1s,box-shadow .1s,opacity .1s;
+    }
+    button.secondary{
+      background:transparent;
+      color:var(--muted);
+      box-shadow:none;
+      border-style:dashed;
+    }
+    button:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 32px rgba(15,23,42,.8);
+    }
+    button:active{
+      transform:translateY(0);
+      box-shadow:0 8px 18px rgba(15,23,42,.7);
+    }
+    .status{
+      font-size:.75rem;
+      margin-top:4px;
+    }
+    .status.ok{color:var(--ok);}
+    .status.err{color:var(--danger);}
+    pre{
+      margin:4px 0 0;
+      padding:8px;
+      border-radius:8px;
+      background:#020617;
+      border:1px solid var(--border);
+      font-size:.75rem;
+      max-height:220px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .file-label{
+      font-size:.8rem;
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .file-name{
+      font-size:.78rem;
+      color:var(--fg);
+    }
+    .footer{
+      margin-top:10px;
+      font-size:.7rem;
+      color:var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bongstudio · Worker Bridge v1.0</h1>
+  <div class="sub">
+    Cây cầu nối giữa <b>Bongstudio tool</b> và <b>Cloudflare Worker</b>:  
+    dán JSON + chọn ảnh <span style="opacity:.8">→</span> Worker commit thẳng lên GitHub repo (khi Worker đã cấu hình xong).
+  </div>
+
+  <!-- KHỐI 1: CẤU HÌNH CHUNG -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">1. Cấu hình kết nối</div>
+        <div class="card-sub">URL Worker + repo + thư mục lưu file</div>
+      </div>
+      <span class="badge">Config</span>
+    </div>
+
+    <div class="row">
+      <label for="workerBase">Worker base URL</label>
+      <input id="workerBase" placeholder="https://worker-bongstudio.example.workers.dev"/>
+      <div class="hint">
+        Worker cần bật CORS cho domain: <code>https://bongstudio68.github.io</code>  
+        (ví dụ: <code>Access-Control-Allow-Origin</code> trùng origin này).
+      </div>
+    </div>
+
+    <div class="cols-2">
+      <div class="row">
+        <label for="repoOwner">GitHub owner / user</label>
+        <input id="repoOwner" value="bongstudio68"/>
+      </div>
+      <div class="row">
+        <label for="repoName">GitHub repo</label>
+        <input id="repoName" value="bongstudio68.github.io"/>
+      </div>
+    </div>
+
+    <div class="cols-2">
+      <div class="row">
+        <label for="jsonDir">Thư mục JSON trong repo</label>
+        <input id="jsonDir" value="assets/json/bongstudio"/>
+        <div class="hint">Ví dụ: <code>assets/json/bongstudio</code> → lưu thành <code>assets/json/bongstudio/abc.json</code></div>
+      </div>
+      <div class="row">
+        <label for="imgDir">Thư mục ảnh trong repo</label>
+        <input id="imgDir" value="assets/img/bongstudio"/>
+        <div class="hint">Ví dụ: <code>assets/img/bongstudio</code> → lưu thành <code>assets/img/bongstudio/abc-thumb.webp</code></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="btnTestWorker">Test Worker</button>
+      <button type="button" class="secondary" id="btnFillDemo">Điền mẫu (demo)</button>
+    </div>
+    <div id="statusConfig" class="status"></div>
+  </div>
+
+  <!-- KHỐI 2: JSON SẢN PHẨM -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">2. Gửi JSON sản phẩm cho Worker</div>
+        <div class="card-sub">Dán JSON từ Bongstudio Product Builder v1.3</div>
+      </div>
+      <span class="badge">JSON</span>
+    </div>
+
+    <div class="cols-2">
+      <div class="row">
+        <label for="sku">SKU / Mã sản phẩm</label>
+        <input id="sku" placeholder="Ví dụ: ao-so-mi-trang-nu-rymola"/>
+        <div class="hint">Nếu để trống, tool sẽ cố lấy từ JSON (field <code>sku</code>).</div>
+      </div>
+      <div class="row">
+        <label for="jsonFileNameBase">Tên file JSON (base)</label>
+        <input id="jsonFileNameBase" placeholder="Nếu trống sẽ dùng SKU"/>
+        <div class="hint">Không cần ghi <code>.json</code>. Tool sẽ slug hoá + tự thêm đuôi.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="jsonInput">JSON sản phẩm</label>
+      <textarea id="jsonInput" placeholder='Dán JSON từ tool Bongstudio (ví dụ: {"sku": "...", "title": "...", ...})'></textarea>
+      <div class="hint">Worker endpoint dự kiến: <code>POST /git/json</code> (mô tả ở cuối file JS).</div>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="btnSendJson">Gửi JSON lên Worker</button>
+    </div>
+    <div id="statusJson" class="status"></div>
+    <pre id="logJson" hidden></pre>
+  </div>
+
+  <!-- KHỐI 3: ẢNH SẢN PHẨM -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">3. Gửi ảnh sản phẩm cho Worker</div>
+        <div class="card-sub">Chọn file ảnh (WebP/JPG/PNG) từ máy</div>
+      </div>
+      <span class="badge">Image</span>
+    </div>
+
+    <div class="cols-2">
+      <div class="row">
+        <div class="file-label">
+          <span>File ảnh từ máy</span>
+          <span id="fileName" class="file-name"></span>
+        </div>
+        <input id="fileInput" type="file" accept="image/*"/>
+        <div class="hint">
+          Kết hợp tốt nhất với ảnh đã xuất từ Bongstudio Product Builder (WebP thumb vuông).
+        </div>
+      </div>
+      <div class="row">
+        <label for="imgFileNameBase">Tên file ảnh (base)</label>
+        <input id="imgFileNameBase" placeholder="Nếu trống sẽ dùng SKU"/>
+        <div class="hint">
+          Tool sẽ tạo tên: <code>[base]-thumb.webp</code> (hoặc giữ nguyên đuôi gốc nếu muốn).  
+          Hiện bản v1.0 đang cố định <code>-thumb.webp</code> để đồng bộ với tool ảnh.
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="btnSendImage">Gửi ảnh lên Worker</button>
+    </div>
+    <div id="statusImg" class="status"></div>
+    <pre id="logImg" hidden></pre>
+  </div>
+
+  <div class="footer">
+    Bongstudio Worker Bridge v1.0 — chỉ là client HTML/JS.  
+    Worker cần cài sẵn GH_TOKEN & endpoint <code>/git/json</code>, <code>/git/image</code> để nhận dữ liệu.
+  </div>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+
+  function slugify(str){
+    if(!str) return "";
+    let s = str.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    s = s.toLowerCase();
+    s = s.replace(/[^a-z0-9]+/g,"-");
+    s = s.replace(/^-+|-+$/g,"");
+    s = s.replace(/-+/g,"-");
+    return s;
+  }
+
+  function trimSlash(path){
+    return String(path||"").replace(/\/+$/,"");
+  }
+
+  function getWorkerBase(){
+    let base = $("workerBase").value.trim();
+    return base.replace(/\/+$/,"");
+  }
+
+  function getRepoFull(){
+    return $("repoOwner").value.trim() + "/" + $("repoName").value.trim();
+  }
+
+  function showStatus(elId, msg, ok){
+    const el = $(elId);
+    el.textContent = msg || "";
+    el.className = "status " + (ok ? "ok" : "err");
+  }
+
+  function showLog(elId, obj){
+    const el = $(elId);
+    if(!obj){
+      el.hidden = true;
+      el.textContent = "";
+      return;
+    }
+    el.hidden = false;
+    try{
+      el.textContent = typeof obj === "string" ? obj : JSON.stringify(obj, null, 2);
+    }catch(e){
+      el.textContent = String(obj);
+    }
+  }
+
+  // Khối 1: Config
+  $("btnFillDemo").addEventListener("click", function(){
+    if(!$("workerBase").value){
+      $("workerBase").value = "https://worker-bongstudio.example.workers.dev";
+    }
+    if(!$("jsonDir").value){
+      $("jsonDir").value = "assets/json/bongstudio";
+    }
+    if(!$("imgDir").value){
+      $("imgDir").value = "assets/img/bongstudio";
+    }
+    showStatus("statusConfig", "Đã điền mẫu. Nhớ sửa lại URL Worker thật của bạn.", true);
+  });
+
+  $("btnTestWorker").addEventListener("click", async function(){
+    const base = getWorkerBase();
+    if(!base){
+      showStatus("statusConfig", "Chưa nhập Worker base URL.", false);
+      return;
+    }
+    showStatus("statusConfig", "Đang gọi /status…", true);
+    try{
+      const res = await fetch(base + "/status", {
+        method:"GET",
+        headers:{ "accept":"application/json" }
+      });
+      const txt = await res.text();
+      let data;
+      try{ data = JSON.parse(txt); }catch{ data = txt; }
+      showStatus("statusConfig", "Worker trả về " + res.status + " (xem log bên dưới).", res.ok);
+      showLog("logJson", data);
+    }catch(e){
+      showStatus("statusConfig", "Không gọi được Worker: " + e.message, false);
+      showLog("logJson", null);
+    }
+  });
+
+  // Khối 2: JSON
+  $("btnSendJson").addEventListener("click", async function(){
+    const base = getWorkerBase();
+    if(!base){
+      showStatus("statusJson", "Chưa nhập Worker base URL.", false);
+      return;
+    }
+    const raw = $("jsonInput").value.trim();
+    if(!raw){
+      showStatus("statusJson", "Chưa dán JSON.", false);
+      return;
+    }
+
+    let data;
+    try{
+      data = JSON.parse(raw);
+    }catch(e){
+      showStatus("statusJson", "JSON không hợp lệ: " + e.message, false);
+      return;
+    }
+
+    let sku = $("sku").value.trim();
+    if(!sku && data && data.sku){
+      sku = String(data.sku);
+      $("sku").value = sku;
+    }
+    if(!sku){
+      showStatus("statusJson", "Chưa có SKU (cần nhập hoặc có trong JSON).", false);
+      return;
+    }
+
+    let baseName = $("jsonFileNameBase").value.trim();
+    if(!baseName) baseName = sku;
+    baseName = slugify(baseName);
+    if(!baseName){
+      showStatus("statusJson", "Tên file JSON base sau khi slugify bị rỗng.", false);
+      return;
+    }
+
+    const jsonDir = trimSlash($("jsonDir").value || "assets/json");
+    const path = jsonDir + "/" + baseName + ".json";
+    const payload = {
+      repo: getRepoFull(),
+      path,
+      content: data,
+      note: "upload-json-from-bongstudio-bridge"
+    };
+
+    showStatus("statusJson", "Đang gửi JSON tới Worker…", true);
+    showLog("logJson", null);
+    try{
+      const res = await fetch(base + "/git/json", {
+        method:"POST",
+        headers:{
+          "content-type":"application/json",
+          "accept":"application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const txt = await res.text();
+      let body;
+      try{ body = JSON.parse(txt); }catch{ body = txt; }
+
+      if(res.ok){
+        showStatus("statusJson", "Đã gửi JSON. Worker trả về " + res.status + ".", true);
+      }else{
+        showStatus("statusJson", "Worker trả về lỗi HTTP " + res.status + ".", false);
+      }
+      showLog("logJson", body);
+    }catch(e){
+      showStatus("statusJson", "Lỗi khi gọi Worker: " + e.message, false);
+      showLog("logJson", null);
+    }
+  });
+
+  // Khối 3: Ảnh
+  $("fileInput").addEventListener("change", function(e){
+    const file = e.target.files && e.target.files[0];
+    $("fileName").textContent = file ? (file.name + " (" + Math.round(file.size/1024) + " KB)") : "";
+  });
+
+  $("btnSendImage").addEventListener("click", function(){
+    const base = getWorkerBase();
+    if(!base){
+      showStatus("statusImg", "Chưa nhập Worker base URL.", false);
+      return;
+    }
+    const fileInput = $("fileInput");
+    if(!fileInput.files || !fileInput.files[0]){
+      showStatus("statusImg", "Chưa chọn file ảnh.", false);
+      return;
+    }
+    const file = fileInput.files[0];
+
+    let sku = $("sku").value.trim();
+    if(!sku){
+      showStatus("statusImg", "Nên có SKU để đặt tên file ảnh cho thống nhất.", false);
+      return;
+    }
+
+    let baseName = $("imgFileNameBase").value.trim();
+    if(!baseName) baseName = sku;
+    baseName = slugify(baseName);
+    if(!baseName){
+      showStatus("statusImg", "Tên file ảnh base sau khi slugify bị rỗng.", false);
+      return;
+    }
+
+    const imgDir = trimSlash($("imgDir").value || "assets/img");
+    const targetFile = baseName + "-thumb.webp"; // chuẩn với tool ảnh hiện tại
+    const path = imgDir + "/" + targetFile;
+
+    showStatus("statusImg", "Đang đọc file & gửi lên Worker…", true);
+    showLog("logImg", null);
+
+    const reader = new FileReader();
+    reader.onload = async function(ev){
+      const dataUrl = ev.target.result; // dạng: data:image/xxx;base64,....
+      const payload = {
+        repo: getRepoFull(),
+        path,
+        data_url: dataUrl,
+        note: "upload-image-from-bongstudio-bridge"
+      };
+
+      try{
+        const res = await fetch(base + "/git/image", {
+          method:"POST",
+          headers:{
+            "content-type":"application/json",
+            "accept":"application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+        const txt = await res.text();
+        let body;
+        try{ body = JSON.parse(txt); }catch{ body = txt; }
+
+        if(res.ok){
+          showStatus("statusImg", "Đã gửi ảnh. Worker trả về " + res.status + ".", true);
+        }else{
+          showStatus("statusImg", "Worker trả lỗi HTTP " + res.status + ".", false);
+        }
+        showLog("logImg", body);
+      }catch(e){
+        showStatus("statusImg", "Lỗi khi gọi Worker: " + e.message, false);
+        showLog("logImg", null);
+      }
+    };
+    reader.onerror = function(){
+      showStatus("statusImg", "Không đọc được file ảnh (FileReader error).", false);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Gợi ý nhỏ: auto copy sku vào jsonFileNameBase nếu rỗng
+  $("sku").addEventListener("blur", function(){
+    const sku = $("sku").value.trim();
+    if(sku){
+      if(!$("jsonFileNameBase").value) $("jsonFileNameBase").value = sku;
+      if(!$("imgFileNameBase").value) $("imgFileNameBase").value = sku;
+    }
+  });
+})();
+</script>
+</body>
+</html>
