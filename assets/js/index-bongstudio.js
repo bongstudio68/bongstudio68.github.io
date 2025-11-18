@@ -1,12 +1,12 @@
-// NEW FILE: /assets/js/index-bongstudio.js
-// Load sản phẩm từ assets/json/bongstudio/*.json và render block "Sản phẩm nổi bật" trên trang chủ
+// REPLACE WHOLE FILE: /assets/js/index-bongstudio.js
+// Load sản phẩm từ assets/json/bongstudio/*.json và render vào khối "Sản phẩm nổi bật" trên trang chủ
 
 (function(){
-  const API_LIST = "https://api.github.com/repos/bongstudio68/bongstudio68.github.io/contents/assets/json/bongstudio";
   const grid = document.getElementById("homeFeaturedGrid");
   const statusEl = document.getElementById("homeFeaturedStatus");
+  if(!grid || !statusEl) return;
 
-  if(!grid || !statusEl) return; // Trang khác thì bỏ qua
+  const API_LIST = "https://api.github.com/repos/bongstudio68/bongstudio68.github.io/contents/assets/json/bongstudio";
 
   const CAT_LABELS = {
     "gia-dung-decor": "Gia dụng, decor nhà cửa",
@@ -37,13 +37,24 @@
     return n.toLocaleString("vi-VN") + "₫";
   }
 
+  function fixOrigin(url){
+    if(!url) return "";
+    url = String(url).trim();
+    if(!url) return "";
+    if(/^https?:\/\//i.test(url)) return url;
+    if(url.startsWith("//")) return "https:" + url;
+    return "https://" + url.replace(/^\/+/, "");
+  }
+
   function normalizeProduct(raw){
     if(!raw || typeof raw !== "object") return null;
+    var origin = raw.origin_url || raw.origin || "";
+    origin = fixOrigin(origin);
     return {
       name: raw.name || "",
       sku: raw.sku || "",
       price_vnd: raw.price_vnd || raw.price || 0,
-      origin_url: raw.origin_url || raw.origin || "",
+      origin_url: origin,
       deeplink: raw.deeplink || "",
       merchant: (raw.merchant || "").toLowerCase() || "shopee",
       image: raw.image || "",
@@ -103,10 +114,8 @@
         "</article>"
       );
     }).join("");
-
     grid.innerHTML = html;
 
-    // Nếu MXD_AFF có scan thì gọi
     try{
       if(window.MXD_AFF && typeof window.MXD_AFF.scan === "function"){
         window.MXD_AFF.scan();
@@ -145,7 +154,6 @@
         }
       }
 
-      // Ưu tiên featured; nếu chưa set featured thì lấy 8 sản phẩm đầu tiên
       let list = products.filter(function(p){ return !!p.featured; });
       if(!list.length){
         list = products.slice(0, 8);
