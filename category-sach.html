@@ -1,4 +1,3 @@
-<!-- NEW FILE: /category-sach.html -->
 <!doctype html>
 <html lang="vi">
 <head>
@@ -32,7 +31,7 @@
   <!-- CSS chung -->
   <link rel="stylesheet" href="/assets/css/styles.css"/>
 
-  <!-- STYLE đồng bộ -->
+  <!-- STYLE -->
   <style>
     .container {
       max-width: 1120px;
@@ -117,6 +116,7 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: .9rem;
       padding-bottom: 2.5rem;
+      min-height: 3rem;
     }
     .product-card {
       border-radius: 1rem;
@@ -265,70 +265,16 @@
       </div>
     </section>
 
-    <!-- LƯỚI SẢN PHẨM SÁCH -->
+    <!-- LƯỚI SẢN PHẨM: RENDER TỪ JSON -->
     <section>
       <div class="container">
         <div class="home-section-head">
-          <h2>Sách gợi ý (bản test)</h2>
-          <p>Sau này kho sản phẩm & tool sẽ thay toàn bộ khối này bằng dữ liệu thật.</p>
+          <h2>Sách gợi ý</h2>
+          <p>Dữ liệu đang lấy từ kho JSON /assets/data/bongstudio-products.json (category: sach).</p>
         </div>
 
-        <div class="product-grid">
-          <!-- CARD 1: Sách kỹ năng sống (Shopee placeholder) -->
-          <article class="product-card"
-                   data-sku="BS-SACH-KN-001"
-                   data-merchant="shopee"
-                   data-origin-url="https://shopee.vn/">
-            <a class="product-thumb" href="#sach-ky-nang-song" aria-label="Sách kỹ năng sống, dễ áp dụng">
-              <img src="/assets/img/products/sach-ky-nang-song.webp"
-                   loading="lazy"
-                   alt="Bìa sách kỹ năng sống (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Sách kỹ năng sống – Dễ đọc, nhiều ví dụ thực tế, phù hợp người bận
-              </h3>
-              <div class="product-merchant">Nguồn: Shopee (placeholder, sau thay link thật)</div>
-              <div class="product-price">
-                <span class="product-price-current">89.000₫</span>
-                <span class="product-price-old">120.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Xem sách trên Shopee
-                </button>
-                <a class="btn-secondary" href="#sach-ky-nang-song">Chi tiết</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 2: Sổ tay lập kế hoạch (Lazada placeholder) -->
-          <article class="product-card"
-                   data-sku="BS-SACH-PLAN-001"
-                   data-merchant="lazada"
-                   data-origin-url="https://www.lazada.vn/">
-            <a class="product-thumb" href="#so-tay-ke-hoach" aria-label="Sổ tay lập kế hoạch">
-              <img src="/assets/img/products/so-tay-lap-ke-hoach.webp"
-                   loading="lazy"
-                   alt="Sổ tay lập kế hoạch, bullet journal (minh họa)"/>
-            </a>
-            <div class="product-card-body">
-              <h3 class="product-name">
-                Sổ tay lập kế hoạch – Hỗ trợ ghi mục tiêu, việc cần làm, theo dõi thói quen
-              </h3>
-              <div class="product-merchant">Nguồn: Lazada (placeholder, sau thay link thật)</div>
-              <div class="product-price">
-                <span class="product-price-current">59.000₫</span>
-                <span class="product-price-old">89.000₫</span>
-              </div>
-              <div class="product-actions">
-                <button class="btn-primary js-mxd-buy" type="button">
-                  Xem sổ tay trên Lazada
-                </button>
-                <a class="btn-secondary" href="#so-tay-ke-hoach">Chi tiết</a>
-              </div>
-            </div>
-          </article>
+        <div class="product-grid" data-category="sach">
+          Đang tải sản phẩm...
         </div>
       </div>
     </section>
@@ -352,58 +298,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ISCLIX: CHUẨN CHUNG TOÀN SITE -->
-  <script>
-    ;(function(){
-      const AFF_BASE = {
-        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
-        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
-        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655"
-      };
-
-      const UTM_BASE = "utm_source=" + encodeURIComponent(location.hostname) + "&utm_medium=affiliate";
-
-      function makeIsclixUrl(base, originUrl, sku, merchant){
-        if(!base || !originUrl) return originUrl;
-        const head = base + (base.includes("?") ? "&" : "?") + "url=" + encodeURIComponent(originUrl);
-        const params = [
-          UTM_BASE,
-          "utm_campaign=" + encodeURIComponent(merchant || ""),
-          "sub1=" + encodeURIComponent(sku || ""),
-          "sub2=" + encodeURIComponent(merchant || "")
-        ];
-        return head + "&" + params.join("&");
-      }
-
-      function wireCatCards(){
-        const cards = document.querySelectorAll(".product-card[data-origin-url][data-merchant]");
-        if(!cards.length) return;
-
-        cards.forEach(card => {
-          const sku = card.getAttribute("data-sku") || "";
-          const merchant = (card.getAttribute("data-merchant") || "").toLowerCase();
-          const origin = card.getAttribute("data-origin-url");
-          const base = AFF_BASE[merchant];
-          const btn = card.querySelector(".js-mxd-buy");
-          if(!btn) return;
-
-          const finalUrl = makeIsclixUrl(base, origin, sku, merchant);
-
-          btn.addEventListener("click", function(ev){
-            ev.preventDefault();
-            const urlToOpen = finalUrl || origin;
-            if(!urlToOpen) return;
-            window.open(urlToOpen, "_blank");
-          });
-        });
-      }
-
-      if(document.readyState === "loading"){
-        document.addEventListener("DOMContentLoaded", wireCatCards);
-      } else {
-        wireCatCards();
-      }
-    })();
-  </script>
+  <!-- TOOL RENDER + ISCLIX CHUNG -->
+  <script defer src="/assets/js/bongstudio-products.js"></script>
 </body>
 </html>
