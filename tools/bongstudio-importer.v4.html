@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <!-- Updated to version 4.4 with improved verification timing -->
-  <title>Bongstudio Importer v4.4 — PRO + Batch + Featured + Debug</title>
+  <title>Bongstudio Importer v4.4 — PRO + Batch + Featured</title>
   <meta name="robots" content="noindex,follow"/>
   <style>
     :root{
@@ -449,8 +449,19 @@ function initImporter() {
     return (m?m[1]:'mxd').replace(/[^a-z0-9-]/g,'')||'mxd';
   })();
 
-  /* Đường dẫn kho JSON chính cho Bongstudio (kho sản phẩm chung) */
-  const PRODUCTS_JSON_PATH = "/assets/data/bongstudio-products.json";
+  /* Đường dẫn kho JSON chính cho Bongstudio (kho sản phẩm chung).
+     Tự động tính theo basePath để phù hợp với các trang được đặt trong thư mục con.
+     Ví dụ: nếu importer nằm ở /tools/, basePath sẽ là '' và đường dẫn là '/assets/data/bongstudio-products.json'.
+  */
+  const PRODUCTS_JSON_PATH = (() => {
+    try {
+      const parts = location.pathname.split('/tools/');
+      const basePath = parts && parts.length > 1 ? parts[0] : '';
+      return `${basePath || ''}/assets/data/bongstudio-products.json`;
+    } catch (_) {
+      return '/assets/data/bongstudio-products.json';
+    }
+  })();
 
   // Update version string for v4.4.0
   document.title = `${SITE_ID} Importer v4.4.0 — PRO + Batch + Featured + Debug`;
