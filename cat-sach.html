@@ -1,152 +1,134 @@
+<!-- REPLACE WHOLE FILE: /cat-sach.html -->
 <!doctype html>
 <html lang="vi">
 <head>
-  <!-- MXD210 — Category page for bongstudio68 -->
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-  <title>Sách – bongstudio68</title>
-  <meta name="description" content="Danh mục sách trên bongstudio68 – sách kỹ năng, kinh doanh, nuôi dạy con, tiểu thuyết, truyện tranh… ưu tiên đầu sách dễ đọc, áp dụng được."/>
-  <meta name="robots" content="index,follow"/>
-  <link rel="canonical" href="https://bongstudio68.github.io/cat-sach.html"/>
-  <link rel="icon" href="/assets/favicon.png"/>
-  <link rel="stylesheet" href="/assets/mxd-store.css?v=1"/>
-
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-550F47VKPR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-550F47VKPR');
-  </script>
-
-  <style>
-    :root{
-      --bg:#070b10;
-      --fg:#f5f7fb;
-      --muted:#9ca3af;
-      --accent:#f97316;
-      --card:#111827;
-      --border:#1f2933;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-      background:var(--bg);
-      color:var(--fg);
-      min-height:100vh;
-    }
-    a{color:inherit;text-decoration:none}
-    header{
-      padding:16px 20px;
-      border-bottom:1px solid var(--border);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:sticky;
-      top:0;
-      background:rgba(7,11,16,0.92);
-      backdrop-filter:blur(10px);
-      z-index:10;
-    }
-    .brand{font-weight:700;font-size:18px;}
-    nav a{margin-left:16px;font-size:14px;color:var(--muted);}
-    nav a.active{color:var(--accent);font-weight:600;}
-    main{
-      padding:20px;
-      max-width:960px;
-      margin:0 auto 40px;
-    }
-    .cat-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      font-size:12px;
-      padding:4px 10px;
-      border-radius:999px;
-      background:rgba(249,115,22,0.12);
-      color:var(--accent);
-      margin-bottom:10px;
-    }
-    h1{font-size:24px;margin-bottom:8px;}
-    .cat-intro{
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:20px;
-    }
-    .empty-state{
-      margin-top:24px;
-      border-radius:16px;
-      border:1px dashed var(--border);
-      padding:18px 16px;
-      background:rgba(15,23,42,0.7);
-      font-size:14px;
-      color:var(--muted);
-    }
-    .empty-state strong{color:var(--fg);}
-    .hint{
-      margin-top:8px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .product-grid{
-      margin-top:24px;
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-      gap:16px;
-    }
-    @media (max-width:640px){
-      header{padding:12px 14px;}
-      main{padding:18px 14px;}
-      h1{font-size:20px;}
-    }
-  </style>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Sách – bongstudio68",
-    "description": "Danh mục sách trên bongstudio68 – sách kỹ năng, kinh doanh, nuôi dạy con, tiểu thuyết, truyện tranh… ưu tiên đầu sách dễ đọc, áp dụng được.",
-    "url": "https://bongstudio68.github.io/cat-sach.html"
-  }
-  </script>
-
-  <script defer src="/assets/mxd-buy.js?v=1"></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sách • Bongstudio</title>
+<meta name="description" content="Sách phát triển bản thân, kỹ năng, tài chính, nuôi dạy con… được chọn lọc cho cộng đồng Bongstudio."/>
+<link rel="canonical" href="https://bongstudio68.github.io/cat-sach.html"/>
+<meta property="og:title" content="Sách • Bongstudio"/>
+<meta property="og:description" content="Góc sách Bongstudio – ưu tiên đầu sách dễ đọc, thực tế, nhiều người review tốt."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://bongstudio68.github.io/cat-sach.html"/>
+<meta property="og:image" content="https://bongstudio68.github.io/assets/img/categories/sach.webp"/>
+<meta name="robots" content="index,follow"/>
+<meta name="google-site-verification" content=""/>
+<script defer src="/assets/js/analytics.js"></script>
+<script defer src="/assets/js/mxd-affiliate.js"></script>
+<link rel="stylesheet" href="/assets/site.css"/>
+<style>
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:16px}
+  .product-card{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .product-card img{width:100%;height:190px;object-fit:cover}
+  .product-card-body{padding:10px;display:flex;flex-direction:column;gap:6px}
+  .product-name{font-size:14px;line-height:1.4;font-weight:600}
+  .price-row{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+  .price{font-weight:700;color:#b91c1c}
+  .badge-merchant{padding:2px 8px;border-radius:999px;font-size:11px;border:1px solid #e5e7eb;text-transform:uppercase}
+  .buy-btn{display:inline-block;margin-top:4px;padding:8px 10px;border-radius:999px;background:#2563eb;color:#fff;text-align:center;font-size:13px;text-decoration:none}
+  .buy-btn:hover{filter:brightness(0.97)}
+  .empty-state{margin-top:16px;font-size:14px;color:#6b7280}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">bongstudio68 · MXD210</div>
-    <nav>
-      <a href="/">Trang chủ</a>
-      <a href="/store.html">Cửa hàng</a>
-      <a href="/cat-sach.html" class="active">Danh mục</a>
-    </nav>
-  </header>
-  <main>
-    <div class="cat-badge">
-      <span>Danh mục</span>
-      <span>•</span>
-      <span>Sách</span>
-    </div>
-    <h1>Sách</h1>
-    <p class="cat-intro">
-      Góc dành cho các đầu sách kỹ năng, kinh doanh, nuôi dạy con, tiểu thuyết, truyện tranh…
-      Tập trung chọn những cuốn dễ đọc, áp dụng được, giúp người đọc “lời” được thứ gì đó sau khi gấp sách lại.
-    </p>
+<header class="top"><div class="inner container">
+  <div class="brand">Bongstudio</div>
+  <nav>
+    <a href="/">Trang chủ</a>
+    <a href="/store.html">Cửa hàng</a>
+  </nav>
+</div></header>
 
-    <div class="empty-state">
-      <strong>Danh mục sách đã có khung, chưa cài đầu sách.</strong><br/>
-      Khi thêm sản phẩm, dùng tag <code>sach</code> để gom sách về đây.
-      <div class="hint">
-        Tip: có thể thêm trường “phù hợp với ai” (học sinh, người đi làm…) trong mô tả sách để người dùng chọn nhanh hơn.
-      </div>
-    </div>
+<div class="container">
+  <h1>Sách</h1>
+  <p class="small">Một vài đầu sách hay, dễ đọc, giúp bạn có thêm góc nhìn về công việc, tài chính, gia đình, nuôi dạy con…</p>
 
-    <div class="product-grid" data-category="sach">
-      <!-- Sau này auto render sản phẩm theo slug / tag này -->
-    </div>
-  </main>
+  <div id="productGrid" class="product-grid"></div>
+  <div id="emptyState" class="empty-state" style="display:none">
+    Hiện chưa có sản phẩm nào trong danh mục <b>Sách</b>. Bạn có thể thêm bằng tool Bongstudio Importer.
+  </div>
+</div>
+
+<div class="container footer small">
+  © 2025 — Bongstudio68.github.io • GitHub Pages
+</div>
+<div class="fabs">
+  <a href="tel:0978557797"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.5 21.2 2.8 14.5 2.8 6.2 2.8 5.5 3.3 5 4 5h3.7c.7 0 1.2.5 1.2 1.2 0 1 0 2-.5 3-.1.4 0 .9.3 1.2l-2.1 2.4z'/></svg>'/><span>Gọi 0978557797</span></a>
+  <a href="https://zalo.me/0978557797" target="_blank" rel="noopener"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><circle cx='12' cy='12' r='10'/></svg>'/><span>Zalo</span></a>
+  <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M10 9h2V7c0-1.1.9-2 2-2h2v3h-2v2h2l-.5 3h-1.5v6h-3v-6H10V9z'/></svg>'/><span>Facebook</span></a>
+</div>
+
+<script>
+  const CATEGORY = 'sach';
+  const JSON_URL = '/assets/json/bongstudio/products.json';
+
+  function formatPrice(v){
+    const n = Number(v||0);
+    if(!n) return 'Liên hệ';
+    return n.toLocaleString('vi-VN') + '₫';
+  }
+  function escapeHtml(str){
+    return String(str||'').replace(/[&<>"']/g, s => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"
+    }[s]));
+  }
+  function merchantLabel(m){
+    m = (m||'').toLowerCase();
+    if(m === 'shopee') return 'Shopee';
+    if(m === 'lazada') return 'Lazada';
+    if(m === 'tiktok') return 'TikTok';
+    return m || 'Khác';
+  }
+
+  async function loadProducts(){
+    const grid = document.getElementById('productGrid');
+    const empty = document.getElementById('emptyState');
+    try{
+      const res = await fetch(JSON_URL + '?_=' + Date.now(), {cache:'no-cache'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.items || []);
+      const items = list.filter(p => p && p.status !== false && p.category === CATEGORY);
+
+      if(!items.length){
+        empty.style.display = 'block';
+        return;
+      }
+
+      grid.innerHTML = items.map(p => {
+        const name = escapeHtml(p.name || '');
+        const img  = p.image || '/assets/img/categories/sach.webp';
+        const link = p.deeplink || p.origin_url || '#';
+        const price = formatPrice(p.price_vnd);
+        const merchant = merchantLabel(p.merchant);
+
+        return `
+        <article class="product-card">
+          <a class="product-thumb" href="${link}" target="_blank" rel="noopener">
+            <img src="${img}" alt="${name}" loading="lazy"/>
+          </a>
+          <div class="product-card-body">
+            <div class="product-name">${name}</div>
+            <div class="price-row">
+              <span class="price">${price}</span>
+              <span class="badge-merchant">${merchant}</span>
+            </div>
+            <a class="buy-btn" href="${link}" target="_blank" rel="noopener">Xem chi tiết / Mua ngay</a>
+          </div>
+        </article>`;
+      }).join('');
+    }catch(e){
+      console.error(e);
+      empty.textContent = "Không tải được dữ liệu sản phẩm. Vui lòng thử lại sau.";
+      empty.style.display = 'block';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+<script>
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js'); }
+</script>
 </body>
 </html>
