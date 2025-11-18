@@ -39,13 +39,27 @@
     return n.toLocaleString("vi-VN") + "₫";
   }
 
+  // Chuẩn hoá origin: luôn thành https://...
+  function fixOrigin(url){
+    if(!url) return "";
+    url = String(url).trim();
+    if(!url) return "";
+    if(/^https?:\/\//i.test(url)) return url;
+    if(url.startsWith("//")) return "https:" + url;
+    return "https://" + url.replace(/^\/+/, "");
+  }
+
   function normalizeProduct(raw){
     if(!raw || typeof raw !== "object") return null;
+
+    var origin = raw.origin_url || raw.origin || "";
+    origin = fixOrigin(origin);
+
     return {
       name: raw.name || "",
       sku: raw.sku || "",
       price_vnd: raw.price_vnd || raw.price || 0,
-      origin_url: raw.origin_url || raw.origin || "",
+      origin_url: origin,
       deeplink: raw.deeplink || "",
       merchant: (raw.merchant || "").toLowerCase() || "shopee",
       image: raw.image || "",
@@ -69,8 +83,7 @@
       const catLabel = CAT_LABELS[p.category] || p.category || "";
       const priceText = formatPrice(p.price_vnd);
       const img = p.image || "/assets/img/categories/thoi-trang.webp";
-      const origin = p.origin_url || "#";
-      // QUAN TRỌNG: luôn dùng link gốc làm href, tránh các đường dẫn nội bộ 404
+      const origin = p.origin_url || "#"; // đã là https://...
       const href = origin;
       const sku = escapeHtml(p.sku || "");
       const merchant = escapeHtml(p.merchant || "");
@@ -107,7 +120,6 @@
     }).join("");
     grid.innerHTML = html;
 
-    // Nếu mxd-affiliate.js có hook riêng thì vẫn gọi nhẹ cho nó
     try{
       if(window.MXD_AFF && typeof window.MXD_AFF.scan === "function"){
         window.MXD_AFF.scan();
