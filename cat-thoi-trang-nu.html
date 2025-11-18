@@ -1,153 +1,217 @@
+<!-- REPLACE WHOLE FILE: /cat-thoi-trang-nu.html -->
 <!doctype html>
 <html lang="vi">
 <head>
-  <!-- MXD210 — Category page for bongstudio68 -->
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-  <title>Thời trang nữ – bongstudio68</title>
-  <meta name="description" content="Danh mục thời trang nữ trên bongstudio68 – váy, áo, quần, đồ basic tới trendy, dễ phối, dễ mua online, tập trung vào tính ứng dụng thực tế."/>
-  <meta name="robots" content="index,follow"/>
-  <link rel="canonical" href="https://bongstudio68.github.io/cat-thoi-trang-nu.html"/>
-  <link rel="icon" href="/assets/favicon.png"/>
-  <link rel="stylesheet" href="/assets/mxd-store.css?v=1"/>
-
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-550F47VKPR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-550F47VKPR');
-  </script>
-
-  <style>
-    :root{
-      --bg:#070b10;
-      --fg:#f5f7fb;
-      --muted:#9ca3af;
-      --accent:#f97316;
-      --card:#111827;
-      --border:#1f2933;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-      background:var(--bg);
-      color:var(--fg);
-      min-height:100vh;
-    }
-    a{color:inherit;text-decoration:none}
-    header{
-      padding:16px 20px;
-      border-bottom:1px solid var(--border);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:sticky;
-      top:0;
-      background:rgba(7,11,16,0.92);
-      backdrop-filter:blur(10px);
-      z-index:10;
-    }
-    .brand{font-weight:700;font-size:18px;}
-    nav a{margin-left:16px;font-size:14px;color:var(--muted);}
-    nav a.active{color:var(--accent);font-weight:600;}
-    main{
-      padding:20px;
-      max-width:960px;
-      margin:0 auto 40px;
-    }
-    .cat-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      font-size:12px;
-      padding:4px 10px;
-      border-radius:999px;
-      background:rgba(249,115,22,0.12);
-      color:var(--accent);
-      margin-bottom:10px;
-    }
-    h1{font-size:24px;margin-bottom:8px;}
-    .cat-intro{
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:20px;
-    }
-    .empty-state{
-      margin-top:24px;
-      border-radius:16px;
-      border:1px dashed var(--border);
-      padding:18px 16px;
-      background:rgba(15,23,42,0.7);
-      font-size:14px;
-      color:var(--muted);
-    }
-    .empty-state strong{color:var(--fg);}
-    .hint{
-      margin-top:8px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .product-grid{
-      margin-top:24px;
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-      gap:16px;
-    }
-    @media (max-width:640px){
-      header{padding:12px 14px;}
-      main{padding:18px 14px;}
-      h1{font-size:20px;}
-    }
-  </style>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Thời trang nữ – bongstudio68",
-    "description": "Danh mục thời trang nữ trên bongstudio68 – váy, áo, quần, đồ basic tới trendy, dễ phối, dễ mua online, tập trung vào tính ứng dụng thực tế.",
-    "url": "https://bongstudio68.github.io/cat-thoi-trang-nu.html"
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Thời trang nữ • Bongstudio</title>
+<meta name="description" content="Thời trang nữ được Bongstudio chọn lọc: dễ phối, tôn dáng, giá hợp lý từ Shopee, Lazada, TikTok."/>
+<link rel="canonical" href="https://bongstudio68.github.io/cat-thoi-trang-nu.html"/>
+<meta property="og:title" content="Thời trang nữ • Bongstudio"/>
+<meta property="og:description" content="Tổng hợp các mẫu Thời trang nữ nổi bật cho cộng đồng Bongstudio."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://bongstudio68.github.io/cat-thoi-trang-nu.html"/>
+<meta property="og:image" content="https://bongstudio68.github.io/assets/img/categories/thoi-trang-nu.webp"/>
+<meta name="robots" content="index,follow"/>
+<meta name="google-site-verification" content=""/>
+<script defer src="/assets/js/analytics.js"></script>
+<script defer src="/assets/js/mxd-affiliate.js"></script>
+<link rel="stylesheet" href="/assets/site.css"/>
+<style>
+  .product-section{margin-top:24px;}
+  .product-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .product-toolbar .search{flex:1;min-width:180px;}
+  .product-toolbar input{width:100%;padding:8px 10px;border-radius:999px;border:1px solid #dde1ea;font-size:13px;}
+  .product-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
+  .product-card a.thumb{display:block;line-height:0;}
+  .product-card img{width:100%;height:220px;object-fit:cover;display:block;}
+  .product-card-body{padding:10px 12px;display:flex;flex-direction:column;gap:4px;}
+  .product-card-title{font-size:14px;font-weight:600;line-height:1.4;margin:0;}
+  .product-card-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:4px;}
+  .product-price{font-weight:700;color:#d32f2f;}
+  .product-brand{color:#6b7280;font-size:12px;}
+  .product-actions{margin-top:8px;display:flex;justify-content:flex-end;}
+  .btn-buy{display:inline-block;padding:8px 12px;border-radius:999px;font-size:13px;text-decoration:none;background:#2563eb;color:#fff;}
+  .btn-buy:hover{filter:brightness(0.97);}
+  .product-status{margin:4px 0 10px;font-size:12px;color:#6b7280;}
+  @media (prefers-color-scheme: dark){
+    .product-card{background:#0f172a;border-color:#1f2937;}
   }
-  </script>
-
-  <script defer src="/assets/mxd-buy.js?v=1"></script>
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">bongstudio68 · MXD210</div>
-    <nav>
-      <a href="/">Trang chủ</a>
-      <a href="/store.html">Cửa hàng</a>
-      <a href="/cat-thoi-trang-nu.html" class="active">Danh mục</a>
-    </nav>
-  </header>
-  <main>
-    <div class="cat-badge">
-      <span>Danh mục</span>
-      <span>•</span>
-      <span>Thời trang nữ</span>
-    </div>
-    <h1>Thời trang nữ</h1>
-    <p class="cat-intro">
-      Tụ điểm của áo, quần, váy, cardigan, áo khoác… dành cho nữ, ưu tiên các mẫu dễ phối, dễ mặc đi làm – đi chơi – đi café.
-      Mục tiêu là chọn đồ nhìn ngoài đời vẫn đẹp như hình, không quá “sống ảo”, phù hợp túi tiền.
-    </p>
+<header class="top"><div class="inner container">
+  <div class="brand">Bongstudio</div>
+  <nav>
+    <a href="/">Trang chủ</a>
+    <a href="/store.html">Cửa hàng</a>
+  </nav>
+</div></header>
 
-    <div class="empty-state">
-      <strong>Danh mục đã sẵn sàng, đang chờ sản phẩm đầu tiên.</strong><br/>
-      Khi import sản phẩm thời trang nữ, hãy gắn tag
-      <code>thoi-trang-nu</code> để hệ bongstudio68 có thể lọc và hiển thị ở đây.
-      <div class="hint">
-        Tip: cấu trúc lưới <code>.product-grid</code> giữ nguyên, chỉ cần thêm thẻ sản phẩm theo chuẩn MXD210.
+<div class="container">
+  <h1>Thời trang nữ</h1>
+  <p class="small">Các mẫu dành cho chị em: dễ mặc, dễ phối, ưu tiên chất vải ổn – giá hợp lý.</p>
+
+  <section class="product-section">
+    <div class="product-toolbar">
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Tìm theo tên / thương hiệu trong Thời trang nữ…"/>
       </div>
     </div>
+    <div id="productStatus" class="product-status"></div>
+    <div id="productGrid" class="grid cards"></div>
+  </section>
+</div>
 
-    <div class="product-grid" data-category="thoi-trang-nu">
-      <!-- Sau này auto render sản phẩm theo slug / tag này -->
-    </div>
-  </main>
+<div class="container footer small">
+  © 2025 — Bongstudio68.github.io • GitHub Pages
+</div>
+<div class="fabs">
+  <a href="tel:0978557797"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.5 21.2 2.8 14.5 2.8 6.2 2.8 5.5 3.3 5 4 5h3.7c.7 0 1.2.5 1.2 1.2 0 1 0 2-.5 3-.1.4 0 .9.3 1.2l-2.1 2.4z'/></svg>'/><span>Gọi 0978557797</span></a>
+  <a href="https://zalo.me/0978557797" target="_blank" rel="noopener"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><circle cx='12' cy='12' r='10'/></svg>'/><span>Zalo</span></a>
+  <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener"><img class="icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M10 9h2V7c0-1.1.9-2 2-2h2v3h-2v2h2l-.5 3h-1.5v6h-3v-6H10V9z'/></svg>'/><span>Facebook</span></a>
+</div>
+
+<script>
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js'); }
+</script>
+
+<script>
+(function(){
+  const API_LIST = "https://api.github.com/repos/bongstudio68/bongstudio68.github.io/contents/assets/json/bongstudio";
+  const FILTER_CAT = "thoi-trang-nu";
+
+  const grid = document.getElementById("productGrid");
+  const statusEl = document.getElementById("productStatus");
+  const searchInput = document.getElementById("searchInput");
+
+  function escapeHtml(str){
+    return String(str || "").replace(/[&<>"']/g,function(ch){
+      return ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" })[ch];
+    });
+  }
+  function formatPrice(p){
+    const n = Number(p || 0);
+    if(!n) return "Liên hệ";
+    return n.toLocaleString("vi-VN") + "₫";
+  }
+  function normalizeProduct(raw){
+    if(!raw || typeof raw !== "object") return null;
+    return {
+      name: raw.name || "",
+      sku: raw.sku || "",
+      price_vnd: raw.price_vnd || raw.price || 0,
+      origin_url: raw.origin_url || raw.origin || "",
+      deeplink: raw.deeplink || "",
+      merchant: (raw.merchant || "").toLowerCase() || "shopee",
+      image: raw.image || "",
+      category: raw.category || "khac",
+      brand: raw.brand || "",
+      featured: !!raw.featured,
+      status: (typeof raw.status === "boolean") ? raw.status : true
+    };
+  }
+  function render(list){
+    if(!grid) return;
+    if(!list.length){
+      grid.innerHTML = "<p class='small'>Chưa có sản phẩm Thời trang nữ phù hợp.</p>";
+      return;
+    }
+    const html = list.map(function(p){
+      const name = escapeHtml(p.name);
+      const brand = escapeHtml(p.brand || "");
+      const priceText = formatPrice(p.price_vnd);
+      const img = p.image || "/assets/img/categories/thoi-trang-nu.webp";
+      const origin = p.origin_url || "#";
+      const href = p.deeplink || origin;
+      const sku = escapeHtml(p.sku || "");
+      const merchant = escapeHtml(p.merchant || "");
+
+      return (
+        "<article class=\"product-card\" data-sku=\"" + sku + "\">" +
+          "<a class=\"thumb\" href=\"" + href + "\" target=\"_blank\" rel=\"nofollow noopener\">" +
+            "<img loading=\"lazy\" src=\"" + escapeHtml(img) + "\" alt=\"" + name + "\"/>" +
+          "</a>" +
+          "<div class=\"product-card-body\">" +
+            "<h3 class=\"product-card-title\">" + name + "</h3>" +
+            "<div class=\"product-card-meta\">" +
+              "<span class=\"product-price\">" + priceText + "</span>" +
+              "<span class=\"product-brand\">" + (brand || "Thời trang nữ") + "</span>" +
+            "</div>" +
+            "<div class=\"product-actions\">" +
+              "<a class=\"btn-buy\" href=\"" + href + "\"" +
+                 " data-origin=\"" + escapeHtml(origin) + "\"" +
+                 " data-merchant=\"" + merchant + "\"" +
+                 " data-sku=\"" + sku + "\"" +
+                 " target=\"_blank\" rel=\"nofollow noopener\">" +
+                "Xem / Mua" +
+              "</a>" +
+            "</div>" +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
+    grid.innerHTML = html;
+    try{
+      if(window.MXD_AFF && typeof window.MXD_AFF.scan === "function"){
+        window.MXD_AFF.scan();
+      }
+    }catch(_){}
+  }
+
+  let all = [];
+  function applyFilter(){
+    const q = (searchInput && searchInput.value || "").trim().toLowerCase();
+    let list = all.slice();
+    if(q){
+      list = list.filter(function(p){
+        const name = (p.name || "").toLowerCase();
+        const brand = (p.brand || "").toLowerCase();
+        return name.indexOf(q) !== -1 || brand.indexOf(q) !== -1;
+      });
+    }
+    render(list);
+  }
+
+  async function loadProducts(){
+    if(!grid || !statusEl) return;
+    statusEl.textContent = "Đang tải sản phẩm Thời trang nữ…";
+    try{
+      const res = await fetch(API_LIST + "?_=" + Date.now());
+      if(!res.ok) throw new Error("HTTP " + res.status);
+      const files = await res.json();
+      const jsonFiles = (files || []).filter(function(f){
+        return f && f.type === "file" && /\.json$/i.test(f.name || "");
+      });
+      const products = [];
+      for(const f of jsonFiles){
+        try{
+          const r = await fetch((f.download_url || "") + "?_=" + Date.now());
+          if(!r.ok) continue;
+          const data = await r.json();
+          const p = normalizeProduct(data);
+          if(p && p.status !== false && p.origin_url && p.category === FILTER_CAT){
+            products.push(p);
+          }
+        }catch(e){}
+      }
+      all = products;
+      statusEl.textContent = "";
+      applyFilter();
+    }catch(e){
+      statusEl.textContent = "Không tải được danh sách sản phẩm. Thử tải lại trang giúp mình.";
+    }
+  }
+
+  function init(){
+    if(searchInput){
+      searchInput.addEventListener("input", applyFilter);
+    }
+    loadProducts();
+  }
+  init();
+})();
+</script>
+
 </body>
 </html>
