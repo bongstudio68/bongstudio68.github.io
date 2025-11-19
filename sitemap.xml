@@ -2,17 +2,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://nthuong09.github.io/sitemap-pages.xml</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://bongstudio68.github.io/sitemap-pages.xml</loc>
+    <lastmod>2025-11-19</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://nthuong09.github.io/sitemap-store.xml</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://bongstudio68.github.io/sitemap-store.xml</loc>
+    <lastmod>2025-11-19</lastmod>
   </sitemap>
-  <!-- Optional: nếu có blog
   <sitemap>
-    <loc>https://nthuong09.github.io/sitemap-blog.xml</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://bongstudio68.github.io/sitemap-blog.xml</loc>
+    <lastmod>2025-11-19</lastmod>
   </sitemap>
-  -->
 </sitemapindex>
