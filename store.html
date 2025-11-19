@@ -1,357 +1,350 @@
-<!-- REPLACE WHOLE FILE: /store.html -->
 <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-  <title>Cửa hàng • Bongstudio</title>
-  <meta name="description" content="Cửa hàng Bongstudio – danh mục sản phẩm chọn lọc: Gia dụng, Thời trang, Mẹ & Bé, Sức khỏe, Sách, Đồ ăn… từ Shopee, Lazada, TikTok."/>
+  <title>Cửa hàng Bongstudio</title>
+  <meta name="description" content="Cửa hàng Bongstudio – kho sản phẩm chọn lọc cho cộng đồng Bongstudio, mỗi món đều có link mua rõ ràng, ưu tiên dễ dùng, giá hợp lý.">
   <link rel="canonical" href="https://bongstudio68.github.io/store.html"/>
   <meta name="robots" content="index,follow"/>
 
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Cửa hàng • Bongstudio"/>
-  <meta property="og:description" content="Danh mục sản phẩm chọn lọc cho cộng đồng Bongstudio – tổng hợp từ nhiều sàn thương mại điện tử."/>
+  <meta property="og:title" content="Cửa hàng Bongstudio"/>
+  <meta property="og:description" content="Kho sản phẩm chọn lọc, link affiliate minh bạch, giúp Bongstudio có thêm thu nhập để duy trì nội dung."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://bongstudio68.github.io/store.html"/>
-  <meta property="og:image" content="https://bongstudio68.github.io/assets/img/categories/thoi-trang.webp"/>
 
-  <!-- VERIFY: Google Search Console (nếu có) -->
-  <meta name="google-site-verification" content=""/>
-
-  <!-- GA4: Bongstudio -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-550F47VKPR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-550F47VKPR');
-  </script>
-
-  <!-- CSS chung -->
-  <link rel="stylesheet" href="/assets/css/styles.css"/>
-
-  <!-- STYLE đen – hồng + lưới sản phẩm -->
   <style>
-    :root {
-      --bg: #050816;
-      --bg-soft: #0b1020;
-      --card: #020617;
-      --border-soft: rgba(148,163,184,.35);
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --accent: #ec4899;
-      --accent-soft: #f472b6;
+    :root{
+      --bg:#020617;
+      --bg-soft:#020617;
+      --bg-card:#020617;
+      --fg:#e5e7eb;
+      --fg-soft:#9ca3af;
+      --accent:#ec4899;
+      --accent-soft:#f9a8d4;
+      --border:#1f2933;
+      --chip:#0b1120;
+      --danger:#ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#111827 0,#020617 55%,#000 100%);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+    }
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .shell{
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px 16px 40px;
     }
 
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
-      color: var(--text-main);
+    /* HEADER SITE */
+    .site-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:8px 16px;
+      margin-bottom:8px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:700;
+    }
+    .brand-main{
+      font-size:20px;
+      color:#f9a8d4;
+    }
+    .brand-sub{
+      font-size:11px;
+      color:var(--fg-soft);
+    }
+    .nav-links{
+      display:flex;
+      gap:12px;
+      font-size:14px;
+    }
+    .nav-links a{
+      padding:6px 12px;
+      border-radius:999px;
+      background:#020617;
+      border:1px solid #111827;
+      color:var(--fg-soft);
+    }
+    .nav-links a.active{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
     }
 
-    a { color: inherit; }
-
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1rem;
+    /* PAGE HEADER */
+    .page-header{
+      padding:8px 16px 12px;
+    }
+    .page-title{
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+    .page-desc{
+      font-size:14px;
+      color:var(--fg-soft);
+      max-width:640px;
     }
 
-    .site-header {
-      border-bottom: 1px solid rgba(148,163,184,.3);
-      background: rgba(15,23,42,.95);
-      backdrop-filter: blur(10px);
+    /* FILTER BAR */
+    .filter-bar-wrap{
+      padding:8px 16px 0;
     }
-    .site-header .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .6rem 0;
-      gap: .75rem;
+    .filter-bar{
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#020617;
+      padding:10px 14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
     }
-    .logo {
-      text-decoration: none;
-      color: inherit;
-      display: inline-flex;
-      flex-direction: column;
-      line-height: 1.1;
+    .filter-group{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:14px;
+      color:var(--fg-soft);
     }
-    .logo-main {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--accent-soft);
+    .filter-label{
+      white-space:nowrap;
     }
-    .logo-sub {
-      font-size: .8rem;
-      color: var(--text-muted);
+    .filter-select{
+      min-width:160px;
+      padding:6px 28px 6px 10px;
+      border-radius:999px;
+      border:1px solid #111827;
+      background:#020617;
+      color:var(--fg);
+      font-size:14px;
+      appearance:none;
+      position:relative;
     }
-    .main-nav ul {
-      list-style: none;
-      display: flex;
-      gap: .75rem;
-      padding: 0;
-      margin: 0;
-      font-size: .85rem;
+    .filter-select:focus{
+      outline:1px solid var(--accent-soft);
+      outline-offset:1px;
     }
-    .main-nav a {
-      text-decoration: none;
-      padding: .35rem .6rem;
-      border-radius: 999px;
-      color: var(--text-muted);
+    .filter-select-wrap{
+      position:relative;
     }
-    .main-nav a:hover { color: #e5e7eb; }
-    .main-nav a[data-nav="store"].is-active {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .store-hero {
-      padding: 2rem 0 1.25rem;
-      background: linear-gradient(135deg, #020617 0%, #0b1120 45%, #111827 100%);
-    }
-    .store-hero h1 {
-      font-size: 1.5rem;
-      margin-bottom: .35rem;
-      color: #f9fafb;
-    }
-    .store-hero p {
-      font-size: .95rem;
-      max-width: 680px;
-      color: var(--text-muted);
+    .filter-select-wrap::after{
+      content:"▾";
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:11px;
+      color:var(--fg-soft);
+      pointer-events:none;
     }
 
-    .store-filters {
-      margin-top: 1.25rem;
-      padding: .8rem .9rem;
-      border-radius: .9rem;
-      border: 1px solid var(--border-soft);
-      background: rgba(15,23,42,.9);
-      font-size: .85rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem .75rem;
-      align-items: center;
-      color: var(--text-muted);
+    /* META ABOVE GRID */
+    .section-head{
+      padding:18px 16px 8px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-end;
     }
-    .store-filters label {
-      font-weight: 500;
-      margin-right: .25rem;
-      color: #e5e7eb;
+    .section-title{
+      font-size:16px;
+      font-weight:600;
     }
-    .store-filters select {
-      padding: .3rem .5rem;
-      border-radius: .4rem;
-      border: 1px solid rgba(148,163,184,.7);
-      font-size: .85rem;
-      background: #020617;
-      color: var(--text-main);
+    .section-meta{
+      font-size:12px;
+      color:var(--fg-soft);
+      text-align:right;
+    }
+    .section-meta strong{color:var(--accent-soft);}
+
+    /* GRID */
+    .product-grid{
+      padding:8px 12px 32px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+      gap:14px;
     }
 
-    .home-section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: .75rem;
-      margin: 1.5rem 0 .75rem;
+    .product-card{
+      background:linear-gradient(145deg,#020617,#020617 60%,#020617);
+      border-radius:18px;
+      border:1px solid #111827;
+      padding:10px 10px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      box-shadow:0 0 0 1px rgba(15,23,42,0.7);
     }
-    .home-section-head h2 {
-      font-size: 1.2rem;
-      color: #f9fafb;
-    }
-    .home-section-head p {
-      font-size: .85rem;
-      color: var(--text-muted);
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: .9rem;
-      padding-bottom: 2.5rem;
-      min-height: 3rem;
-    }
-    .product-grid.loading {
-      display: block;
-      color: var(--text-muted);
-      font-size: .9rem;
+    .product-card:hover{
+      border-color:var(--accent-soft);
+      box-shadow:0 0 0 1px rgba(236,72,153,0.4);
+      transform:translateY(-1px);
+      transition:all .16s ease-out;
     }
 
-    .product-card {
-      border-radius: 1rem;
-      border: 1px solid var(--border-soft);
-      background: rgba(15,23,42,.96);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    .product-thumb{
+      width:100%;
+      border-radius:14px;
+      overflow:hidden;
+      background:#020617;
+      border:1px solid #111827;
+      aspect-ratio:4/5;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    .product-card .product-thumb {
-      display: block;
-      position: relative;
-      padding-top: 100%;
-      overflow: hidden;
-      background: #020617;
-    }
-    .product-card .product-thumb img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .product-card-body {
-      padding: .7rem .75rem .75rem;
-      display: flex;
-      flex-direction: column;
-      gap: .35rem;
-      flex: 1;
-    }
-    .product-name {
-      font-size: .92rem;
-      line-height: 1.4;
-      max-height: 2.8em;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      color: #e5e7eb;
-    }
-    .product-merchant {
-      font-size: .8rem;
-      color: var(--text-muted);
-    }
-    .product-price {
-      display: flex;
-      align-items: baseline;
-      gap: .4rem;
-      margin-top: .1rem;
-    }
-    .product-price-current {
-      font-weight: 600;
-      font-size: .95rem;
-      color: var(--accent-soft);
-    }
-    .product-price-old {
-      font-size: .78rem;
-      text-decoration: line-through;
-      color: var(--text-muted);
+    .product-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    .product-actions {
-      margin-top: .4rem;
-      display: flex;
-      gap: .4rem;
+    .product-body{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:13px;
+    }
+    .product-name{
+      font-size:13px;
+      font-weight:600;
+      line-height:1.3;
+    }
+    .product-merchant{
+      font-size:12px;
+      color:var(--fg-soft);
     }
 
-    .btn-primary,
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: .7rem;
-      font-size: .82rem;
-      padding: .45rem .8rem;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      transition:
-        transform .1s ease,
-        box-shadow .1s ease,
-        background-color .1s ease,
-        color .1s ease,
-        border-color .1s ease;
+    .product-footer{
+      margin-top:4px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
     }
-    .btn-primary {
-      flex: 1;
-      border: 1px solid var(--accent-soft);
-      background: linear-gradient(135deg, #ec4899, #db2777);
-      color: #fff;
+    .price-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      font-size:12px;
     }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(0,0,0,.35);
+    .price-main{
+      font-weight:700;
+      color:var(--accent-soft);
     }
-    .btn-secondary {
-      border: 1px solid var(--border-soft);
-      background: rgba(15,23,42,.7);
-      color: var(--text-muted);
-      font-size: .8rem;
-      padding-inline: .75rem;
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent-soft);
-      color: #e5e7eb;
+    .price-old{
+      text-decoration:line-through;
+      color:var(--fg-soft);
+      font-size:11px;
     }
 
-    .site-footer {
-      border-top: 1px solid rgba(148,163,184,.2);
-      padding: 1rem 0 1.5rem;
-      font-size: .85rem;
-      background: #020617;
-      color: var(--text-muted);
+    .btn-buy{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 10px; /* nhỏ hơn bản cũ */
+      border-radius:999px;
+      border:none;
+      background:var(--accent);
+      color:white;
+      font-size:11.5px;
+      font-weight:600;
+      white-space:nowrap;
+      cursor:pointer;
+      flex-shrink:0;
     }
-    .site-footer strong { color: #e5e7eb; }
-    .site-footer a { color: var(--accent-soft); }
+    .btn-buy:hover{
+      filter:brightness(1.08);
+    }
 
-    @media (max-width: 640px) {
-      .site-header .container {
-        flex-direction: column;
-        align-items: flex-start;
+    /* EMPTY STATE */
+    .empty{
+      padding:24px 16px;
+      font-size:13px;
+      color:var(--fg-soft);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:768px){
+      .site-header{padding-inline:8px;}
+      .shell{padding-inline:10px;}
+      .filter-bar{
+        border-radius:16px;
+        align-items:flex-start;
       }
-      .main-nav ul {
-        flex-wrap: wrap;
-        justify-content: flex-start;
+      .filter-select{min-width:140px;}
+      .section-head{
+        flex-direction:column;
+        align-items:flex-start;
       }
-      .store-filters {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      .section-meta{text-align:left;}
     }
   </style>
 </head>
 <body>
+<div class="page">
   <header class="site-header">
-    <div class="container">
-      <a href="/" class="logo">
-        <span class="logo-main">Bongstudio</span>
-        <span class="logo-sub">Cửa hàng affiliate đa sàn</span>
-      </a>
-    <nav class="main-nav">
-        <ul>
-          <li><a href="/" data-nav="home">Trang chủ</a></li>
-          <li><a href="/store.html" data-nav="store" class="is-active">Cửa hàng</a></li>
-        </ul>
-      </nav>
+    <div class="brand">
+      <div>
+        <div class="brand-main">Bongstudio</div>
+        <div class="brand-sub">Cửa hàng affiliate đa sàn</div>
+      </div>
     </div>
+    <nav class="nav-links">
+      <a href="/" data-nav="home">Trang chủ</a>
+      <a href="/store.html" data-nav="store" class="active">Cửa hàng</a>
+    </nav>
   </header>
 
-  <main>
-    <!-- HERO CỬA HÀNG -->
-    <section class="store-hero">
-      <div class="container">
-        <h1>Cửa hàng Bongstudio</h1>
-        <p>
-          Đây là kho sản phẩm chọn lọc cho cộng đồng Bongstudio – mỗi món đều có link mua rõ ràng,
-          ưu tiên dễ dùng, giá hợp lý. Toàn bộ link là link affiliate: giá bạn không đổi, Bongstudio
-          được thêm chút hoa hồng để duy trì nội dung.
-        </p>
+  <main class="shell">
+    <section class="page-header">
+      <h1 class="page-title">Cửa hàng Bongstudio</h1>
+      <p class="page-desc">
+        Đây là kho sản phẩm chọn lọc cho cộng đồng Bongstudio – mỗi món đều có link mua rõ ràng,
+        ưu tiên dễ dùng, giá hợp lý. Toàn bộ link là link affiliate: giá bạn không đổi, Bongstudio được thêm chút
+        hoa hồng để duy trì nội dung.
+      </p>
+    </section>
 
-        <!-- THANH LỌC CƠ BẢN -->
-        <div class="store-filters">
-          <div>
-            <label for="filter-category">Danh mục:</label>
-            <select id="filter-category" name="category">
+    <!-- FILTER BAR -->
+    <section class="filter-bar-wrap">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label">Danh mục:</span>
+          <div class="filter-select-wrap">
+            <select id="filter-category" class="filter-select">
               <option value="all">Tất cả danh mục</option>
+              <!-- Các option còn lại sẽ được JS tự thêm dựa vào data -->
             </select>
           </div>
-          <div>
-            <label for="filter-merchant">Sàn:</label>
-            <select id="filter-merchant" name="merchant">
-              <option value="">Tất cả</option>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Sàn:</span>
+          <div class="filter-select-wrap">
+            <select id="filter-merchant" class="filter-select">
+              <option value="all">Tất cả</option>
               <option value="shopee">Shopee</option>
               <option value="lazada">Lazada</option>
               <option value="tiktok">TikTok</option>
@@ -362,290 +355,245 @@
       </div>
     </section>
 
-    <!-- LƯỚI SẢN PHẨM: RENDER TỪ JSON -->
-    <section>
-      <div class="container">
-        <div class="home-section-head">
-          <h2>Tất cả sản phẩm</h2>
-          <p>Dữ liệu đang lấy từ kho JSON <code>/assets/data/affiliates.json</code>.</p>
+    <!-- META + GRID -->
+    <section aria-label="Danh sách sản phẩm">
+      <div class="section-head" id="product-list-anchor">
+        <div class="section-title" id="section-title">
+          Tất cả sản phẩm
         </div>
+        <div class="section-meta">
+          <div>Đang hiển thị <strong id="product-count">0</strong> sản phẩm.</div>
+          <div>Dữ liệu lấy từ <code>/assets/data/affiliates.json</code></div>
+        </div>
+      </div>
 
-        <div class="product-grid loading" data-category="all">
-          Đang tải sản phẩm...
-        </div>
+      <div id="product-grid" class="product-grid">
+        <!-- JS render -->
+      </div>
+
+      <div id="empty-state" class="empty" style="display:none;">
+        Hiện tại chưa tìm thấy sản phẩm nào khớp với bộ lọc. Thử đổi lại danh mục hoặc sàn hiển thị nhé.
       </div>
     </section>
   </main>
+</div>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div><strong>Bongstudio</strong> – cửa hàng affiliate chọn lọc sản phẩm từ nhiều sàn.</div>
-      <div>
-        Liên hệ: 0978 557 797 ·
-        Facebook:
-        <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener">
-          Mai (Bongstudio)
-        </a>
-      </div>
-      <div style="margin-top:.3rem; opacity:.8;">
-        Khi bạn mua qua link affiliate, Bongstudio có thể nhận hoa hồng nhỏ từ sàn nhưng giá bạn trả không đổi.
-      </div>
-    </div>
-  </footer>
+<script>
+(function(){
+  const CATEGORY_LABELS = {
+    "gia-dung":"Gia dụng, decor nhà cửa",
+    "thoi-trang-nu":"Thời trang nữ",
+    "thoi-trang-nam":"Thời trang nam",
+    "quan-ao-em-be":"Quần áo em bé",
+    "suc-khoe-tpcn":"Sức khỏe & TPCN",
+    "sach":"Sách",
+    "do-an-do-uong":"Đồ ăn & đồ uống",
+    // fallback cũ:
+    "thoi-trang":"Thời trang",
+    "my-pham":"Mỹ phẩm",
+    "trang-suc":"Trang sức"
+  };
 
-  <!-- SCRIPT: load affiliates.json + build card + gắn nút mua -->
-  <script>
-    ;(function(){
-      const GRID = document.querySelector(".product-grid");
-      const selCategory = document.getElementById("filter-category");
-      const selMerchant = document.getElementById("filter-merchant");
+  const MERCHANT_LABELS = {
+    shopee:"Shopee",
+    lazada:"Lazada",
+    tiktok:"TikTok",
+    tiki:"Tiki"
+  };
 
-      const AFF_BASE = {
-        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
-        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
-        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655",
-        tiki:   "https://go.isclix.com/deep_link/6837508078414670452/4348614231480407268"
-      };
+  const catSelect = document.getElementById("filter-category");
+  const merchantSelect = document.getElementById("filter-merchant");
+  const gridEl = document.getElementById("product-grid");
+  const countEl = document.getElementById("product-count");
+  const emptyEl = document.getElementById("empty-state");
+  const sectionTitleEl = document.getElementById("section-title");
 
-      const MERCHANT_LABEL = {
-        shopee: "Shopee",
-        lazada: "Lazada",
-        tiktok: "TikTok",
-        tiki: "Tiki"
-      };
+  let ALL_PRODUCTS = [];
 
-      const UTM_BASE =
-        "utm_source=" + encodeURIComponent(location.hostname) +
-        "&utm_medium=affiliate";
+  function formatVnd(value){
+    if(value == null || isNaN(value)) return "";
+    try{
+      return value.toLocaleString("vi-VN")+"đ";
+    }catch(e){
+      return value + "đ";
+    }
+  }
 
-      // Dùng URL tuyệt đối cho chắc cú
-      const AFFILIATES_URL = "https://bongstudio68.github.io/assets/data/affiliates.json";
+  function buildCategoryOptions(products){
+    const set = new Set();
+    products.forEach(p=>{
+      if(p.category){
+        set.add(p.category);
+      }
+    });
 
-      let PRODUCTS = [];
+    // Xoá hết option != all
+    Array.from(catSelect.options).forEach(opt=>{
+      if(opt.value !== "all"){
+        catSelect.removeChild(opt);
+      }
+    });
 
-      function formatPrice(v) {
-        if (typeof v !== "number") return "";
-        try {
-          return v.toLocaleString("vi-VN") + "₫";
-        } catch(e) {
-          return v + "₫";
+    Array.from(set).sort().forEach(slug=>{
+      const opt = document.createElement("option");
+      opt.value = slug;
+      opt.textContent = CATEGORY_LABELS[slug] || slug.replace(/-/g," ");
+      catSelect.appendChild(opt);
+    });
+  }
+
+  function applyInitialFiltersFromURL(){
+    const params = new URLSearchParams(window.location.search);
+    const catParam = params.get("cat") || params.get("category");
+    const merchantParam = params.get("merchant");
+
+    if(catParam && catSelect.querySelector('option[value="'+catParam+'"]')){
+      catSelect.value = catParam;
+      // scroll nhẹ xuống phần sản phẩm cho cảm giác "click danh mục" mượt hơn
+      setTimeout(function(){
+        const anchor = document.getElementById("product-list-anchor");
+        if(anchor){
+          anchor.scrollIntoView({behavior:"smooth",block:"start"});
         }
-      }
+      },300);
+    }
 
-      function normalizeOriginUrl(originUrl) {
-        if (!originUrl) return "";
-        let url = String(originUrl).trim();
+    if(merchantParam && merchantSelect.querySelector('option[value="'+merchantParam+'"]')){
+      merchantSelect.value = merchantParam;
+    }
+  }
 
-        if (/^https?:\/\//i.test(url)) return url;
-        if (url.startsWith("//")) return "https:" + url;
+  function renderProducts(){
+    const selectedCat = catSelect.value || "all";
+    const selectedMerchant = merchantSelect.value || "all";
 
-        let lower = url.toLowerCase().replace(/^\/+/, "");
+    let filtered = ALL_PRODUCTS.slice();
 
-        if (
-          lower.startsWith("shopee.vn") ||
-          lower.startsWith("lazada.vn") ||
-          lower.startsWith("tiki.vn") ||
-          lower.startsWith("tiktokshop.com") ||
-          lower.startsWith("tiktok.com")
-        ) {
-          return "https://" + lower;
-        }
+    filtered = filtered.filter(p=>{
+      const catOk = (selectedCat==="all") || (p.category === selectedCat);
+      const mOk = (selectedMerchant==="all") || (p.merchant === selectedMerchant);
+      return catOk && mOk;
+    });
 
-        return "https://" + lower;
-      }
+    gridEl.innerHTML = "";
 
-      function makeIsclixUrl(merchant, originUrl, sku) {
-        const base = AFF_BASE[merchant];
-        const normalized = normalizeOriginUrl(originUrl);
+    if(!filtered.length){
+      emptyEl.style.display = "block";
+      countEl.textContent = "0";
+    }else{
+      emptyEl.style.display = "none";
+      const frag = document.createDocumentFragment();
 
-        if (!base || !normalized) return normalized || originUrl || "";
+      filtered.forEach(p=>{
+        const link = p.deeplink || p.origin_url || "#";
+        const merchantLabel = MERCHANT_LABELS[p.merchant] || p.merchant || "Sàn khác";
 
-        const head =
-          base +
-          (base.includes("?") ? "&" : "?") +
-          "url=" +
-          encodeURIComponent(normalized);
-
-        const params = [
-          UTM_BASE,
-          "utm_campaign=" + encodeURIComponent(merchant || ""),
-          "sub1=" + encodeURIComponent(sku || ""),
-          "sub2=" + encodeURIComponent(merchant || "")
-        ];
-
-        return head + "&" + params.join("&");
-      }
-
-      function buildCard(p) {
         const card = document.createElement("article");
         card.className = "product-card";
 
-        const imgSrc = p.image || p.image_url || "/assets/og/default-og.webp";
-        const merchantKey = (p.merchant || p.san || p.platform || "").toLowerCase();
-        const merchantLabel = MERCHANT_LABEL[merchantKey] || "Khác";
+        const thumb = document.createElement("div");
+        thumb.className = "product-thumb";
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.alt = p.name || "";
+        img.src = p.image || "/assets/img/placeholder-product.webp";
+        thumb.appendChild(img);
 
-        const originUrl =
-          p.origin_url ||
-          p.origin ||
-          p.product_url ||
-          p.url ||
-          "";
+        const body = document.createElement("div");
+        body.className = "product-body";
 
-        const sku = p.sku || p.id || p.code || "";
+        const nameEl = document.createElement("div");
+        nameEl.className = "product-name";
+        nameEl.textContent = p.name || "Sản phẩm chưa đặt tên";
 
-        const priceValue =
-          (typeof p.price_vnd === "number") ? p.price_vnd :
-          (typeof p.price === "number") ? p.price :
-          null;
+        const merchantEl = document.createElement("div");
+        merchantEl.className = "product-merchant";
+        merchantEl.textContent = "Nguồn: " + merchantLabel;
 
-        const oldPriceValue =
-          (typeof p.old_price_vnd === "number") ? p.old_price_vnd :
-          (typeof p.old_price === "number") ? p.old_price :
-          null;
+        body.appendChild(nameEl);
+        body.appendChild(merchantEl);
 
-        const finalUrl = makeIsclixUrl(merchantKey, originUrl, sku);
+        const footer = document.createElement("div");
+        footer.className = "product-footer";
 
-        const safeName = (p.name || "Sản phẩm Bongstudio").replace(/"/g, "&quot;");
+        const priceWrap = document.createElement("div");
+        priceWrap.className = "price-wrap";
 
-        card.innerHTML = `
-          <a class="product-thumb" href="javascript:void(0)" aria-label="Xem chi tiết sản phẩm">
-            <img src="${imgSrc}"
-                 loading="lazy"
-                 alt="${safeName}"/>
-          </a>
-          <div class="product-card-body">
-            <h3 class="product-name">${safeName}</h3>
-            <div class="product-merchant">Nguồn: ${merchantLabel}</div>
-            <div class="product-price">
-              <span class="product-price-current">
-                ${priceValue ? formatPrice(priceValue) : ""}
-              </span>
-              ${
-                oldPriceValue
-                  ? `<span class="product-price-old">${formatPrice(oldPriceValue)}</span>`
-                  : ""
-              }
-            </div>
-            <div class="product-actions">
-              <a
-                class="btn-primary js-mxd-buy"
-                href="${finalUrl || (originUrl ? normalizeOriginUrl(originUrl) : "#")}"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-merchant="${merchantKey}"
-                data-sku="${sku}"
-              >
-                Mua ngay trên ${merchantLabel}
-              </a>
-              <a class="btn-secondary" href="javascript:void(0)">Giữ lại để xem sau</a>
-            </div>
-          </div>
-        `;
-
-        return card;
-      }
-
-      function applyFilters() {
-        if (!GRID) return;
-
-        GRID.classList.remove("loading");
-        GRID.innerHTML = "";
-
-        const catVal = selCategory ? selCategory.value : "all";
-        const merVal = selMerchant ? selMerchant.value : "";
-
-        let list = PRODUCTS.filter(p => p && p.status !== false);
-
-        if (catVal && catVal !== "all") {
-          list = list.filter(p =>
-            (p.category || "").toLowerCase() === catVal.toLowerCase()
-          );
+        if(p.price_vnd){
+          const priceMain = document.createElement("div");
+          priceMain.className = "price-main";
+          priceMain.textContent = formatVnd(p.price_vnd);
+          priceWrap.appendChild(priceMain);
         }
 
-        if (merVal) {
-          list = list.filter(p =>
-            (p.merchant || p.san || p.platform || "")
-              .toLowerCase() === merVal.toLowerCase()
-          );
+        if(p.price_old){
+          const priceOld = document.createElement("div");
+          priceOld.className = "price-old";
+          priceOld.textContent = formatVnd(p.price_old);
+          priceWrap.appendChild(priceOld);
         }
 
-        if (!list.length) {
-          GRID.textContent = "Chưa có sản phẩm phù hợp bộ lọc (hoặc JSON đang trống).";
-          return;
-        }
+        const buyBtn = document.createElement("a");
+        buyBtn.className = "btn-buy";
+        buyBtn.href = link;
+        buyBtn.target = "_blank";
+        buyBtn.rel = "nofollow noopener";
+        // để người dùng có thể chuột phải -> Copy link địa chỉ
+        buyBtn.textContent = "Mua ngay trên " + merchantLabel;
 
-        list.forEach(p => GRID.appendChild(buildCard(p)));
-      }
+        footer.appendChild(priceWrap);
+        footer.appendChild(buyBtn);
 
-      function populateFilters() {
-        if (!selCategory) return;
+        card.appendChild(thumb);
+        card.appendChild(body);
+        card.appendChild(footer);
 
-        const cats = Array.from(new Set(
-          PRODUCTS
-            .map(p => p && p.category)
-            .filter(Boolean)
-        ));
+        frag.appendChild(card);
+      });
 
-        selCategory.innerHTML = '<option value="all">Tất cả danh mục</option>';
-        cats.forEach(c => {
-          const opt = document.createElement("option");
-          opt.value = c;
-          opt.textContent = c;
-          selCategory.appendChild(opt);
+      gridEl.appendChild(frag);
+      countEl.textContent = String(filtered.length);
+    }
+
+    // Cập nhật tiêu đề section
+    let title = "Tất cả sản phẩm";
+    const cat = catSelect.value;
+    if(cat && cat !== "all"){
+      title = CATEGORY_LABELS[cat] || "Danh mục";
+    }
+    sectionTitleEl.textContent = title;
+  }
+
+  function initEvents(){
+    catSelect.addEventListener("change",renderProducts);
+    merchantSelect.addEventListener("change",renderProducts);
+  }
+
+  function fetchData(){
+    fetch("/assets/data/affiliates.json",{cache:"no-store"})
+      .then(function(res){return res.json();})
+      .then(function(data){
+        if(!Array.isArray(data)) data = [];
+        // loại các sản phẩm bị ẩn nếu có
+        ALL_PRODUCTS = data.filter(function(p){
+          return !p.status || p.status === "active" || p.status === "ok";
         });
-      }
 
-      function initEvents() {
-        if (selCategory) selCategory.addEventListener("change", applyFilters);
-        if (selMerchant) selMerchant.addEventListener("change", applyFilters);
-      }
+        buildCategoryOptions(ALL_PRODUCTS);
+        applyInitialFiltersFromURL();
+        renderProducts();
+      })
+      .catch(function(err){
+        console.error("Lỗi tải affiliates.json",err);
+        ALL_PRODUCTS = [];
+        renderProducts();
+      });
+  }
 
-      function init() {
-        if (!GRID) return;
-
-        fetch(AFFILIATES_URL, { cache: "no-store" })
-          .then(function(r){
-            if (!r.ok) {
-              throw new Error("HTTP " + r.status + " khi load " + AFFILIATES_URL);
-            }
-            return r.json();
-          })
-          .then(function(data){
-            if (Array.isArray(data)) {
-              PRODUCTS = data;
-            } else if (data && Array.isArray(data.items)) {
-              PRODUCTS = data.items;
-            } else if (data && Array.isArray(data.products)) {
-              PRODUCTS = data.products;
-            } else {
-              console.warn("Cấu trúc JSON lạ, không phải mảng:", data);
-              PRODUCTS = [];
-            }
-
-            populateFilters();
-            initEvents();
-            applyFilters();
-          })
-          .catch(function(err){
-            console.error("Load affiliates.json error:", err);
-            GRID.classList.remove("loading");
-            GRID.textContent =
-              "Không tải được dữ liệu sản phẩm (affiliates.json). Chi tiết: " +
-              (err && err.message ? err.message : String(err));
-          });
-      }
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
-      } else {
-        init();
-      }
-    })();
-  </script>
-
-  <!-- Các script dùng chung hệ MXD (giữ nguyên để sau dùng tiếp) -->
-  <script defer src="/assets/mxd-affiliates.js?v=1"></script>
-  <script defer src="/assets/mxd-store.js?v=1"></script>
-  <script defer src="/assets/mxd-buy.js?v=20251119"></script>
+  // init
+  initEvents();
+  fetchData();
+})();
+</script>
 </body>
 </html>
