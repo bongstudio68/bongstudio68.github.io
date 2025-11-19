@@ -1,4 +1,4 @@
-const VERSION = '2025-11-19-v37';
+const VERSION = '2025-11-19-v40';
 const ASSET_CACHE = 'mxd-assets-' + VERSION;
 
 self.addEventListener('install', (e) => self.skipWaiting());
