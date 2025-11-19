@@ -685,6 +685,38 @@ function initImporter() {
   function cleanUrl(u){
     return (u||'').trim().replace(/^["']+|["',]+$/g,'');
   }
+
+  /* ✅ CHUẨN HOÁ ORIGIN CHO JSON (auto thêm https:// + encode path nếu cần) */
+  function normalizeOriginForJson(raw, merchant){
+    let u = cleanUrl(raw);
+    if(!u) return '';
+
+    // Nếu thiếu http/https thì auto thêm https:// cho các domain quen
+    if(!/^https?:\/\//i.test(u)){
+      const trimmed = u.replace(/^\/+/, '');
+      if(/^(shopee\.vn|www\.shopee\.vn|lazada\.vn|www\.lazada\.vn|tiki\.vn|www\.tiki\.vn|tiktok\.com|www\.tiktok\.com|vt\.tiktok\.com)/i.test(trimmed)
+        || /^[a-z0-9.-]+\.[a-z]{2,}(\/|$)/i.test(trimmed)){
+        u = 'https://' + trimmed;
+      }
+    }
+
+    // Mã hoá path nếu còn ký tự Unicode và chưa có %xx trong path
+    try{
+      const urlObj = new URL(u);
+      const path = urlObj.pathname;
+      if (/[^\x00-\x7F]/.test(path) && !/%[0-9A-Fa-f]{2}/.test(path)){
+        const encodedPath = path
+          .split('/')
+          .map(seg => encodeURIComponent(seg))
+          .join('/');
+        u = urlObj.origin + encodedPath + urlObj.search + urlObj.hash;
+      }
+    }catch(e){
+      // Nếu URL constructor fail thì giữ nguyên
+    }
+    return u;
+  }
+
   function activeTplFor(merchant){
     const s=readSettings();
     const pick = merchant==='lazada'
@@ -802,16 +834,16 @@ function initImporter() {
   function runDiag(){
     const sku=$("#sku").value.trim();
     const img=$("#image").value.trim();
-    const origin=cleanUrl($("#origin").value.trim());
     const merchant=$("#merchant").value;
+    const origin = normalizeOriginForJson($("#origin").value.trim(), merchant);
     const expectedFolder=getSelectedFolder();
     const fmt=getSelectedFmt();
     const msgs=[];
     if(!sku) msgs.push("• Thiếu SKU (bắt buộc cho publish).");
     if(img && !img.startsWith(`${expectedFolder}${sku||'...'}`))
       msgs.push("• Ảnh nên là "+expectedFolder+(sku||'<sku>')+extByFmt(fmt));
-    if(origin && !/shopee\.vn|lazada\.vn|tiktok\.com/i.test(origin))
-      msgs.push("• Origin không phải Shopee/Lazada/TikTok.");
+    if(origin && !/shopee\.vn|lazada\.vn|tiktok\.com|tiki\.vn/i.test(origin))
+      msgs.push("• Origin không phải Shopee/Lazada/TikTok/Tiki.");
     msgs.push("• Merchant: "+merchant);
     $("#diag").innerHTML=msgs.length
       ? msgs.map(x=>`<div>${x}</div>`).join("")
@@ -1290,10 +1322,13 @@ function initImporter() {
     $("#category").value=normCategory($("#category").value);
 
     const now=new Date().toISOString();
+    const rawOrigin = $("#origin").value.trim();
+    const normOrigin = normalizeOriginForJson(rawOrigin, $("#merchant").value);
+
     const obj={
       name:$("#name").value.trim(),
       price_vnd:Number($("#price").value||0),
-      origin_url:cleanUrl($("#origin").value.trim()),
+      origin_url:normOrigin,
       merchant:$("#merchant").value,
       sku:$("#sku").value.trim(),
       image:$("#image").value.trim(),
