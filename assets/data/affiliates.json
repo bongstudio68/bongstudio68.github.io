@@ -1,0 +1,41 @@
+[
+  {
+    "sku": "BS-PJ-001",
+    "name": "Pijama Xinh Tay Dài Quần Dài – Chất mát, không nhăn, dễ mặc ở nhà",
+    "merchant": "shopee",
+    "origin": "https://shopee.vn/Pijama-Xinh-Tay-D%C3%A0i-Qu%E1%BA%A7n-D%C3%A0i-%C4%90%E1%BB%93-Ng%E1%BB%A7-Gi%C3%A1-R%E1%BA%BB-%C4%90%E1%BB%93-B%E1%BB%99-Ng%E1%BB%A7-N%E1%BB%AF-Pyjama-%C4%90%E1%BB%93-B%E1%BB%99-M%E1%BA%B7c-Nh%C3%A0-Ch%C3%A2%CC%81t-Ma%CC%81t-Kh%C3%B4ng-Nh%C4%83n-Ha%CC%80ng-Si%C3%AAu-%C4%90e%CC%A3p-i.1121158422.20386415824",
+    "image": "/assets/img/products/pijama-xinh-tay-dai-quan-dai.webp",
+    "price_vnd": 57000,
+    "category": "thoi-trang-nu",
+    "brand": "",
+    "featured": true,
+    "status": true,
+    "updated_at": "2025-11-19T07:00:00Z"
+  },
+  {
+    "sku": "BS-SM-001",
+    "name": "Áo Sơ Mi Trắng Nữ Rymola – Không nhăn, giấu nút, dễ phối đồ",
+    "merchant": "shopee",
+    "origin": "https://shopee.vn/%C3%81o-S%C6%A1-Mi-Tr%E1%BA%AFng-N%E1%BB%AF-Rymola-Kh%C3%B4ng-Nh%C4%83n-Gi%E1%BA%A5u-N%C3%BAt-Tay-D%C3%A0i-C%C3%B3-Bigsize-S%C6%A1-Mi-Tr%E1%BA%AFng-C%C3%B4ng-S%E1%BB%9F-Ch%E1%BA%A5t-V%E1%BA%A3i-Cotton-Form-Su%C3%B4ng-i.8496476.6342798120",
+    "image": "/assets/img/products/ao-so-mi-trang-nu-rymola.webp",
+    "price_vnd": 199000,
+    "category": "thoi-trang-nu",
+    "brand": "",
+    "featured": true,
+    "status": true,
+    "updated_at": "2025-11-19T07:00:00Z"
+  },
+  {
+    "sku": "BS-GD-001",
+    "name": "Sản phẩm gia dụng minh họa – chỗ này để test link Lazada",
+    "merchant": "lazada",
+    "origin": "https://www.lazada.vn/",
+    "image": "/assets/img/products/gia-dung-minh-hoa.webp",
+    "price_vnd": 123000,
+    "category": "gia-dung",
+    "brand": "",
+    "featured": false,
+    "status": true,
+    "updated_at": "2025-11-19T07:00:00Z"
+  }
+]
