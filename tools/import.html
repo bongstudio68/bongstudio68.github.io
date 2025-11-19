@@ -4,29 +4,46 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NThương Importer-Lite</title>
+  <title>Bongstudio Importer-Lite</title>
   <meta name="robots" content="noindex,nofollow"/>
   <!-- MXD-CHECK: canonical tuyệt đối theo domain repo này -->
-  <link rel="canonical" href="https://nthuong09.github.io/tools/import.html"/>
+  <link rel="canonical" href="https://bongstudio68.github.io/tools/import.html"/>
 
   <!-- Base styles + MXD -->
   <link rel="stylesheet" href="/assets/site.css"/>
 
   <style>
-    /* Tone màu hồng (khác Tuyet) + nhẹ nhàng */
+    /* Tone đen – hồng cho Bongstudio */
     :root{
-      --brand:#c2185b;      /* hồng đậm */
-      --accent:#ff2d8d;     /* hồng neon nhẹ */
+      --brand:#111827;      /* đen đậm */
+      --accent:#ec4899;     /* hồng Bongstudio */
       --ink:#111827;
       --muted:#6b7280;
-      --panel:#fff5fa;
-      --border:#ffd1e8;
+      --panel:#fdf2f8;      /* nền panel hồng rất nhạt */
+      --border:#fecdd3;
     }
-    header.topbar{position:sticky;top:0;background:#fff;z-index:10;box-shadow:0 1px 0 rgba(0,0,0,.06)}
-    .topbar .brand{color:var(--brand)}
-    .btn{background:var(--brand);border-color:var(--brand)}
+    header.topbar{
+      position:sticky;
+      top:0;
+      background:#ffffff;
+      z-index:10;
+      box-shadow:0 1px 0 rgba(0,0,0,.06)
+    }
+    .topbar .brand{
+      color:var(--accent);
+      font-weight:700;
+    }
+    .btn{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
     .btn:hover{filter:brightness(.96)}
-    .btn.outline{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+    .btn.outline{
+      background:#fff;
+      color:var(--accent);
+      border:1px solid var(--accent)
+    }
     .tool-wrap{max-width:1100px;margin:0 auto;padding:16px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
@@ -35,10 +52,24 @@
     th,td{border:1px solid #e5e7eb;padding:6px;vertical-align:top}
     .btn.small{padding:.45rem .7rem;border-radius:10px;font-size:14px}
     .hint{color:var(--muted);font-size:13px}
-    .drop{border:2px dashed #cbd5e1;border-radius:12px;padding:16px;text-align:center;background:#f8fafc}
-    .drop.drag{background:#ffe6f2;border-color:var(--accent)}
-    /* khu log/panel theo tone hồng */
-    .panel{background:var(--panel);border:1px dashed var(--border);border-radius:12px;padding:10px}
+    .drop{
+      border:2px dashed #cbd5e1;
+      border-radius:12px;
+      padding:16px;
+      text-align:center;
+      background:#f8fafc
+    }
+    .drop.drag{
+      background:#fdf2f8;
+      border-color:var(--accent)
+    }
+    /* khu log/panel theo tone hồng Bongstudio */
+    .panel{
+      background:var(--panel);
+      border:1px dashed var(--border);
+      border-radius:12px;
+      padding:10px
+    }
   </style>
 
   <!-- GA4 luôn trước affiliate theo MXD -->
@@ -50,28 +81,31 @@
 <body>
 <header class="topbar">
   <div class="container nav">
-    <a class="brand" href="/">NThương Store</a>
+    <a class="brand" href="/">Bongstudio</a>
     <nav>
       <a href="/">Trang chủ</a>
       <a href="/store.html">Cửa hàng</a>
-      <a href="/store/thoi-trang.html">Thời trang</a>
-      <a href="/store/my-pham.html">Mỹ phẩm</a>
-      <a href="/store/me-va-be.html">Mẹ & Bé</a>
-      <a href="/store/trang-suc.html">Trang sức</a>
-      <a href="/lien-he.html">Liên hệ</a>
     </nav>
   </div>
 </header>
 
 <div class="tool-wrap">
-  <h1>NThương Importer-Lite</h1>
-  <p class="hint">Nhập CSV / thêm nhanh / dán hàng loạt / kéo-thả ảnh → gộp <code>affiliates.json</code> + ZIP ảnh <code>.webp</code> đúng chuẩn <code>/assets/img/products/&lt;sku&gt;.webp</code>. (Nguồn sự thật khuyến nghị: <code>/assets/data/affiliates.json</code>).</p>
+  <h1>Bongstudio Importer-Lite</h1>
+  <p class="hint">
+    Nhập CSV / thêm nhanh / dán hàng loạt / kéo–thả ảnh → gộp
+    <code>affiliates.json</code> + ZIP ảnh <code>.webp</code> đúng chuẩn
+    <code>/assets/img/products/&lt;sku&gt;.webp</code>.
+    (Nguồn sự thật khuyến nghị: <code>/assets/data/affiliates.json</code>).
+  </p>
 
   <div class="grid">
     <div>
       <h3>1) Tải CSV</h3>
       <input type="file" id="csvFile" accept=".csv,.txt"/>
-      <p class="hint">CSV Shopee/Excel có thể gồm: <em>Mã sản phẩm, Tên sản phẩm, Giá, Link sản phẩm…</em></p>
+      <p class="hint">
+        CSV Shopee/Excel có thể gồm:
+        <em>Mã sản phẩm, Tên sản phẩm, Giá, Link sản phẩm…</em>
+      </p>
 
       <h3>2) Tuỳ chọn</h3>
       <label>Merchant mặc định:
@@ -83,7 +117,7 @@
         </select>
       </label>
       <br/>
-      <label>Tiền tố SKU (tuỳ chọn): <input id="skuPrefix" placeholder="vd: nt-"/></label>
+      <label>Tiền tố SKU (tuỳ chọn): <input id="skuPrefix" placeholder="vd: bs-"/></label>
       <p class="hint">Ảnh theo chuẩn: <code>/assets/img/products/&lt;sku&gt;.webp</code></p>
 
       <h3>3) Hành động dữ liệu</h3>
@@ -97,7 +131,10 @@
       <pre id="log" class="mono panel" style="min-height:120px"></pre>
 
       <h3>Thiết lập map cột</h3>
-      <p class="hint">Có thể sửa tên cột đích: <code>name, price_vnd, origin_url, merchant, sku, category</code></p>
+      <p class="hint">
+        Có thể sửa tên cột đích:
+        <code>name, price_vnd, origin_url, merchant, sku, category</code>
+      </p>
       <textarea id="mapBox" class="mono panel" spellcheck="false"></textarea>
     </div>
   </div>
@@ -118,7 +155,9 @@
       </label><br/>
       <label>SKU (để trống sẽ tự tạo): <input id="mSku" placeholder="auto từ tên"/></label><br/>
       <button class="btn small" id="btnAddManual">Thêm vào danh sách</button>
-      <p class="hint">Sau khi thêm, bấm “Gộp…” để đưa vào <code>affiliates.json</code>.</p>
+      <p class="hint">
+        Sau khi thêm, bấm “Gộp…” để đưa vào <code>affiliates.json</code>.
+      </p>
     </div>
     <div>
       <h3>Danh sách hiện tại</h3>
@@ -127,18 +166,26 @@
   </div>
 
   <h3>4b) Thêm hàng loạt (dán mỗi dòng)</h3>
-  <p class="hint">Format: <code>Tên | Link | Giá | Merchant?</code> | <em>SKU?</em> (có thể dùng <kbd>|</kbd>, <kbd>,</kbd> hoặc Tab; SKU trống sẽ tự tạo).</p>
-  <textarea id="bulkBox" class="mono panel" placeholder="Áo Thể Thao | https://shopee.vn/... | 99000 | shopee"></textarea>
+  <p class="hint">
+    Format:
+    <code>Tên | Link | Giá | Merchant?</code> | <em>SKU?</em>
+    (có thể dùng <kbd>|</kbd>, <kbd>,</kbd> hoặc Tab; SKU trống sẽ tự tạo).
+  </p>
+  <textarea id="bulkBox" class="mono panel"
+            placeholder="Áo Thể Thao | https://shopee.vn/... | 99000 | shopee"></textarea>
   <br/>
   <button class="btn small" id="btnBulk">Thêm hàng loạt</button>
 
   <h3>5) Ảnh sản phẩm (.webp theo SKU)</h3>
   <div class="grid">
     <div>
-      <div id="drop" class="drop">Kéo-thả ảnh (hoặc chọn) — tên file nên <strong>trùng SKU</strong><br/><br/>
+      <div id="drop" class="drop">
+        Kéo–thả ảnh (hoặc chọn) — tên file nên <strong>trùng SKU</strong><br/><br/>
         <input type="file" id="imgFiles" accept="image/*" multiple/>
       </div>
-      <p class="hint">Tool sẽ cố khớp ảnh ↔ SKU theo tên file; có thể sửa SKU trực tiếp trong bảng.</p>
+      <p class="hint">
+        Tool sẽ cố khớp ảnh ↔ SKU theo tên file; có thể sửa SKU trực tiếp trong bảng.
+      </p>
       <button class="btn small" id="btnZip">Tạo ZIP ảnh chuẩn tên</button>
       <button class="btn small outline" id="btnNeedList">Tải danh sách SKU cần ảnh</button>
     </div>
