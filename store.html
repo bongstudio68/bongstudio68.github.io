@@ -213,7 +213,7 @@
     .product-name {
       font-size: .92rem;
       line-height: 1.4;
-      max-height: 2.8em; /* ~2 dòng */
+      max-height: 2.8em;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -254,7 +254,7 @@
       justify-content: center;
       border-radius: .7rem;
       font-size: .82rem;
-      padding: .45rem .8rem; /* nhỏ gọn hơn */
+      padding: .45rem .8rem;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
@@ -320,7 +320,7 @@
         <span class="logo-main">Bongstudio</span>
         <span class="logo-sub">Cửa hàng affiliate đa sàn</span>
       </a>
-      <nav class="main-nav">
+    <nav class="main-nav">
         <ul>
           <li><a href="/" data-nav="home">Trang chủ</a></li>
           <li><a href="/store.html" data-nav="store" class="is-active">Cửa hàng</a></li>
@@ -418,7 +418,8 @@
         "utm_source=" + encodeURIComponent(location.hostname) +
         "&utm_medium=affiliate";
 
-      const AFFILIATES_URL = "/assets/data/affiliates.json";
+      // Dùng URL tuyệt đối cho chắc cú
+      const AFFILIATES_URL = "https://bongstudio68.github.io/assets/data/affiliates.json";
 
       let PRODUCTS = [];
 
@@ -431,12 +432,11 @@
         }
       }
 
-      // CHUẨN HÓA origin_url: xử được cả "https://shopee.vn/..." lẫn "shopee.vn/..."
       function normalizeOriginUrl(originUrl) {
         if (!originUrl) return "";
         let url = String(originUrl).trim();
 
-        if (/^https?:\/\//i.test(url)) return url;      // đã có http/https
+        if (/^https?:\/\//i.test(url)) return url;
         if (url.startsWith("//")) return "https:" + url;
 
         let lower = url.toLowerCase().replace(/^\/+/, "");
@@ -458,7 +458,6 @@
         const base = AFF_BASE[merchant];
         const normalized = normalizeOriginUrl(originUrl);
 
-        // Nếu chưa cấu hình aff cho merchant này thì trả link gốc cho an toàn
         if (!base || !normalized) return normalized || originUrl || "";
 
         const head =
@@ -485,7 +484,6 @@
         const merchantKey = (p.merchant || p.san || p.platform || "").toLowerCase();
         const merchantLabel = MERCHANT_LABEL[merchantKey] || "Khác";
 
-        // LẤY LINK GỐC & GIÁ ĐÚNG FIELD
         const originUrl =
           p.origin_url ||
           p.origin ||
@@ -631,7 +629,9 @@
           .catch(function(err){
             console.error("Load affiliates.json error:", err);
             GRID.classList.remove("loading");
-            GRID.textContent = "Không tải được dữ liệu sản phẩm (affiliates.json).";
+            GRID.textContent =
+              "Không tải được dữ liệu sản phẩm (affiliates.json). Chi tiết: " +
+              (err && err.message ? err.message : String(err));
           });
       }
 
