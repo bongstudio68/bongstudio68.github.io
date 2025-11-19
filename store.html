@@ -1,3 +1,4 @@
+<!-- REPLACE WHOLE FILE: /store.html -->
 <!doctype html>
 <html lang="vi">
 <head>
@@ -31,8 +32,35 @@
   <!-- CSS chính -->
   <link rel="stylesheet" href="/assets/css/styles.css"/>
 
-  <!-- STYLE tối thiểu để đọc tên sản phẩm rõ ràng, đồng bộ -->
+  <!-- STYLE đen – hồng + lưới sản phẩm -->
   <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --card: #020617;
+      --border-soft: rgba(148,163,184,.35);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent: #ec4899;
+      --accent-soft: #f472b6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+    }
+
+    a {
+      color: inherit;
+    }
+
     .container {
       max-width: 1120px;
       margin: 0 auto;
@@ -40,8 +68,9 @@
     }
 
     .site-header {
-      border-bottom: 1px solid #eee;
-      background: #fff;
+      border-bottom: 1px solid rgba(148,163,184,.3);
+      background: rgba(15,23,42,.95);
+      backdrop-filter: blur(10px);
     }
     .site-header .container {
       display: flex;
@@ -60,10 +89,11 @@
     .logo-main {
       font-weight: 700;
       font-size: 1.25rem;
+      color: var(--accent-soft);
     }
     .logo-sub {
       font-size: .8rem;
-      opacity: .75;
+      color: var(--text-muted);
     }
     .main-nav ul {
       list-style: none;
@@ -77,45 +107,56 @@
       text-decoration: none;
       padding: .35rem .6rem;
       border-radius: 999px;
+      color: var(--text-muted);
+    }
+    .main-nav a:hover {
+      color: #e5e7eb;
     }
     .main-nav a[data-nav="store"].is-active {
-      background: #ff5a5f;
+      background: var(--accent);
       color: #fff;
     }
 
     .store-hero {
       padding: 2rem 0 1.25rem;
+      background: linear-gradient(135deg, #020617 0%, #0b1120 45%, #111827 100%);
     }
     .store-hero h1 {
       font-size: 1.5rem;
       margin-bottom: .35rem;
+      color: #f9fafb;
     }
     .store-hero p {
       font-size: .95rem;
       max-width: 680px;
+      color: var(--text-muted);
     }
 
     .store-filters {
       margin-top: 1.25rem;
       padding: .8rem .9rem;
       border-radius: .9rem;
-      border: 1px solid #eee;
-      background: #fafafa;
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,.9);
       font-size: .85rem;
       display: flex;
       flex-wrap: wrap;
       gap: .5rem .75rem;
       align-items: center;
+      color: var(--text-muted);
     }
     .store-filters label {
       font-weight: 500;
       margin-right: .25rem;
+      color: #e5e7eb;
     }
     .store-filters select {
       padding: .3rem .5rem;
       border-radius: .4rem;
-      border: 1px solid #ddd;
+      border: 1px solid rgba(148,163,184,.7);
       font-size: .85rem;
+      background: #020617;
+      color: var(--text-main);
     }
 
     .home-section-head {
@@ -123,14 +164,15 @@
       align-items: baseline;
       justify-content: space-between;
       gap: .75rem;
-      margin-bottom: .75rem;
+      margin: 1.5rem 0 .75rem;
     }
     .home-section-head h2 {
       font-size: 1.2rem;
+      color: #f9fafb;
     }
     .home-section-head p {
       font-size: .85rem;
-      opacity: .8;
+      color: var(--text-muted);
     }
 
     .product-grid {
@@ -140,10 +182,15 @@
       padding-bottom: 2.5rem;
       min-height: 3rem;
     }
+    .product-grid.loading {
+      display: block;
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
     .product-card {
       border-radius: 1rem;
-      border: 1px solid #eee;
-      background: #fff;
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,.96);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -153,7 +200,7 @@
       position: relative;
       padding-top: 100%;
       overflow: hidden;
-      background: #fafafa;
+      background: #020617;
     }
     .product-card .product-thumb img {
       position: absolute;
@@ -177,10 +224,11 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      color: #e5e7eb;
     }
     .product-merchant {
       font-size: .8rem;
-      opacity: .75;
+      color: var(--text-muted);
     }
     .product-price {
       display: flex;
@@ -191,56 +239,71 @@
     .product-price-current {
       font-weight: 600;
       font-size: .98rem;
-      color: #e53935;
+      color: var(--accent-soft);
     }
     .product-price-old {
       font-size: .8rem;
       text-decoration: line-through;
-      opacity: .7;
+      color: var(--text-muted);
     }
     .product-actions {
       margin-top: .45rem;
       display: flex;
       gap: .4rem;
     }
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: .75rem;
-      border: 1px solid #ff5a5f;
       font-size: .85rem;
       padding: .55rem .9rem;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease, color .1s ease;
+      transition:
+        transform .1s ease,
+        box-shadow .1s ease,
+        background-color .1s ease,
+        color .1s ease,
+        border-color .1s ease;
     }
     .btn-primary {
       flex: 1;
-      background: #ff5a5f;
+      border: 1px solid var(--accent-soft);
+      background: linear-gradient(135deg, #ec4899, #db2777);
       color: #fff;
     }
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(0,0,0,.15);
+      box-shadow: 0 3px 10px rgba(0,0,0,.35);
     }
     .btn-secondary {
-      border-color: #ddd;
-      background: #fafafa;
-      color: inherit;
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,.7);
+      color: var(--text-muted);
       font-size: .82rem;
       padding-inline: .8rem;
     }
+    .btn-secondary:hover {
+      border-color: var(--accent-soft);
+      color: #e5e7eb;
+    }
 
     .site-footer {
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(148,163,184,.2);
       padding: 1rem 0 1.5rem;
       font-size: .85rem;
-      background: #fafafa;
+      background: #020617;
+      color: var(--text-muted);
+    }
+    .site-footer strong {
+      color: #e5e7eb;
     }
     .site-footer a {
-      color: inherit;
+      color: var(--accent-soft);
     }
 
     @media (max-width: 640px) {
@@ -286,27 +349,22 @@
           được thêm chút hoa hồng để duy trì nội dung.
         </p>
 
-        <!-- THANH LỌC CƠ BẢN (sau có tool lọc thật) -->
+        <!-- THANH LỌC CƠ BẢN -->
         <div class="store-filters">
           <div>
             <label for="filter-category">Danh mục:</label>
-            <select id="filter-category" name="category" disabled>
-              <option selected>Tất cả (lọc sẽ làm ở tool sau)</option>
+            <select id="filter-category" name="category">
+              <option value="all">Tất cả danh mục</option>
             </select>
           </div>
           <div>
             <label for="filter-merchant">Sàn:</label>
-            <select id="filter-merchant" name="merchant" disabled>
+            <select id="filter-merchant" name="merchant">
               <option value="">Tất cả</option>
               <option value="shopee">Shopee</option>
               <option value="lazada">Lazada</option>
               <option value="tiktok">TikTok</option>
-            </select>
-          </div>
-          <div>
-            <label for="filter-sort">Sắp xếp:</label>
-            <select id="filter-sort" name="sort" disabled>
-              <option>Để mặc định (sau tool xử lý)</option>
+              <option value="tiki">Tiki</option>
             </select>
           </div>
         </div>
@@ -318,12 +376,11 @@
       <div class="container">
         <div class="home-section-head">
           <h2>Tất cả sản phẩm</h2>
-          <p>Dữ liệu đang lấy từ kho JSON /assets/data/bongstudio-products.json.</p>
+          <p>Dữ liệu đang lấy từ kho JSON <code>/assets/data/affiliates.json</code>.</p>
         </div>
 
-        <!-- Tool JS sẽ dựa vào data-category để filter -->
-        <div class="product-grid" data-category="all">
-          <!-- JS sẽ thay thế nội dung này -->
+        <!-- JS sẽ thay nội dung, dựa trên filters -->
+        <div class="product-grid loading" data-category="all">
           Đang tải sản phẩm...
         </div>
       </div>
@@ -342,13 +399,184 @@
           Mai (Bongstudio)
         </a>
       </div>
-      <div style="margin-top:.3rem; opacity:.75;">
+      <div style="margin-top:.3rem; opacity:.8;">
         Khi bạn mua qua link affiliate, Bongstudio có thể nhận hoa hồng nhỏ từ sàn nhưng giá bạn trả không đổi.
       </div>
     </div>
   </footer>
 
-  <!-- TOOL RENDER + ISCLIX CHUNG -->
-  <script defer src="/assets/js/bongstudio-products.js"></script>
+  <!-- SCRIPT: load affiliates.json + isclix aff_base riêng Bongstudio -->
+  <script>
+    ;(function(){
+      const GRID = document.querySelector(".product-grid");
+      const selCategory = document.getElementById("filter-category");
+      const selMerchant = document.getElementById("filter-merchant");
+
+      // aff_base riêng của Bongstudio (PUB_ID 6837)
+      const AFF_BASE = {
+        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
+        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
+        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655",
+        tiki:   "https://go.isclix.com/deep_link/6837508078414670452/4348614231480407268"
+      };
+
+      const MERCHANT_LABEL = {
+        shopee: "Shopee",
+        lazada: "Lazada",
+        tiktok: "TikTok",
+        tiki: "Tiki"
+      };
+
+      const UTM_BASE =
+        "utm_source=" + encodeURIComponent(location.hostname) +
+        "&utm_medium=affiliate";
+
+      let PRODUCTS = [];
+
+      function formatPrice(v) {
+        if (typeof v !== "number") return "";
+        try {
+          return v.toLocaleString("vi-VN") + "₫";
+        } catch(e) {
+          return v + "₫";
+        }
+      }
+
+      function makeIsclixUrl(merchant, originUrl, sku) {
+        const base = AFF_BASE[merchant];
+        if (!base || !originUrl) return originUrl;
+        const head = base + (base.includes("?") ? "&" : "?") + "url=" + encodeURIComponent(originUrl);
+        const params = [
+          UTM_BASE,
+          "utm_campaign=" + encodeURIComponent(merchant || ""),
+          "sub1=" + encodeURIComponent(sku || ""),
+          "sub2=" + encodeURIComponent(merchant || "")
+        ];
+        return head + "&" + params.join("&");
+      }
+
+      function buildCard(p) {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        const imgSrc = p.image || "/assets/og/default-og.webp";
+        const merchantLabel = MERCHANT_LABEL[(p.merchant || "").toLowerCase()] || "Khác";
+
+        card.innerHTML = `
+          <a class="product-thumb" href="javascript:void(0)" aria-label="Xem chi tiết sản phẩm">
+            <img src="${imgSrc}"
+                 loading="lazy"
+                 alt="${(p.name || "Sản phẩm Bongstudio").replace(/"/g, "&quot;")}"/>
+          </a>
+          <div class="product-card-body">
+            <h3 class="product-name">${p.name || "Sản phẩm Bongstudio"}</h3>
+            <div class="product-merchant">Nguồn: ${merchantLabel}</div>
+            <div class="product-price">
+              <span class="product-price-current">${formatPrice(p.price_vnd)}</span>
+              ${p.old_price_vnd ? `<span class="product-price-old">${formatPrice(p.old_price_vnd)}</span>` : ""}
+            </div>
+            <div class="product-actions">
+              <button class="btn-primary js-mxd-buy" type="button">
+                Mua ngay trên ${merchantLabel}
+              </button>
+              <a class="btn-secondary" href="javascript:void(0)">Giữ lại để xem sau</a>
+            </div>
+          </div>
+        `;
+
+        const btn = card.querySelector(".js-mxd-buy");
+        const finalUrl = makeIsclixUrl((p.merchant || "").toLowerCase(), p.origin, p.sku);
+
+        if (btn && finalUrl) {
+          btn.addEventListener("click", function(ev){
+            ev.preventDefault();
+            window.open(finalUrl, "_blank");
+          });
+        }
+
+        return card;
+      }
+
+      function applyFilters() {
+        if (!GRID) return;
+
+        GRID.classList.remove("loading");
+        GRID.innerHTML = "";
+
+        const catVal = selCategory ? selCategory.value : "all";
+        const merVal = selMerchant ? selMerchant.value : "";
+
+        let list = PRODUCTS.filter(p => p && p.status !== false);
+
+        if (catVal && catVal !== "all") {
+          list = list.filter(p => (p.category || "").toLowerCase() === catVal.toLowerCase());
+        }
+
+        if (merVal) {
+          list = list.filter(p => (p.merchant || "").toLowerCase() === merVal.toLowerCase());
+        }
+
+        if (!list.length) {
+          GRID.textContent = "Chưa có sản phẩm phù hợp bộ lọc (hoặc JSON đang trống).";
+          return;
+        }
+
+        list.forEach(p => {
+          GRID.appendChild(buildCard(p));
+        });
+      }
+
+      function populateFilters() {
+        if (!selCategory) return;
+
+        const cats = Array.from(new Set(
+          PRODUCTS
+            .map(p => p && p.category)
+            .filter(Boolean)
+        ));
+
+        selCategory.innerHTML = '<option value="all">Tất cả danh mục</option>';
+        cats.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          selCategory.appendChild(opt);
+        });
+      }
+
+      function initEvents() {
+        if (selCategory) {
+          selCategory.addEventListener("change", applyFilters);
+        }
+        if (selMerchant) {
+          selMerchant.addEventListener("change", applyFilters);
+        }
+      }
+
+      function init() {
+        if (!GRID) return;
+
+        fetch("/assets/data/affiliates.json", {cache: "no-store"})
+          .then(r => r.json())
+          .then(data => {
+            PRODUCTS = Array.isArray(data) ? data : [];
+            populateFilters();
+            initEvents();
+            applyFilters();
+          })
+          .catch(err => {
+            console.error("Load affiliates.json error:", err);
+            GRID.classList.remove("loading");
+            GRID.textContent = "Không tải được dữ liệu sản phẩm (affiliates.json).";
+          });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </body>
 </html>
