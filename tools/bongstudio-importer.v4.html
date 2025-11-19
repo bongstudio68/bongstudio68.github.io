@@ -1,9 +1,9 @@
+<!-- REPLACE WHOLE FILE: /tools/bongstudio-importer.v4.html -->
 <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <!-- Updated to version 4.4 with improved verification timing -->
   <title>Bongstudio Importer v4.4 — PRO + Batch + Featured + Debug</title>
   <meta name="robots" content="noindex,follow"/>
   <style>
@@ -352,7 +352,7 @@
             <input type="checkbox" id="featured" style="width:auto"/> Nổi bật (featured)
           </label>
           <label style="display:flex;align-items:center;gap:8px;flex:unset">
-            <input type="checkbox" id="status" checked style="width-auto"/> Hiển thị (status)
+            <input type="checkbox" id="status" checked style="width:auto"/> Hiển thị (status)
           </label>
           <button class="btn" id="btnAuto">Điền auto từ tên</button>
         </div>
@@ -439,7 +439,7 @@
 </div>
 
 <script>
-/* ===== Bongstudio Importer v4.4.0-pro4 ===== */
+/* ===== Bongstudio Importer v4.4.0-pro5 ===== */
 function initImporter() {
   const $ = s => document.querySelector(s);
 
@@ -449,24 +449,12 @@ function initImporter() {
     return (m?m[1]:'mxd').replace(/[^a-z0-9-]/g,'')||'mxd';
   })();
 
-  /* Đường dẫn kho JSON chính cho Bongstudio (kho sản phẩm chung).
-     Tự động tính theo basePath để phù hợp với các trang được đặt trong thư mục con.
-     Ví dụ: nếu importer nằm ở /tools/, basePath sẽ là '' và đường dẫn là '/assets/data/bongstudio-products.json'.
-  */
-  const PRODUCTS_JSON_PATH = (() => {
-    try {
-      const parts = location.pathname.split('/tools/');
-      const basePath = parts && parts.length > 1 ? parts[0] : '';
-      return `${basePath || ''}/assets/data/bongstudio-products.json`;
-    } catch (_) {
-      return '/assets/data/bongstudio-products.json';
-    }
-  })();
+  /* Đường dẫn kho JSON chính cho Bongstudio (kho sản phẩm chung) */
+  const PRODUCTS_JSON_PATH = "/assets/data/bongstudio-products.json";
 
-  // Update version string for v4.4.0
   document.title = `${SITE_ID} Importer v4.4.0 — PRO + Batch + Featured + Debug`;
   const titleEl=$("#title");
-  if(titleEl) titleEl.innerHTML = `${SITE_ID} Importer v4.4 <span class="pill">PRO</span> <span class="pill">Batch</span> <span class="pill">Featured</span> <span class="pill">Debug</span>`;
+  if(titleEl) titleEl.innerHTML = `${SITE_ID} Importer v4.4.0 <span class="pill">PRO</span> <span class="pill">Batch</span> <span class="pill">Featured</span> <span class="pill">Debug</span>`;
 
   const slugify = s => s.toString()
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -474,8 +462,7 @@ function initImporter() {
     .toLowerCase().replace(/[^a-z0-9]+/g,'-')
     .replace(/^-+|-+$/g,'');
 
-  // Retain the same local storage key as previous versions so users don't lose settings
-  const LS_KEY = `MXD_IMPORTER_SETTINGS_V439PRO4_${SITE_ID.toUpperCase()}`;
+  const LS_KEY = `MXD_IMPORTER_SETTINGS_V440PRO5_${SITE_ID.toUpperCase()}`;
 
   /* Default template AFF cho Bongstudio (cậu đưa) */
   const DEFAULT_TPL = {
@@ -719,7 +706,7 @@ function initImporter() {
       if(!has(k)) qs.push(`${k}=${encodeURIComponent(subs[k])}`);
     return qs.length?(u+(u.includes('?')?'&':'?')+qs.join('&')):u;
   }
-  function cleanUrl(u){ return (u||'').trim().replace(/^['"]+|['",]+$/g,''); }
+  function cleanUrl(u){ return (u||'').trim().replace(/^["']+|["',]+$/g,''); }
 
   function activeTplFor(merchant){
     const s=readSettings();
@@ -952,7 +939,7 @@ function initImporter() {
       handleSingleFile(files[0]);
     } else {
       for(const f of files){ queueAddRawFile(f); }
-      toast(`Đã thêm ${files.length} ảnh vào hàng đợi.`,"ok");
+      toast(`Đã thêm ${files.length} ảnh vào hàng đợi.`,'ok');
     }
   }
 
@@ -1334,6 +1321,13 @@ function initImporter() {
 
   /* Build JSON & publish */
   function buildJson(){
+    // Tự động tạo SKU nếu đang trống: ưu tiên từ tên sản phẩm
+    let skuRaw = (($("#sku").value)||'').trim();
+    const nameRaw = (($("#name").value)||'').trim();
+    if(!skuRaw && nameRaw){
+      skuRaw = slugify(nameRaw);
+      $("#sku").value = skuRaw;
+    }
     if(!$("#category").value.trim()){
       const text=`${$("#name").value} ${$("#brand").value} ${$("#origin").value}`;
       const guess=autoCategory(text);
@@ -1460,9 +1454,6 @@ function initImporter() {
           content: jsonText,   // GỬI DẠNG CHUỖI THUẦN
           note: `feat(product): upsert ${obj.sku} via bongstudio importer`
         };
-
-        // Log the target path for debugging so users can verify where the JSON is being uploaded
-        log(`[doPublish] committing to ${payload.path}`);
         const r = await fetch(b + "/git/json", {
           method: "POST",
           mode: "cors",
@@ -1494,11 +1485,11 @@ function initImporter() {
     a.click();
   }
   
-  /* Verify JSON trên repo */
+  /* Verify JSON trên repo (retry 2 lần để tránh chậm load) */
   $("#btnVerify").onclick = async () => {
     const rawSku = $("#sku").value.trim();
     if (!rawSku) {
-      toast("Chưa có SKU để kiểm tra.", "warn");
+      toast("Chưa có SKU để kiểm tra.","warn");
       return;
     }
     const skuSlug = slugify(rawSku);
@@ -1511,65 +1502,58 @@ function initImporter() {
     };
 
     // Helper to fetch the JSON and return the list (or null on error)
-    async function attemptOnce() {
+    const fetchListOnce = async () => {
       try {
-        const r = await fetch(PRODUCTS_JSON_PATH + '?_=' + Date.now(), { cache: 'no-cache' });
+        const r = await fetch(PRODUCTS_JSON_PATH + '?_=' + Date.now(), { cache:'no-cache' });
         if (!r.ok) {
-          toast(`CHƯA THẤY kho JSON (${r.status}): ${PRODUCTS_JSON_PATH}`, "warn");
+          toast(`CHƯA THẤY kho JSON (${r.status}): ${PRODUCTS_JSON_PATH}`,"warn");
           return null;
         }
         const data = await r.json().catch(() => null);
         if (!data) {
-          toast("Dữ liệu kho JSON không hợp lệ.", "err");
+          toast("Dữ liệu kho JSON không hợp lệ.","err");
           return null;
         }
-        let list;
-        if (Array.isArray(data)) list = data;
-        else if (Array.isArray(data.items)) list = data.items;
-        else if (Array.isArray(data.products)) list = data.products;
-        else list = [];
-        return list;
+        if (Array.isArray(data)) return data;
+        if (Array.isArray(data.items)) return data.items;
+        if (Array.isArray(data.products)) return data.products;
+        return [];
       } catch (e) {
-        toast("Không đọc được kho JSON: " + e.message, "err");
+        toast("Không đọc được kho JSON: "+e.message,"err");
         return null;
       }
-    }
+    };
 
-    // First attempt to find the SKU
-    const list1 = await attemptOnce();
+    // Lần 1
+    const list1 = await fetchListOnce();
     if (list1 && checkSkuInList(list1)) {
-      toast(`ĐÃ TÌM THẤY SKU ${skuSlug} trong kho JSON.`, "ok");
+      toast(`ĐÃ TÌM THẤY SKU ${skuSlug} trong kho JSON.`,"ok");
       return;
     }
 
-    // If not found on the first try, wait briefly and retry once more.
+    // Chờ một chút rồi thử lại
     await new Promise(res => setTimeout(res, 1500));
-    const list2 = await attemptOnce();
+    const list2 = await fetchListOnce();
     if (list2 && checkSkuInList(list2)) {
-      toast(`ĐÃ TÌM THẤY SKU ${skuSlug} trong kho JSON.`, "ok");
+      toast(`ĐÃ TÌM THẤY SKU ${skuSlug} trong kho JSON.`,"ok");
     } else {
-      toast(`Kho JSON đã tải được nhưng CHƯA thấy SKU ${skuSlug}.`, "warn");
+      toast(`Kho JSON đã tải được nhưng CHƯA thấy SKU ${skuSlug}.`,"warn");
     }
   };
 
   /* Commit message generator */
   $("#btnGenCommit").onclick=()=>{
-    const sku = (($("#sku").value)||'').trim();
-    const name = (($("#name").value)||'').trim();
-    const cat = (($("#category").value)||'').trim() || 'khac';
+    const sku = ($("#sku").value||'').trim();
+    const name = ($("#name").value||'').trim();
+    const cat = ($("#category").value||'').trim() || 'khac';
     const feat = $("#featured").checked;
-    const hasImg = (($("#image").value)||'').trim();
+    const hasImg = ($("#image").value||'').trim();
     const msg = `feat(product): add ${slugify(sku||'sku')} "${name||'Product'}" (cat=${cat})${feat?' [featured]':''}${hasImg?' + image':''}`;
     $("#commitMsg").value = msg;
     $("#commitMsg").select();
     document.execCommand('copy');
     toast("Đã tạo & copy commit message.","ok");
   };
-
-  /* Utils */
-  function autoCategoryFromText(text){
-    return autoCategory(text);
-  }
 
   (function initAffOnce(){
     const s=readSettings();
