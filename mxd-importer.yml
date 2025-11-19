@@ -1,0 +1,77 @@
+# mxd-importer.yml — cấu hình cho Bongstudio Importer v4.x
+# Đặt file này ở thư mục gốc repo: /mxd-importer.yml
+
+version: 1
+site:
+  id: bongstudio
+  name: "Bongstudio"
+  note: "Config cho tool Bongstudio Importer v4.x"
+
+github:
+  # TODO: sửa lại cho đúng user & repo của cậu
+  owner: "YOUR_GITHUB_USERNAME"        # ví dụ: "bongstudio68" hoặc user GitHub của cậu
+  repo: "bongstudio.github.io"         # nếu repo tên khác thì sửa lại
+  branch: "main"                       # nếu đang dùng 'master' thì đổi thành 'master'
+
+  # Thư mục lưu dữ liệu / ảnh mặc định mà tool sẽ dùng
+  data_dir: "assets/data"              # nơi chứa affiliates.json, spotlight.json...
+  img_dir: "assets/img/products"       # nơi tool upload ảnh sản phẩm
+  commit_author_name: "MXD Importer"
+  commit_author_email: "importer@mxd.local"
+
+worker:
+  # TODO: điền endpoint của Cloudflare Worker đang dùng để push lên GitHub
+  # ví dụ: "https://mxd-control.example.workers.dev"
+  endpoint: "https://YOUR-WORKER-SUBDOMAIN.workers.dev"
+
+  # Khóa bí mật X-KEY phải trùng với env trên Worker (X_KEY / API_KEY...)
+  x_key: "CHANGE_ME_X_KEY"             # nhớ đổi, không để giá trị này
+
+  # Thời gian chờ khi gọi worker (ms)
+  timeout_ms: 20000
+
+json_targets:
+  # affiliates.json — file chính chứa danh sách sản phẩm
+  affiliates:
+    path: "assets/data/affiliates.json"
+    label: "Danh sách sản phẩm (affiliates.json)"
+    merge_mode: "append"   # append | replace | upsert (tùy tool đọc)
+    pretty: true
+
+  # spotlight.json — (tùy chọn) sản phẩm nổi bật trang chủ
+  spotlight:
+    path: "assets/data/spotlight.json"
+    label: "Sản phẩm nổi bật (spotlight.json)"
+    merge_mode: "replace"
+    pretty: true
+
+images:
+  enable_upload: true
+  auto_webp: true          # nén sang webp trước khi up
+  max_size_mb: 1.5         # giới hạn size sau khi nén
+  concurrency: 3           # số ảnh upload song song
+  # Đặt prefix mặc định cho tên file ảnh (nếu tool có dùng)
+  filename_prefix: "bs_"
+
+ui:
+  default_merchant: "shopee"
+  allow_custom_slug: true
+  # prefix SKU mặc định cho Bongstudio (để phân biệt với repo khác)
+  sku_prefix: "BS"
+  # bật debug panel trong tool (nếu code importer có đọc)
+  debug: true
+
+safety:
+  # Chỉ cho phép ghi vào các đường dẫn này để tránh gõ nhầm
+  allowed_paths:
+    - "assets/data/affiliates.json"
+    - "assets/data/spotlight.json"
+    - "assets/img/"
+    - "assets/img/products/"
+
+  # Chặn ghi đè những file quan trọng
+  protected_paths:
+    - "index.html"
+    - "store.html"
+    - "g.html"
+    - "sitemap.xml"
