@@ -5,143 +5,469 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-  <title>Sản phẩm | NThương Store</title>
-  <meta id="desc" name="description" content="Trang sản phẩm NThương Store. Vui lòng bật JavaScript."/>
-  <link id="canonical" rel="canonical" href="https://nthuong09.github.io/g.html"/>
+  <title>Sản phẩm | Bongstudio</title>
+  <meta id="desc" name="description" content="Trang sản phẩm Bongstudio – chi tiết từng món trong affiliates.json."/>
+  <link id="canonical" rel="canonical" href="https://bongstudio68.github.io/g.html"/>
   <meta id="robots" name="robots" content="index,follow"/>
 
-  <meta property="og:title" content="Sản phẩm | NThương Store"/>
+  <meta property="og:title" content="Sản phẩm | Bongstudio"/>
   <meta id="ogdesc" property="og:description" content="Trang sản phẩm theo SKU từ affiliates.json"/>
-  <meta id="ogurl" property="og:url" content="https://nthuong09.github.io/g.html"/>
-  <meta id="ogimg" property="og:image" content="https://nthuong09.github.io/assets/og/default-og.webp"/>
+  <meta id="ogurl" property="og:url" content="https://bongstudio68.github.io/g.html"/>
+  <meta id="ogimg" property="og:image" content="https://bongstudio68.github.io/assets/og/default-og.webp"/>
+  <meta property="og:type" content="website"/>
 
-  <!-- THEME: Pink (Hường) cho trang sản phẩm -->
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+
   <style>
-    :root{
-      --brand:#c2185b; --accent:#ff2d8d; --border:#ffd1e8;
-      --text:#251a24; --muted:#6b5f67; --bg:#fff;
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --card: #020617;
+      --border-soft: rgba(148,163,184,.35);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent: #ec4899;
+      --accent-soft: #f472b6;
     }
-    body{background:var(--bg); color:var(--text);}
-    .topbar{background:#fff5fa;border-bottom:1px solid var(--border)}
-    .topbar .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:10px 0}
-    .brand{font-weight:800;color:var(--brand);text-decoration:none}
-    .topbar nav a{margin:0 10px;color:#7c3b57;text-decoration:none}
-    .topbar nav a:hover{color:var(--brand)}
-    .container{max-width:980px;margin:0 auto;padding:0 16px}
-    h1{margin:16px 0 8px}
-    .muted{color:var(--muted)}
-    .product-card{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#fff}
-    .product-card img{width:100%;height:320px;object-fit:cover}
-    .product-card .badge{display:inline-block;background:#ffe3f0;color:#a31754;border-radius:999px;padding:.15rem .55rem;margin:.25rem 0}
-    .btn{display:inline-block;padding:.6rem 1rem;border-radius:999px;text-decoration:none;border:1px solid transparent}
-    .btn.buy{background:var(--accent);color:#fff;box-shadow:0 6px 20px rgba(255,45,141,.25)}
-    footer{background:#fff5fa;margin-top:28px}
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#111827 0,#020617 55%,#000 100%);
+      color:var(--text-main);
+    }
+    a{color:inherit;}
+
+    .container{
+      max-width:960px;
+      margin:0 auto;
+      padding:0 1rem;
+    }
+
+    .site-header{
+      border-bottom:1px solid rgba(148,163,184,.3);
+      background:rgba(15,23,42,.95);
+      backdrop-filter:blur(10px);
+    }
+    .site-header .container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:.6rem 0;
+      gap:.75rem;
+    }
+    .logo{
+      text-decoration:none;
+      display:inline-flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .logo-main{
+      font-weight:700;
+      font-size:1.25rem;
+      color:var(--accent-soft);
+    }
+    .logo-sub{
+      font-size:.8rem;
+      color:var(--text-muted);
+    }
+    .main-nav ul{
+      list-style:none;
+      display:flex;
+      gap:.75rem;
+      margin:0;
+      padding:0;
+      font-size:.85rem;
+    }
+    .main-nav a{
+      text-decoration:none;
+      padding:.35rem .6rem;
+      border-radius:999px;
+      color:var(--text-muted);
+    }
+    .main-nav a:hover{color:#e5e7eb;}
+
+    .product-hero{
+      padding:2rem 0 2rem;
+    }
+    .product-layout{
+      display:grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap:1.5rem;
+      align-items:flex-start;
+    }
+    .product-image{
+      border-radius:1.1rem;
+      border:1px solid var(--border-soft);
+      background:rgba(15,23,42,.96);
+      overflow:hidden;
+    }
+    .product-image img{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+    }
+
+    .breadcrumb{
+      font-size:.8rem;
+      color:var(--text-muted);
+      margin:0 0 .5rem;
+    }
+    .breadcrumb a{
+      text-decoration:none;
+      color:var(--accent-soft);
+    }
+    .breadcrumb span{color:var(--text-muted);}
+
+    .product-info h1{
+      margin:.1rem 0 .45rem;
+      font-size:1.3rem;
+      color:#f9fafb;
+    }
+    .merchant-line{
+      font-size:.85rem;
+      color:var(--text-muted);
+      margin-bottom:.4rem;
+    }
+
+    .price-line{
+      display:flex;
+      gap:.5rem;
+      align-items:baseline;
+      margin:.6rem 0 .9rem;
+    }
+    .price-current{
+      font-weight:600;
+      font-size:1.1rem;
+      color:var(--accent-soft);
+    }
+    .price-old{
+      font-size:.85rem;
+      text-decoration:line-through;
+      color:var(--text-muted);
+    }
+
+    .product-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-bottom:1rem;
+    }
+    .btn-primary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:.55rem 1.1rem;
+      border-radius:.9rem;
+      border:1px solid var(--accent-soft);
+      background:linear-gradient(135deg,#ec4899,#db2777);
+      color:#fff;
+      font-size:.9rem;
+      cursor:pointer;
+      text-decoration:none;
+      min-width:150px;
+      transition:transform .1s ease,box-shadow .1s ease;
+    }
+    .btn-primary:hover{
+      transform:translateY(-1px);
+      box-shadow:0 4px 16px rgba(0,0,0,.35);
+    }
+
+    .product-extra{
+      font-size:.86rem;
+      color:var(--text-muted);
+      line-height:1.6;
+    }
+
+    .site-footer{
+      border-top:1px solid rgba(148,163,184,.2);
+      padding:1rem 0 1.5rem;
+      font-size:.85rem;
+      background:#020617;
+      color:var(--text-muted);
+    }
+    .site-footer strong{color:#e5e7eb;}
+    .site-footer a{color:var(--accent-soft);}
+
+    @media (max-width:768px){
+      .product-layout{
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    @media (max-width:640px){
+      .site-header .container{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .main-nav ul{
+        flex-wrap:wrap;
+        justify-content:flex-start;
+      }
+    }
   </style>
 
-  <link rel="stylesheet" href="/assets/site.css"/>
-  <!-- GA4 trước affiliate -->
   <script defer src="/assets/analytics.js"></script>
-  <script defer src="/assets/mxd-affiliate.js"></script>
 </head>
 <body>
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="/">NThương Store</a>
-    <nav>
-      <a href="/">Trang chủ</a>
-      <a href="/store.html">Cửa hàng</a>
-      <a href="/store/thoi-trang.html">Thời trang</a>
-      <a href="/store/my-pham.html">Mỹ phẩm</a>
-      <a href="/store/me-va-be.html">Mẹ & Bé</a>
-      <a href="/store/trang-suc.html">Trang sức</a>
-      <a href="/lien-he.html">Liên hệ</a>
-    </nav>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">
+        <span class="logo-main">Bongstudio</span>
+        <span class="logo-sub">Cửa hàng affiliate đa sàn</span>
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/" data-nav="home">Trang chủ</a></li>
+          <li><a href="/store.html" data-nav="store">Cửa hàng</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<header class="container"><h1 id="title">Sản phẩm</h1></header>
-<div class="container" id="content"><p>Đang tải…</p></div>
-<footer><div class="container"><small class="muted">Dữ liệu từ affiliates.json qua ?sku= • GA4 trước affiliate</small></div></footer>
+  <main>
+    <section class="product-hero">
+      <div class="container product-layout" id="p-wrapper">
+        <div class="product-image">
+          <img id="p-img" src="/assets/og/default-og.webp" alt="Sản phẩm Bongstudio"/>
+        </div>
+        <div class="product-info">
+          <p class="breadcrumb">
+            <a href="/">Bongstudio</a> / <a href="/store.html">Cửa hàng</a> /
+            <span id="p-sku-label">Sản phẩm</span>
+          </p>
+          <h1 id="p-name">Đang tải sản phẩm...</h1>
+          <div class="merchant-line">
+            Nguồn: <span id="p-merchant">...</span>
+          </div>
+          <div class="price-line">
+            <span class="price-current" id="p-price"></span>
+            <span class="price-old" id="p-old-price"></span>
+          </div>
+          <div class="product-actions">
+            <button class="btn-primary" id="btn-buy" type="button">
+              Mua ngay
+            </button>
+          </div>
+          <div class="product-extra" id="p-extra">
+            <p>Trang này lấy dữ liệu trực tiếp từ <code>affiliates.json</code> của Bongstudio theo mã <strong>sku</strong> trên URL.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<script>
-/* FIND: g.html loader v2025-10-31 — tries /assets/data/affiliates.json then /affiliates.json */
-const qs = n => new URL(location.href).searchParams.get(n);
-const canonical = document.getElementById('canonical');
-const ogurl = document.getElementById('ogurl');
-const ogimg = document.getElementById('ogimg');
-const ogdesc = document.getElementById('ogdesc');
-const desc = document.getElementById('desc');
-const robotsMeta = document.getElementById('robots');
+  <footer class="site-footer">
+    <div class="container">
+      <div>
+        <strong>Bongstudio</strong> – cửa hàng affiliate chọn lọc sản phẩm từ nhiều sàn.
+      </div>
+      <div>
+        Liên hệ: 0978 557 797 ·
+        Facebook:
+        <a href="https://www.facebook.com/profile.php?id=100050291345045" target="_blank" rel="noopener">
+          Mai (Bongstudio)
+        </a>
+      </div>
+      <div style="margin-top:.3rem; opacity:.8;">
+        Khi bạn mua qua link affiliate, Bongstudio có thể nhận hoa hồng nhỏ từ sàn nhưng giá bạn trả không đổi.
+      </div>
+    </div>
+  </footer>
 
-function setMeta(p, imgAbs){
-  const u = new URL('/g.html?sku='+encodeURIComponent(p.sku), location.origin).href;
-  canonical.href = u; ogurl.setAttribute('content', u);
-  ogimg.setAttribute('content', imgAbs);
-  desc.setAttribute('content', p.name);
-  ogdesc.setAttribute('content', p.name);
-  document.title = p.name + ' | NThương Store';
-}
+  <script>
+    ;(function(){
+      const params = new URLSearchParams(location.search);
+      const skuParam = (params.get("sku") || "").trim();
 
-async function loadAffiliates(){
-  const candidates = ['/assets/data/affiliates.json', '/affiliates.json'];
-  for (const url of candidates){
-    try{
-      const res = await fetch(url, {cache:'no-store'});
-      if(res.ok) return await res.json();
-    }catch(e){}
-  }
-  return [];
-}
+      const elName = document.getElementById("p-name");
+      const elSku = document.getElementById("p-sku-label");
+      const elMerchant = document.getElementById("p-merchant");
+      const elPrice = document.getElementById("p-price");
+      const elOldPrice = document.getElementById("p-old-price");
+      const elImg = document.getElementById("p-img");
+      const elExtra = document.getElementById("p-extra");
+      const btnBuy = document.getElementById("btn-buy");
 
-document.addEventListener('DOMContentLoaded', async ()=>{
-  const sku = qs('sku'), wrap = document.getElementById('content'), h1 = document.getElementById('title');
-  if(!sku){ wrap.innerHTML = '<p>Thiếu ?sku=</p>'; return; }
+      const metaDesc = document.getElementById("desc");
+      const metaRobots = document.getElementById("robots");
+      const ogDesc = document.getElementById("ogdesc");
+      const ogUrl = document.getElementById("ogurl");
+      const ogImg = document.getElementById("ogimg");
+      const linkCanonical = document.getElementById("canonical");
 
-  const data = await loadAffiliates();
-  const p = data.find(x=> String(x.sku) === String(sku));
+      const MERCHANT_LABEL = {
+        shopee: "Shopee",
+        lazada: "Lazada",
+        tiktok: "TikTok",
+        tiki: "Tiki"
+      };
 
-  if(!p){
-    robotsMeta?.setAttribute('content','noindex,follow');
-    wrap.innerHTML = '<p>Không tìm thấy SKU.</p>';
-    return;
-  }
+      const AFF_BASE = {
+        shopee: "https://go.isclix.com/deep_link/6837508078414670452/4751584435713464237",
+        lazada: "https://go.isclix.com/deep_link/6837508078414670452/5127144557053758578",
+        tiktok: "https://go.isclix.com/deep_link/6837508078414670452/6648523843406889655",
+        tiki:   "https://go.isclix.com/deep_link/6837508078414670452/4348614231480407268"
+      };
 
-  const imgAbs = new URL(p.image || ('/assets/img/products/'+p.sku+'.webp'), location.origin).href;
-  setMeta(p, imgAbs);
-  h1.textContent = p.name;
+      const UTM_BASE =
+        "utm_source=" + encodeURIComponent(location.hostname) +
+        "&utm_medium=affiliate";
 
-  const priceRaw = (p.price_vnd ?? p.price);
-  const priceNum = Number(priceRaw);
-  const price = Number.isFinite(priceNum) ? priceNum.toLocaleString('vi-VN') + ' ₫' : '';
+      function formatPrice(v){
+        if (typeof v !== "number") return "";
+        try{
+          return v.toLocaleString("vi-VN") + "₫";
+        }catch(e){
+          return v + "₫";
+        }
+      }
 
-  const ld = {
-    "@context":"https://schema.org","@type":"Product",
-    "name":p.name,"sku":p.sku,
-    "image":[imgAbs],
-    "description":p.name,
-    "offers":{"@type":"Offer","priceCurrency":"VND","price":String(priceRaw??''),"availability":"https://schema.org/InStock","url":new URL('/g.html?sku='+encodeURIComponent(p.sku),location.origin).href}
-  };
-  const s=document.createElement('script'); s.type='application/ld+json'; s.textContent=JSON.stringify(ld); document.head.appendChild(s);
+      function makeIsclixUrl(merchant, originUrl, sku){
+        const base = AFF_BASE[merchant];
+        if (!base || !originUrl) return originUrl;
+        const head = base + (base.includes("?") ? "&" : "?") + "url=" + encodeURIComponent(originUrl);
+        const params = [
+          UTM_BASE,
+          "utm_campaign=" + encodeURIComponent(merchant || ""),
+          "sub1=" + encodeURIComponent(sku || ""),
+          "sub2=" + encodeURIComponent(merchant || "")
+        ];
+        return head + "&" + params.join("&");
+      }
 
-  wrap.innerHTML = `
-  <div class="card product-card">
-    <a class="product-meta"
-       href="${p.origin_url ?? p.origin ?? '#'}"
-       data-merchant="${p.merchant||''}"
-       data-sku="${p.sku}"
-       data-img="${p.image||('/assets/img/products/'+p.sku+'.webp')}"
-       ${Number.isFinite(priceNum)?`data-price="${priceNum}"`:''}>${p.name}</a>
-    <img src="${p.image || ('/assets/img/products/'+p.sku+'.webp')}" alt="${p.name}"/>
-    ${price?`<p style="margin:.5rem .75rem"><strong>${price}</strong></p>`:''}
-    <p style="margin:.25rem .75rem"><span class="badge">${p.merchant||''}</span></p>
-    <p style="margin:.5rem .75rem 1rem"><a class="btn buy" href="#">Mua ngay</a></p>
-  </div>`;
+      function setMeta(p, imgAbs){
+        const title = (p.name || "Sản phẩm Bongstudio") + " | Bongstudio";
+        document.title = title;
 
-  // MXD-CHECK: SW register
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  }
-});
-</script>
+        const descText = "Sản phẩm " + (p.name || "") + " – được Bongstudio lọc từ " +
+          (MERCHANT_LABEL[(p.merchant || "").toLowerCase()] || "nhiều sàn") + ".";
+
+        if (metaDesc) metaDesc.setAttribute("content", descText);
+        if (ogDesc) ogDesc.setAttribute("content", descText);
+
+        const urlObj = new URL(location.pathname, location.origin);
+        if (p.sku){
+          urlObj.searchParams.set("sku", p.sku);
+        }
+        const urlHref = urlObj.href;
+        if (ogUrl) ogUrl.setAttribute("content", urlHref);
+        if (linkCanonical) linkCanonical.setAttribute("href", urlHref);
+
+        const imgUrl = imgAbs || (p.image ? new URL(p.image, location.origin).href : "");
+        if (imgUrl && ogImg) ogImg.setAttribute("content", imgUrl);
+
+        // JSON-LD Product
+        const priceRaw = p.price_vnd ?? p.price;
+        const priceNum = Number(priceRaw);
+        const ld = {
+          "@context":"https://schema.org",
+          "@type":"Product",
+          "name":p.name,
+          "sku":p.sku,
+          "image":[imgUrl],
+          "description":descText,
+          "offers":{
+            "@type":"Offer",
+            "priceCurrency":"VND",
+            "price":Number.isFinite(priceNum) ? String(priceNum) : undefined,
+            "url":urlHref
+          }
+        };
+        const s = document.createElement("script");
+        s.type = "application/ld+json";
+        s.textContent = JSON.stringify(ld);
+        document.head.appendChild(s);
+      }
+
+      function showNotFound(msg){
+        elName.textContent = msg || "Không tìm thấy sản phẩm.";
+        elSku.textContent = "Không tìm thấy";
+        elMerchant.textContent = "–";
+        elPrice.textContent = "";
+        elOldPrice.textContent = "";
+        elImg.src = "/assets/og/default-og.webp";
+        if (metaRobots) metaRobots.setAttribute("content","noindex,follow");
+        if (btnBuy){
+          btnBuy.disabled = true;
+          btnBuy.textContent = "Không có link mua";
+        }
+      }
+
+      function init(){
+        if (!skuParam){
+          showNotFound("Thiếu mã sản phẩm (sku) trên URL.");
+          return;
+        }
+        elSku.textContent = skuParam;
+
+        fetch("/assets/data/affiliates.json", {cache:"no-store"})
+          .then(r => r.json())
+          .then(data => {
+            const list = Array.isArray(data) ? data : [];
+            const skuLower = skuParam.toLowerCase();
+            const p = list.find(item => (item && (item.sku || "").toLowerCase() === skuLower));
+            if (!p){
+              showNotFound("Không tìm thấy sản phẩm trong affiliates.json.");
+              return;
+            }
+
+            const merchantKey = (p.merchant || "").toLowerCase();
+            const merchantLabel = MERCHANT_LABEL[merchantKey] || "Khác";
+
+            elName.textContent = p.name || "Sản phẩm Bongstudio";
+            elMerchant.textContent = merchantLabel;
+
+            const priceText = typeof p.price_vnd === "number" ? formatPrice(p.price_vnd) : "";
+            elPrice.textContent = priceText;
+            if (typeof p.old_price_vnd === "number"){
+              elOldPrice.textContent = formatPrice(p.old_price_vnd);
+            }
+
+            const imgSrc = p.image || (p.sku ? "/assets/img/products/" + p.sku + ".webp" : "/assets/og/default-og.webp");
+            elImg.src = imgSrc;
+            elImg.alt = p.name || "Sản phẩm Bongstudio";
+
+            if (elExtra){
+              elExtra.innerHTML =
+                "<p>Sản phẩm này được Bongstudio chọn từ " + merchantLabel +
+                " với mã <code>" + (p.sku || "") + "</code>.</p>";
+            }
+
+            const imgAbs = new URL(imgSrc, location.origin).href;
+            setMeta(p, imgAbs);
+
+            if (btnBuy){
+              const finalUrl = makeIsclixUrl(merchantKey, p.origin, p.sku);
+              if (finalUrl){
+                btnBuy.addEventListener("click", function(ev){
+                  ev.preventDefault();
+                  window.open(finalUrl, "_blank");
+                });
+                btnBuy.textContent = "Mua ngay trên " + merchantLabel;
+              } else {
+                btnBuy.disabled = true;
+                btnBuy.textContent = "Không có link mua";
+              }
+            }
+
+            // Đăng ký SW để offline giống các repo MXD khác
+            if ("serviceWorker" in navigator){
+              navigator.serviceWorker.register("/sw.js").catch(()=>{});
+            }
+          })
+          .catch(err => {
+            console.error("Load affiliates.json error:", err);
+            showNotFound("Không tải được dữ liệu sản phẩm (affiliates.json).");
+          });
+      }
+
+      if (document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </body>
 </html>
