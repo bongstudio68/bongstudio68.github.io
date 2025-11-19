@@ -483,7 +483,8 @@
       function setStatus(msg, tone) {
         if (!STATUS) return;
         STATUS.textContent = msg || "";
-        if (tone) STATUS.dataset.tone = tone; else STATUS.removeAttribute("data-tone");
+        if (tone) STATUS.dataset.tone = tone;
+        else STATUS.removeAttribute("data-tone");
       }
 
       function escapeHtml(str) {
@@ -639,18 +640,28 @@
         });
       }
 
+      function isActiveProduct(p) {
+        if (!p) return false;
+        if (p.status === false || p.status === "false" || p.status === 0) return false;
+        return true;
+      }
+
       async function loadFeatured() {
         try {
-          setStatus("Đang tải sản phẩm nổi bật…", ""); // neutral
+          setStatus("Đang tải sản phẩm nổi bật…", "");
           const res = await fetch(AFF_PATH + "?v=" + Date.now(), { cache: "no-store" });
           if (!res.ok) {
             throw new Error("Không đọc được affiliates.json: HTTP " + res.status);
           }
-          const all = await res.json();
+
+          const raw = await res.json();
+          const all = Array.isArray(raw) ? raw : (raw.items || []);
+          if (!Array.isArray(all)) {
+            console.warn("[Bongstudio][home-featured] Định dạng affiliates.json lạ:", raw);
+          }
 
           let featured = (all || []).filter(function (p) {
-            if (!p) return false;
-            // chấp nhận true hoặc "true"
+            if (!isActiveProduct(p)) return false;
             return p.featured === true || p.featured === "true" || p.featured === 1;
           });
 
@@ -677,3 +688,9 @@
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", loadFeatured);
       } else {
+        loadFeatured();
+      }
+    })();
+  </script>
+</body>
+</html>
