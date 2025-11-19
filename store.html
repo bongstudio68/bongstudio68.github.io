@@ -422,7 +422,7 @@
   function buildCategoryOptions(products){
     const set = new Set();
     products.forEach(p=>{
-      if(p.category){
+      if(p && p.category){
         set.add(p.category);
       }
     });
@@ -449,7 +449,6 @@
 
     if(catParam && catSelect.querySelector('option[value="'+catParam+'"]')){
       catSelect.value = catParam;
-      // scroll nhẹ xuống phần sản phẩm cho cảm giác "click danh mục" mượt hơn
       setTimeout(function(){
         const anchor = document.getElementById("product-list-anchor");
         if(anchor){
@@ -538,7 +537,6 @@
         buyBtn.href = link;
         buyBtn.target = "_blank";
         buyBtn.rel = "nofollow noopener";
-        // để người dùng có thể chuột phải -> Copy link địa chỉ
         buyBtn.textContent = "Mua ngay trên " + merchantLabel;
 
         footer.appendChild(priceWrap);
@@ -569,16 +567,25 @@
     merchantSelect.addEventListener("change",renderProducts);
   }
 
-  function fetchData(){
-    fetch("/assets/data/affiliates.json",{cache:"no-store"})
-      .then(function(res){return res.json();})
-      .then(function(data){
-        if(!Array.isArray(data)) data = [];
-        // loại các sản phẩm bị ẩn nếu có
-        ALL_PRODUCTS = data.filter(function(p){
-          return !p.status || p.status === "active" || p.status === "ok";
-        });
+  function normalizeData(raw){
+    if(Array.isArray(raw)) return raw;
+    if(raw && Array.isArray(raw.items)) return raw.items;
+    if(raw && Array.isArray(raw.products)) return raw.products;
+    return [];
+  }
 
+  function fetchData(){
+    // dùng đường dẫn tương đối cho an toàn
+    fetch("assets/data/affiliates.json",{cache:"no-store"})
+      .then(function(res){
+        if(!res.ok) throw new Error("HTTP "+res.status);
+        return res.json();
+      })
+      .then(function(raw){
+        const data = normalizeData(raw);
+        ALL_PRODUCTS = data.filter(function(p){
+          return p && (!p.status || p.status === "active" || p.status === "ok");
+        });
         buildCategoryOptions(ALL_PRODUCTS);
         applyInitialFiltersFromURL();
         renderProducts();
@@ -586,11 +593,12 @@
       .catch(function(err){
         console.error("Lỗi tải affiliates.json",err);
         ALL_PRODUCTS = [];
-        renderProducts();
+        countEl.textContent = "0";
+        emptyEl.textContent = "Đang có lỗi khi tải dữ liệu sản phẩm. Cậu kiểm tra lại file assets/data/affiliates.json xem có đúng dạng JSON không nhé.";
+        emptyEl.style.display = "block";
       });
   }
 
-  // init
   initEvents();
   fetchData();
 })();
